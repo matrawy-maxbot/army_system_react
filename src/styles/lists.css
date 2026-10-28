@@ -1,0 +1,233 @@
+/* ========== Lists Styles ========== */
+
+.lists-section {
+    margin-bottom: var(--spacing-24);
+}
+
+.lists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--spacing-24);
+}
+
+.list-card {
+    position: relative;
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    padding: var(--spacing-24);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-16);
+}
+
+.list-card:hover {
+    border-color: var(--border-hover);
+}
+
+.list-card.default {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+.list-card.default:hover {
+    border-color: var(--color-primary-hover);
+}
+
+.list-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-12);
+}
+
+.list-icon {
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-card.default .list-icon {
+    color: var(--color-primary-hover);
+}
+
+.list-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    text-align: center;
+    margin: 0;
+}
+
+.list-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: var(--color-primary);
+    color: #ffffff;
+    border-radius: var(--radius-card);
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.list-badge-small {
+    display: inline-block;
+    padding: 2px var(--spacing-8);
+    background: var(--bg-active);
+    color: var(--text-secondary);
+    border-radius: var(--radius-lg);
+    font-size: 9px;
+    font-weight: var(--font-weight-semibold);
+    margin-right: 6px;
+}
+
+.list-items-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-8);
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    padding-top: var(--spacing-12);
+    border-top: 1px solid var(--border-color);
+}
+
+.list-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-8);
+    margin-top: var(--spacing-8);
+}
+
+/* List Items Container */
+.list-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+    padding: var(--spacing-12);
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.list-item:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
+}
+
+.list-item-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.list-item-icon.fax {
+    background: var(--color-info-light);
+    color: var(--color-info);
+}
+
+.list-item-icon.reply {
+    background: var(--color-success-light);
+    color: var(--color-success);
+}
+
+.list-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.list-item-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-item-type {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-medium);
+}
+
+.list-content-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-64) var(--spacing-24);
+    color: var(--text-tertiary);
+    text-align: center;
+}
+
+.list-content-empty .empty-icon {
+    font-size: var(--icon-xl);
+    margin-bottom: var(--spacing-12);
+    opacity: 0.5;
+}
+
+.list-content-empty p {
+    margin-bottom: var(--spacing-8);
+    font-size: var(--font-size-sm);
+}
+
+.list-content-empty .empty-hint {
+    font-size: var(--font-size-xs);
+    color: var(--text-disabled);
+}
+
+/* List Checkbox Items (for adding to lists) */
+.list-checkbox-item {
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-12);
+    transition: all var(--transition-base);
+}
+
+.list-checkbox-item:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
+}
+
+.list-checkbox-item label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+}
+
+.list-checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.list-checkbox-item span {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}

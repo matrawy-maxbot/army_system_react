@@ -1,0 +1,34 @@
+/* ========== رسائل Toast ========== */
+.toast-message {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: var(--spacing-12) var(--spacing-24);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: white;
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-tooltip);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-slow) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    pointer-events: none;
+}
+
+.toast-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background: var(--color-success);
+}
+
+.toast-error {
+    background: var(--color-danger);
+}
+
+.toast-info {
+    background: var(--color-primary);
+}

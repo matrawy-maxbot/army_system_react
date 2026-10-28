@@ -1,0 +1,109 @@
+/* ========== شريط البحث والفلترة ========== */
+
+/* فلترة التاريخ */
+.date-filter-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    position: sticky;
+    top: 73px;
+    z-index: 10;
+    margin-bottom: var(--spacing-16);
+}
+
+.date-filter-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.date-filter-input {
+    flex: 1;
+    padding: var(--spacing-8) var(--spacing-12);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-family: inherit;
+    transition: all var(--transition-base);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    width: 120px;
+}
+
+.date-filter-input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(56, 125, 245, 0.1);
+}
+
+.date-filter-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: opacity(0.6);
+}
+
+/* شريط البحث والفلترة */
+.search-filter-container {
+    padding: var(--spacing-16);
+    background-color: var(--bg-app);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 125px;
+    z-index: 9;
+}
+
+.search-box {
+    flex: 1;
+}
+
+.search-box input {
+    width: 100%;
+    padding: var(--spacing-12);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-family: inherit;
+    transition: all var(--transition-base);
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-subtle);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(56, 125, 245, 0.1);
+}
+
+.search-box input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.filter-controls {
+    display: flex;
+    gap: var(--spacing-8);
+}
+
+.filter-select {
+    flex: 1;
+    padding: var(--spacing-8) 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-subtle);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-family: inherit;
+    background-color: var(--bg-surface);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    color: var(--text-secondary);
+}
+
+.filter-select:hover {
+    border-color: var(--border-hover);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(56, 125, 245, 0.1);
+}

@@ -1,6 +1,6 @@
 /**
  * Categories Styles
- * أنماط الفئات (منسوخة من المشروع القديم)
+ * Modern Minimalist SaaS Dashboard Style
  */
 
 /* Add Category Section */
@@ -11,48 +11,46 @@
 }
 
 .btn-add-category {
-    background: #3b82f6;
+    background: var(--color-primary);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 10px;
+    padding: var(--spacing-12) var(--spacing-24);
+    border-radius: var(--radius-lg);
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    gap: var(--spacing-8);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-subtle);
 }
 
 .btn-add-category:hover {
-    background: #2563eb;
-    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
-    transform: translateY(-1px);
+    background: var(--color-primary-hover);
 }
 
 .btn-add-category:active {
-    transform: translateY(0);
+    transform: scale(0.98);
 }
 
 .add-icon {
-    font-size: 16px;
+    font-size: var(--font-size-base);
 }
 
 /* Categories Container */
 #categoriesContainer {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: var(--spacing-24);
 }
 
 /* Category Card */
 .category-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    border: 1px solid #e8eaed;
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--border-color);
     overflow: hidden;
 }
 
@@ -60,9 +58,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid #e8eaed;
-    background: #fafbfc;
+    padding: var(--spacing-24);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-app);
 }
 
 .category-title {
@@ -72,78 +70,76 @@
 }
 
 .category-icon {
-    font-size: 24px;
+    font-size: var(--icon-md);
 }
 
 .category-title h2 {
     font-size: 17px;
-    font-weight: 600;
-    color: #1a202c;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
     margin: 0;
     letter-spacing: -0.2px;
 }
 
 .category-actions {
     display: flex;
-    gap: 8px;
+    gap: var(--spacing-8);
 }
 
 .btn-category-action {
-    background: #f1f3f5;
-    color: #475569;
-    border: 1px solid #e8eaed;
-    padding: 8px 16px;
-    border-radius: 8px;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-8) var(--spacing-16);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-base);
 }
 
 .btn-category-action:hover {
-    background: #e8eaed;
-    border-color: #cbd5e1;
+    background: var(--bg-active);
+    border-color: var(--border-hover);
 }
 
 .category-content {
-    padding: 24px;
+    padding: var(--spacing-24);
 }
 
 .category-documents-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+    gap: var(--spacing-16);
 }
 
 .category-empty {
     text-align: center;
-    padding: 60px 20px;
-    color: #94a3b8;
+    padding: var(--spacing-64) var(--spacing-24);
+    color: var(--text-tertiary);
 }
 
 .category-empty-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
+    font-size: var(--icon-xl);
+    margin-bottom: var(--spacing-12);
     opacity: 0.5;
 }
 
 /* Document Cards in Categories */
 .task-card {
-    background: #ffffff;
-    padding: 24px 20px;
-    border-radius: 10px;
+    background: var(--bg-surface);
+    padding: var(--spacing-24) var(--spacing-24);
+    border-radius: var(--radius-lg);
     text-align: center;
     position: relative;
-    border: 1px solid #e8eaed;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-subtle);
+    transition: all var(--transition-base);
     cursor: pointer;
 }
 
 .task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    border-color: #cbd5e1;
+    border-color: var(--border-hover);
 }
 
 .task-card.clickable-card {
@@ -151,41 +147,41 @@
 }
 
 .task-icon {
-    margin-bottom: 12px;
-    color: #3b82f6;
+    margin-bottom: var(--spacing-12);
+    color: var(--color-primary);
 }
 
 .task-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1a202c;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
     margin-bottom: 6px;
 }
 
 .task-meta {
-    font-size: 12px;
-    color: #94a3b8;
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
 }
 
 .doc-settings-btn {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: var(--spacing-8);
+    left: var(--spacing-8);
     width: 32px;
     height: 32px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     border: none;
     background: rgba(255, 255, 255, 0.95);
-    color: #64748b;
-    font-size: 16px;
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transform: scale(0.8);
-    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: var(--shadow-sm);
     z-index: 10;
 }
 
@@ -195,12 +191,11 @@
 }
 
 .doc-settings-btn:hover {
-    background: #3b82f6;
+    background: var(--color-primary);
     color: white;
-    transform: scale(1.1) rotate(90deg);
-    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+    transform: scale(1.1);
 }
 
 .doc-settings-btn:active {
-    transform: scale(0.95) rotate(90deg);
+    transform: scale(0.95);
 }

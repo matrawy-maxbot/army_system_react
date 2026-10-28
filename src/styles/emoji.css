@@ -1,0 +1,184 @@
+/* ========== Emoji Picker - Modern Design ========== */
+
+/* Overlay خلف الـ picker */
+.emoji-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: var(--z-modal-backdrop);
+    animation: fadeIn var(--transition-base);
+}
+
+.emoji-picker-dropdown {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-modal);
+    box-shadow: var(--shadow-modal);
+    padding: var(--spacing-24);
+    z-index: var(--z-modal);
+    width: 420px;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: none;
+    overflow: hidden;
+    animation: modalContentSlideIn var(--transition-modal);
+}
+
+.emoji-picker-dropdown.active {
+    display: block;
+}
+
+.emoji-picker-header {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    letter-spacing: -0.3px;
+}
+
+.emoji-picker-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-12);
+    font-family: var(--font-family-base);
+    transition: all var(--transition-base);
+    background: var(--bg-app);
+}
+
+.emoji-picker-search:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: var(--bg-surface);
+    box-shadow: 0 0 0 3px rgba(56, 125, 245, 0.1);
+}
+
+.emoji-picker-search::placeholder {
+    color: var(--text-tertiary);
+}
+
+.emoji-picker-categories {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-12);
+    padding: var(--spacing-4) 2px;
+}
+
+.emoji-category-btn {
+    padding: 6px var(--spacing-4);
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 18px;
+    transition: all var(--transition-base);
+    width: 100%;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoji-category-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
+}
+
+.emoji-category-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.emoji-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 3px;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--spacing-8);
+    border-radius: var(--radius-lg);
+    background: var(--bg-app);
+}
+
+.emoji-picker-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.emoji-picker-grid::-webkit-scrollbar-track {
+    background: var(--bg-app);
+    border-radius: 4px;
+    margin: 4px;
+}
+
+.emoji-picker-grid::-webkit-scrollbar-thumb {
+    background: var(--border-hover);
+    border-radius: 4px;
+}
+
+.emoji-picker-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+}
+
+.emoji-item {
+    padding: 6px;
+    background: var(--bg-surface);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+.emoji-item:hover {
+    background: var(--color-primary-light);
+    border-color: var(--border-focus);
+    transform: scale(1.25);
+    z-index: 1;
+}
+
+.emoji-item:active {
+    transform: scale(1.15);
+}
+
+/* صورة الإيموجي داخل الزر */
+.emoji-img {
+    width: 22px;
+    height: 22px;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    transition: transform var(--transition-fast);
+}
+
+.emoji-item:hover .emoji-img {
+    transform: scale(1.1);
+}
+
+.emoji-picker-no-results {
+    text-align: center;
+    padding: var(--spacing-32) var(--spacing-24);
+    color: var(--text-tertiary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}

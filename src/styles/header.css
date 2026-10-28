@@ -1,14 +1,14 @@
 /* ========== Header ========== */
 .header {
-    background: #ffffff;
-    padding: 15px 40px;
-    border-bottom: 1px solid #e8eaed;
+    background: var(--bg-surface);
+    padding: 15px var(--spacing-40);
+    border-bottom: 1px solid var(--border-color);
     margin-bottom: 0;
     position: fixed;
     top: 32px; /* أسفل الـ titlebar */
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: var(--z-header);
     height: 73px; /* ارتفاع ثابت */
     box-sizing: border-box;
 }
@@ -28,37 +28,37 @@
 }
 
 .header-right h1 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #1a202c;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
     letter-spacing: -0.3px;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--spacing-12);
 }
 
 .header-left .date-time {
-    color: #64748b;
-    font-size: 16px;
-    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
 }
 
 .btn-icon {
-    background: #ffffff;
-    border: 1px solid #e8eaed;
-    padding: 9px 16px;
-    border-radius: 8px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 9px var(--spacing-16);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: 13px;
-    color: #475569;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-base);
 }
 
 .btn-icon:hover {
-    background: #f8f9fb;
-    border-color: #cbd5e1;
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
 }
