@@ -4,6 +4,7 @@ import { SettingsProvider } from './context/SettingsContext';
 import { TitleBar, Header, Sidebar, TabBar, Footer } from './components/layout';
 import { OriginalFaxSection, FaxGrid, UploadFaxModal, FilterFaxModal } from './components/faxes';
 import { FilesList } from './components/files';
+import { SettingsModal } from './components/settings';
 import './styles/files.css';
 
 function App() {
@@ -55,6 +56,11 @@ function App() {
                     <FilterFaxModal 
                         isOpen={showFilterFax}
                         onClose={() => setShowFilterFax(false)}
+                    />
+
+                    <SettingsModal 
+                        isOpen={showSettings}
+                        onClose={() => setShowSettings(false)}
                     />
                 </div>
             </AppStateProvider>
