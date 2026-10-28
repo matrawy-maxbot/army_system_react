@@ -1,0 +1,159 @@
+/* ========== Document Styles ========== */
+
+/* Modal Styles */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.required-mark {
+  color: #ef4444;
+  margin-right: 4px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.file-input-wrapper:hover {
+  border-color: #cbd5e1;
+}
+
+.file-input-text {
+  flex: 1;
+  font-size: 13px;
+  color: #475569;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-input-placeholder {
+  color: #94a3b8;
+}
+
+.error-message {
+  display: block;
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* Button styles for documents */
+.btn-file {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-file:hover {
+  background: #2563eb;
+}
+
+.btn-file:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Current file info display */
+.current-file-info {
+  padding: 12px;
+  background: #f8f9fb;
+  border-radius: 8px;
+  border: 1px solid #e8eaed;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.current-file-info svg {
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.current-icon-preview {
+  padding: 12px;
+  background: #f8f9fb;
+  border-radius: 8px;
+  border: 1px solid #e8eaed;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.current-icon-preview img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.current-icon-preview .icon-emoji {
+  font-size: 32px;
+}
+
+/* Empty states */
+.no-documents-message,
+.no-copies-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+}
+
+.no-documents-message svg,
+.no-copies-message svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.no-documents-message p,
+.no-copies-message p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
