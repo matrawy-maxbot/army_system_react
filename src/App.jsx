@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import { AppStateProvider } from './context/AppStateContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { TitleBar, Header, Sidebar, TabBar, Footer } from './components/layout';
+import { OriginalFaxSection, FaxGrid, UploadFaxModal, FilterFaxModal } from './components/faxes';
 
 function App() {
     const [showSettings, setShowSettings] = useState(false);
+    const [showUploadFax, setShowUploadFax] = useState(false);
+    const [showFilterFax, setShowFilterFax] = useState(false);
+
+    const handleUpload = async (uploadData) => {
+        const { type, pdf, images } = uploadData;
+        
+        // TODO: Implement actual file upload logic
+        console.log('Upload data:', uploadData);
+    };
 
     return (
         <SettingsProvider>
@@ -16,9 +26,31 @@ function App() {
                     <Sidebar />
                     
                     <main className="container">
+                        <OriginalFaxSection 
+                            onUploadClick={() => setShowUploadFax(true)}
+                            onEditClick={() => setShowUploadFax(true)}
+                            onDeleteClick={async () => {
+                                // TODO: Implement delete logic
+                                console.log('Delete fax');
+                            }}
+                            onFilterClick={() => setShowFilterFax(true)}
+                        />
+
+                        <FaxGrid />
                     </main>
                     
                     <Footer />
+
+                    <UploadFaxModal 
+                        isOpen={showUploadFax}
+                        onClose={() => setShowUploadFax(false)}
+                        onUpload={handleUpload}
+                    />
+
+                    <FilterFaxModal 
+                        isOpen={showFilterFax}
+                        onClose={() => setShowFilterFax(false)}
+                    />
                 </div>
             </AppStateProvider>
         </SettingsProvider>
