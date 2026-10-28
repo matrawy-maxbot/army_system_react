@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../../styles/header.css';
 
 function Header({ onSettingsClick }) {
     const [dateTime, setDateTime] = useState('');
@@ -37,6 +38,7 @@ function Header({ onSettingsClick }) {
                     <span className="date-time">{dateTime}</span>
                     <button 
                         className="btn-icon" 
+                        id="openSettingsBtn"
                         onClick={onSettingsClick}
                         title="الإعدادات"
                     >

@@ -1,0 +1,64 @@
+/* ========== Header ========== */
+.header {
+    background: #ffffff;
+    padding: 15px 40px;
+    border-bottom: 1px solid #e8eaed;
+    margin-bottom: 0;
+    position: fixed;
+    top: 32px; /* أسفل الـ titlebar */
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 73px; /* ارتفاع ثابت */
+    box-sizing: border-box;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+.header-left {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-right h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a202c;
+    letter-spacing: -0.3px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left .date-time {
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn-icon {
+    background: #ffffff;
+    border: 1px solid #e8eaed;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #475569;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background: #f8f9fb;
+    border-color: #cbd5e1;
+}

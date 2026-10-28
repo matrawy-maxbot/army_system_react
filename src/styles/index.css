@@ -4,6 +4,8 @@
 @import './typography.css';
 @import './rtl.css';
 @import './titlebar.css';
+@import './header.css';
+@import './layout.css';
 
 /* ========== SVG Icon Styles ========== */
 .svg-icon {
@@ -43,70 +45,54 @@
     overflow-x: hidden;
 }
 
-/* Header */
-.header {
-    position: fixed;
-    top: 32px;
-    left: 0;
-    right: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 1.2rem 2rem;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
-    z-index: 9999;
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.header-right h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.date-time {
-    font-size: 0.95rem;
-    font-weight: 500;
-    opacity: 0.95;
-}
-
-.btn-icon {
-    background: rgba(255, 255, 255, 0.15);
-    border: none;
-    border-radius: 8px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: white;
-    transition: all 0.2s ease;
-}
-
-.btn-icon:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.05);
-}
-
-.btn-icon:active {
-    background: rgba(255, 255, 255, 0.35);
-    transform: scale(0.95);
-}
-
 /* Main Content */
+.container {
+    flex: 1;
+    max-width: 100%;
+    padding: 24px 40px 40px 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 105px);
+    margin-left: 80px; /* مساحة للـ app-sidebar */
+    margin-right: 280px; /* مساحة للـ sidebar */
+}
+
+.container-header {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.filters-view-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.sort-view-container {
+    position: relative;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filters-container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
 .app-content {
     padding: 2rem;
     max-width: 1400px;

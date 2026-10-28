@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { AppStateProvider } from './context/AppStateContext';
 import { SettingsProvider } from './context/SettingsContext';
-import TitleBar from './components/layout/TitleBar';
-import Header from './components/layout/Header';
+import { TitleBar, Header, Sidebar, TabBar, Footer } from './components/layout';
 
 function App() {
     const [showSettings, setShowSettings] = useState(false);
@@ -13,8 +12,10 @@ function App() {
                 <div className="app" dir="rtl">
                     <TitleBar />
                     <Header onSettingsClick={() => setShowSettings(true)} />
+                    <TabBar />
+                    <Sidebar />
                     
-                    <main className="app-content">
+                    <main className="container">
                         <div className="welcome-message">
                             <h2>🎉 مرحباً بك في النسخة الجديدة</h2>
                             <p>تم إعداد المشروع بنجاح باستخدام React + Electron</p>
@@ -30,6 +31,7 @@ function App() {
                                     <li>✅ Context لإدارة الإعدادات (Settings)</li>
                                     <li>✅ نسخ جميع الأصول (خطوط، أيقونات، إيموجي)</li>
                                     <li>✅ إعداد CSS Variables والأنماط الأساسية</li>
+                                    <li>✅ مكونات التخطيط (Header, Sidebar, TabBar)</li>
                                 </ul>
                                 
                                 <h3>🔄 الخطوات التالية:</h3>
@@ -46,6 +48,8 @@ function App() {
                             </div>
                         </div>
                     </main>
+                    
+                    <Footer />
                 </div>
             </AppStateProvider>
         </SettingsProvider>
