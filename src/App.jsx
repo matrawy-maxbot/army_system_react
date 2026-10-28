@@ -3,6 +3,8 @@ import { AppStateProvider } from './context/AppStateContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { TitleBar, Header, Sidebar, TabBar, Footer } from './components/layout';
 import { OriginalFaxSection, FaxGrid, UploadFaxModal, FilterFaxModal } from './components/faxes';
+import { FilesList } from './components/files';
+import './styles/files.css';
 
 function App() {
     const [showSettings, setShowSettings] = useState(false);
@@ -38,6 +40,9 @@ function App() {
 
                         <FaxGrid />
                     </main>
+                    
+                    {/* نظام الملفات اليومية */}
+                    <FilesList />
                     
                     <Footer />
 
