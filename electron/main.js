@@ -66,10 +66,34 @@ function registerCustomProtocols() {
   });
 }
 
+// Import IPC handlers
+const { registerWindowHandlers } = require('./ipc/window-handlers');
+const { registerFileHandlers } = require('./ipc/file-handlers');
+const { registerDocumentHandlers } = require('./ipc/document-handlers');
+const { registerThumbnailHandlers } = require('./ipc/thumbnail-handlers');
+const { registerPrintHandlers } = require('./ipc/print-handlers');
+const { registerDataHandlers } = require('./ipc/data-handlers');
+const { registerSettingsHandlers } = require('./ipc/settings-handlers');
+
 // App ready
 app.whenReady().then(() => {
   registerCustomProtocols();
+  
+  // Register all IPC handlers first
+  // These handlers don't need mainWindow reference in their registration
+  // but will be called with mainWindow when needed
+  registerFileHandlers();
+  registerDocumentHandlers();
+  registerThumbnailHandlers();
+  registerPrintHandlers();
+  registerDataHandlers();
+  registerSettingsHandlers();
+  
+  // Create window after registering handlers
   createWindow();
+  
+  // Register window handlers that need mainWindow
+  registerWindowHandlers(mainWindow);
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -84,11 +108,3 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-
-// TODO: Import and register IPC handlers
-// require('./ipc/window-handlers');
-// require('./ipc/file-handlers');
-// require('./ipc/document-handlers');
-// require('./ipc/thumbnail-handlers');
-// require('./ipc/print-handlers');
-// require('./ipc/settings-handlers');
