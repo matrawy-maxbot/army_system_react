@@ -1,0 +1,66 @@
+/* Select Styles */
+.filter-select {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ffffff;
+  border-left: 10px solid #fff;
+  box-shadow: 0px 1px 6px #0c0c0c24;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #475569;
+  width: 100%;
+}
+
+.filter-select:hover {
+  box-shadow: 0px 1px 6px #7a9dd7;
+}
+
+.filter-select:focus {
+  outline: none;
+  box-shadow: 0px 1px 6px #7a9dd7;
+}
+
+.filter-select:disabled {
+  background-color: #f8f9fb;
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.filter-select.input-error {
+  border-color: #ef4444;
+  box-shadow: 0px 1px 6px rgba(239, 68, 68, 0.3);
+}
+
+.filter-select option {
+  padding: 8px;
+  background: #ffffff;
+  color: #1a202c;
+}
+
+.filter-select option:disabled {
+  color: #94a3b8;
+}
+
+/* Full width variant for forms */
+.form-group .filter-select {
+  padding: 10px 14px;
+  font-size: 13px;
+  border: 1px solid #e8eaed;
+  border-left: 1px solid #e8eaed;
+  box-shadow: none;
+}
+
+.form-group .filter-select:hover {
+  border-color: #cbd5e1;
+  box-shadow: none;
+}
+
+.form-group .filter-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}

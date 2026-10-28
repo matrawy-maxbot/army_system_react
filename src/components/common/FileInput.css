@@ -1,0 +1,46 @@
+/* File Input Styles */
+.file-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.file-input-text {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 13px;
+  color: #1a202c;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-height: 41px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.file-input-placeholder {
+  color: #94a3b8;
+}
+
+.file-input-wrapper:hover .file-input-text {
+  border-color: #cbd5e1;
+}
+
+.file-input-text[disabled] {
+  background: #f8f9fb;
+  color: #94a3b8;
+  cursor: not-allowed;
+}

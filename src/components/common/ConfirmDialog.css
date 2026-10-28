@@ -1,0 +1,24 @@
+/* Confirm Dialog Styles */
+.confirm-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.confirm-message {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+  text-align: center;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.confirm-actions button {
+  min-width: 100px;
+}

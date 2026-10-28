@@ -1,0 +1,91 @@
+/* Color Picker Styles */
+.color-picker-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.color-picker-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a202c;
+}
+
+.color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker-input {
+  width: 60px;
+  height: 40px;
+  border: 2px solid #e8eaed;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.color-picker-input:hover {
+  border-color: #cbd5e1;
+}
+
+.color-picker-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+
+.color-preview {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #e8eaed;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.color-value-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+}
+
+.color-value-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.color-presets {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 6px;
+}
+
+.color-preset {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.color-preset:hover {
+  border-color: #64748b;
+  transform: scale(1.1);
+}
+
+.color-preset.selected {
+  border-color: #1a202c;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #1a202c;
+}
