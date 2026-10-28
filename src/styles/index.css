@@ -1,170 +1,188 @@
-/* Main CSS Entry Point */
+/* Import all CSS files */
 @import './variables.css';
 @import './reset.css';
 @import './typography.css';
 @import './rtl.css';
+@import './titlebar.css';
 
-* {
-  box-sizing: border-box;
+/* ========== SVG Icon Styles ========== */
+.svg-icon {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: middle;
+    display: inline-block;
+    flex-shrink: 0;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Tajawal', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  direction: rtl;
-  overflow: hidden;
+.svg-icon-sm {
+    width: 1em;
+    height: 1em;
 }
 
-#root {
-  width: 100%;
-  height: 100vh;
+.svg-icon-md {
+    width: 1.5em;
+    height: 1.5em;
 }
 
+.svg-icon-lg {
+    width: 2em;
+    height: 2em;
+}
+
+.svg-icon-xl {
+    width: 2.5em;
+    height: 2.5em;
+}
+
+/* Main App */
 .app {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-primary);
+    min-height: 100vh;
+    background: var(--color-background-primary);
+    padding-top: 105px; /* مسافة للـ custom titlebar + header الثابت */
+    direction: rtl;
+    overflow-x: hidden;
 }
 
-/* Title Bar */
-.title-bar {
-  height: 32px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-  -webkit-app-region: drag;
-  user-select: none;
-  color: white;
+/* Header */
+.header {
+    position: fixed;
+    top: 32px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.2rem 2rem;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+    z-index: 9999;
 }
 
-.title-bar-text {
-  font-size: 13px;
-  font-weight: 500;
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.title-bar-controls {
-  display: flex;
-  gap: 8px;
-  -webkit-app-region: no-drag;
+.header-right h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
 }
 
-.title-bar-button {
-  width: 32px;
-  height: 24px;
-  border: none;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.title-bar-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.date-time {
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.95;
 }
 
-.title-bar-button.close:hover {
-  background: #e81123;
+.btn-icon {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s ease;
 }
 
-/* App Container */
-.app-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
 }
 
-.app-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: white;
-  padding: 30px 40px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.btn-icon:active {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(0.95);
 }
 
-.app-header h1 {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 700;
-}
-
-.app-header .subtitle {
-  margin: 10px 0 0;
-  font-size: 16px;
-  opacity: 0.9;
-}
-
-.app-main {
-  flex: 1;
-  overflow-y: auto;
-  padding: 40px;
+/* Main Content */
+.app-content {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 /* Welcome Message */
 .welcome-message {
-  max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 12px;
-  padding: 40px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .welcome-message h2 {
-  color: var(--primary-color);
-  font-size: 28px;
-  margin-top: 0;
-  margin-bottom: 20px;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
 }
 
-.welcome-message p {
-  font-size: 18px;
-  color: var(--text-secondary);
-  margin-bottom: 30px;
+.welcome-message > p {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
 }
 
 .features-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    margin-top: 2rem;
+}
+
+.features-list h3 {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+}
+
+.features-list ul {
+    list-style: none;
+    padding: 0;
 }
 
 .features-list li {
-  font-size: 16px;
-  padding: 12px 20px;
-  margin-bottom: 10px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-  color: var(--text-primary);
-  border-right: 4px solid var(--primary-color);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    position: relative;
 }
 
-/* Scrollbar Styles */
+.features-list li::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+    background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 5px;
+    background: #888;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
+    background: #555;
 }

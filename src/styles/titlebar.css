@@ -1,0 +1,195 @@
+/* ========== Custom Title Bar ========== */
+.custom-titlebar {
+    height: 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.titlebar-drag-region {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    -webkit-app-region: drag;
+    padding: 0 12px;
+}
+
+.titlebar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* زر السهم للاختصارات */
+.titlebar-shortcuts-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    -webkit-app-region: no-drag;
+    padding: 0;
+    margin-right: 4px;
+}
+
+.titlebar-shortcuts-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+.titlebar-shortcuts-btn:active {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(0.95);
+}
+
+.titlebar-shortcuts-btn svg {
+    pointer-events: none;
+}
+
+/* قائمة الاختصارات المنسدلة */
+.shortcuts-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 15px;
+    margin-top: 8px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e2e8f0;
+    min-width: 280px;
+    max-width: 320px;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    -webkit-app-region: no-drag;
+    overflow: hidden;
+}
+
+.shortcuts-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.shortcuts-header {
+    padding: 12px 16px;
+    background: #f8fafc;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 13px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.shortcuts-list {
+    padding-top: 1px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    color: #1a202c;
+}
+
+.shortcut-item:hover {
+    background: #f8fafc;
+}
+
+.shortcut-item:active {
+    background: #f1f5f9;
+}
+
+.shortcut-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+}
+
+.shortcut-keys {
+    font-size: 9px;
+    font-weight: 600;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+    letter-spacing: 0.3px;
+    border: 1px solid #e2e8f0;
+    min-width: 60px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.app-logo {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+}
+
+.titlebar-controls {
+    display: flex;
+    height: 100%;
+    -webkit-app-region: no-drag;
+}
+
+.titlebar-btn {
+    width: 46px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+    padding: 0;
+}
+
+.titlebar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.titlebar-btn:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.titlebar-btn.close-btn:hover {
+    background-color: #e81123;
+}
+
+.titlebar-btn.close-btn:active {
+    background-color: #f1707a;
+}
+
+.titlebar-btn svg {
+    pointer-events: none;
+}
