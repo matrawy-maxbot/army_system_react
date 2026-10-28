@@ -1,0 +1,104 @@
+/* RTL Support - Right-to-Left Layout for Arabic */
+
+/* RTL Direction */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL Margins - swap left and right */
+[dir="rtl"] .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* RTL Padding - swap left and right */
+[dir="rtl"] .pr-0 { padding-left: 0; padding-right: 0; }
+[dir="rtl"] .pl-0 { padding-right: 0; padding-left: 0; }
+
+/* RTL Border - swap left and right */
+[dir="rtl"] .border-l {
+  border-left: none;
+  border-right: 1px solid var(--border-color);
+}
+
+[dir="rtl"] .border-r {
+  border-right: none;
+  border-left: 1px solid var(--border-color);
+}
+
+/* RTL Text Alignment */
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* RTL Flex Direction */
+[dir="rtl"] .flex-row-reverse {
+  flex-direction: row;
+}
+
+/* RTL Transform for icons that need flipping */
+[dir="rtl"] .icon-flip {
+  transform: scaleX(-1);
+}
+
+/* Arabic Numbers */
+.arabic-numbers {
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* RTL specific components adjustments */
+[dir="rtl"] input[type="text"],
+[dir="rtl"] input[type="search"],
+[dir="rtl"] textarea {
+  text-align: right;
+}
+
+[dir="rtl"] select {
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-xl);
+  background-position: left 10px center;
+}
+
+/* Checkboxes and Radio buttons */
+[dir="rtl"] input[type="checkbox"],
+[dir="rtl"] input[type="radio"] {
+  margin-left: var(--spacing-sm);
+  margin-right: 0;
+}
+
+/* Dropdown menus */
+[dir="rtl"] .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+/* Tooltips */
+[dir="rtl"] .tooltip-left {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: var(--spacing-sm);
+}
+
+[dir="rtl"] .tooltip-right {
+  right: auto;
+  left: 100%;
+  margin-right: 0;
+  margin-left: var(--spacing-sm);
+}
+
+/* Scrollbar position */
+[dir="rtl"] ::-webkit-scrollbar {
+  left: 0;
+  right: auto;
+}

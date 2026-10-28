@@ -1,0 +1,170 @@
+/* Main CSS Entry Point */
+@import './variables.css';
+@import './reset.css';
+@import './typography.css';
+@import './rtl.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Tajawal', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  direction: rtl;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+}
+
+/* Title Bar */
+.title-bar {
+  height: 32px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  -webkit-app-region: drag;
+  user-select: none;
+  color: white;
+}
+
+.title-bar-text {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.title-bar-controls {
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.title-bar-button {
+  width: 32px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.title-bar-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.title-bar-button.close:hover {
+  background: #e81123;
+}
+
+/* App Container */
+.app-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 30px 40px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.app-header .subtitle {
+  margin: 10px 0 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px;
+}
+
+/* Welcome Message */
+.welcome-message {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-message h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.welcome-message p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features-list li {
+  font-size: 16px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  border-right: 4px solid var(--primary-color);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
