@@ -1,0 +1,113 @@
+.archive-category-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.archive-category-header {
+  padding: 20px 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.archive-category-header:hover {
+  background-color: #f8f9fb;
+}
+
+.archive-category-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.archive-category-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.toggle-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.archive-category-card.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.archive-category-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-add-folder {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add-folder:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-add-folder:active {
+  transform: translateY(0);
+}
+
+.archive-folders-grid {
+  padding: 0 24px 24px;
+  animation: slideDown 0.3s ease;
+}
+
+.archive-category-card.collapsed .archive-folders-grid {
+  display: none;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .archive-category-header {
+    padding: 16px;
+  }
+  
+  .archive-folders-grid {
+    padding: 0 16px 16px;
+  }
+  
+  .archive-category-toggle {
+    font-size: 16px;
+  }
+  
+  .btn-add-folder {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}

@@ -1,187 +1,298 @@
-/* ========== Reminders Styles ========== */
+/* ========== Reminders Section ========== */
 
+/* القسم الرئيسي */
 .reminders-section {
-    margin-bottom: var(--spacing-24);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e8eaed;
 }
 
-.reminders-filters {
-    margin-bottom: var(--spacing-24);
+/* Section header */
+.reminders-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--spacing-16);
+    margin-bottom: 24px;
 }
+
+.reminders-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0;
+}
+
+/* ========== Filters Toolbar ========== */
+
+.reminders-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #f8f9fb;
+    border-radius: 10px;
+}
+
+/* Radio filter group */
+.filter-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.filter-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+    cursor: pointer;
+}
+
+.filter-group input[type="radio"] {
+    accent-color: #3b82f6;
+    cursor: pointer;
+}
+
+/* Select dropdown للترتيب */
+.filter-select {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #ffffff;
+    border-left: 10px solid #fff;
+    box-shadow: 0 1px 6px #0c0c0c24;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: inherit;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #475569;
+}
+
+.filter-select:hover {
+    box-shadow: 0 1px 6px #7a9dd7;
+}
+
+.filter-select:focus {
+    outline: none;
+    box-shadow: 0 1px 6px #7a9dd7;
+}
+
+/* ========== Reminders Grid ========== */
 
 .reminders-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--spacing-24);
+    gap: 20px;
 }
+
+/* ========== Reminder Card ========== */
+
+.reminder-card {
+    background: #ffffff;
+    border: 2px solid #e8eaed;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.reminder-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* حالات البطاقة */
+.reminder-card.active {
+    border-color: #10b981;
+    background: #f0fdf9;
+}
+
+.reminder-card.expired {
+    border-color: #ef4444;
+    background: #fef2f2;
+    opacity: 0.7;
+}
+
+/* ========== Status Badge ========== */
+
+.reminder-status {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
+
+.reminder-status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reminder-status-badge.active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.reminder-status-badge.expired {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ========== Card Content ========== */
+
+/* الأيقونة */
+.reminder-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: #3b82f6;
+}
+
+/* العنوان */
+.reminder-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 8px;
+}
+
+/* الوصف */
+.reminder-description {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* ========== Dates Section ========== */
+
+.reminder-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e8eaed;
+}
+
+.reminder-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.reminder-date svg {
+    color: #94a3b8;
+}
+
+/* ========== Actions ========== */
+
+.reminder-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+/* ========== Empty State ========== */
 
 .reminders-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-64) var(--spacing-24);
-    color: var(--text-tertiary);
+    padding: 80px 20px;
     text-align: center;
+    color: #94a3b8;
 }
 
-.reminder-card {
-    position: relative;
-    background: var(--bg-surface);
-    border-radius: var(--radius-card);
-    padding: var(--spacing-24);
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-base);
-    cursor: pointer;
+.reminders-empty .empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
 }
 
-.reminder-card:hover {
-    border-color: var(--border-hover);
+.reminders-empty p {
+    font-size: 16px;
+    margin-bottom: 8px;
 }
 
-.reminder-card.active {
-    border-color: var(--color-success);
-    background: var(--color-success-light);
+.reminders-empty .empty-hint {
+    font-size: 13px;
+    color: #cbd5e1;
 }
 
-.reminder-card.expired {
-    border-color: var(--color-danger);
-    background: var(--color-danger-light);
-    opacity: 0.85;
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+    .reminders-grid,
+    .lists-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reminders-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        flex-wrap: wrap;
+    }
 }
 
-.reminder-status {
-    position: absolute;
-    top: var(--spacing-12);
-    left: var(--spacing-12);
-}
+/* ========== Form Styles for Modals ========== */
 
-.reminder-status-badge {
-    font-size: 10px;
-    font-weight: var(--font-weight-bold);
-    padding: 4px 10px;
-    border-radius: var(--radius-card);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.reminder-status-badge.active {
-    background: var(--color-success-light);
-    color: var(--color-success);
-}
-
-.reminder-status-badge.expired {
-    background: var(--color-danger-light);
-    color: var(--color-danger);
-}
-
-.reminder-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--spacing-12);
-    color: var(--color-primary);
-}
-
-.reminder-card.active .reminder-icon {
-    color: var(--color-success);
-}
-
-.reminder-card.expired .reminder-icon {
-    color: var(--color-danger);
-}
-
-.reminder-title {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-8);
-    text-align: center;
-}
-
-.reminder-description {
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-16);
-    text-align: center;
-    line-height: var(--line-height-normal);
-}
-
-.reminder-dates {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-8);
-    margin-bottom: var(--spacing-16);
-    padding-top: var(--spacing-16);
-    border-top: 1px solid var(--border-color);
-}
-
-.reminder-date {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-8);
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
-}
-
-.reminder-date svg {
-    color: var(--text-tertiary);
-    flex-shrink: 0;
-}
-
-.reminder-actions {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-8);
-    margin-top: var(--spacing-16);
-    padding-top: var(--spacing-16);
-    border-top: 1px solid var(--border-color);
-}
-
-/* Form styles for reminder modal */
 .form-group textarea {
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-xs);
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    font-size: 13px;
     font-family: inherit;
-    background: var(--bg-surface);
-    transition: all var(--transition-base);
+    background: #ffffff;
+    transition: all 0.2s;
     resize: vertical;
+    color: #1a202c;
 }
 
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px rgba(56, 125, 245, 0.1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-group input[type="date"] {
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-xs);
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    font-size: 13px;
     font-family: inherit;
-    background: var(--bg-surface);
-    transition: all var(--transition-base);
+    background: #ffffff;
+    transition: all 0.2s;
     cursor: pointer;
+    color: #1a202c;
 }
 
 .form-group input[type="date"]:focus {
     outline: none;
-    border-color: var(--border-focus);
-    box-shadow: 0 0 0 3px rgba(56, 125, 245, 0.1);
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--spacing-12);
-    padding: var(--spacing-24) 28px;
-    border-top: 1px solid var(--border-color);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }

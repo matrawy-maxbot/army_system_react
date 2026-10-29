@@ -151,6 +151,8 @@ const AddDocumentModal = ({ isOpen, onClose, categoryId, onSuccess }) => {
       <form onSubmit={handleSubmit}>
         <Input
           label="اسم المستند"
+          id="document-name"
+          name="documentName"
           value={formData.name}
           onChange={handleNameChange}
           placeholder="أدخل اسم المستند"
@@ -158,12 +160,13 @@ const AddDocumentModal = ({ isOpen, onClose, categoryId, onSuccess }) => {
         />
 
         <div className="form-group">
-          <label>اختر ملف المستند <span className="required-mark">*</span></label>
+          <label htmlFor="doc-file-selector">اختر ملف المستند <span className="required-mark">*</span></label>
           <div className="file-input-wrapper">
             <span className="file-input-text">
               {formData.docFileName || 'لم يتم اختيار ملف'}
             </span>
             <Button
+              id="doc-file-selector"
               type="button"
               variant="file"
               onClick={handleDocFileClick}
@@ -174,11 +177,13 @@ const AddDocumentModal = ({ isOpen, onClose, categoryId, onSuccess }) => {
         </div>
 
         <div className="form-group">
-          <label>اختر أيقونة</label>
-          <IconPicker
-            selectedIcon={formData.icon}
-            onSelectIcon={handleIconSelect}
-          />
+          <label htmlFor="icon-picker">اختر أيقونة</label>
+          <div id="icon-picker">
+            <IconPicker
+              selectedIcon={formData.icon}
+              onSelectIcon={handleIconSelect}
+            />
+          </div>
           <div style={{ marginTop: '10px' }}>
             <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '8px' }}>
               أو ارفع صورة مخصصة:
@@ -188,6 +193,7 @@ const AddDocumentModal = ({ isOpen, onClose, categoryId, onSuccess }) => {
                 {formData.iconFile ? formData.iconFile.split(/[\\/]/).pop() : 'لم يتم اختيار صورة'}
               </span>
               <Button
+                id="icon-file-selector"
                 type="button"
                 variant="file"
                 onClick={handleIconFileClick}

@@ -104,10 +104,6 @@
     cursor: pointer;
     transition: all var(--transition-base);
     box-shadow: var(--shadow-subtle);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 0.2rem;
     height: fit-content;
 }
 
@@ -149,19 +145,6 @@
     height: 1px;
     border-radius: 10px;
     background: #838282;
-}
-
-/* فلترة التاريخ */
-.date-filter-container {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-8);
-    padding: var(--spacing-16);
-    background-color: var(--bg-surface);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 73px;
-    z-index: 10;
 }
 
 .date-filter-label {

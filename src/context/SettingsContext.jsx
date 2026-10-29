@@ -22,10 +22,19 @@ export function SettingsProvider({ children }) {
     const loadSettings = async () => {
         try {
             setIsLoading(true);
-            const result = await window.electronAPI.loadSettings();
             
-            if (result.success && result.settings) {
-                setSettings(result.settings);
+            // Check if running in Electron
+            if (window.electronAPI && window.electronAPI.loadSettings) {
+                const result = await window.electronAPI.loadSettings();
+                if (result.success && result.settings) {
+                    setSettings(result.settings);
+                }
+            } else {
+                // Use localStorage for browser mode
+                const savedSettings = localStorage.getItem('army_system_settings');
+                if (savedSettings) {
+                    setSettings(JSON.parse(savedSettings));
+                }
             }
         } catch (error) {
             console.error('Error loading settings:', error);
@@ -38,15 +47,25 @@ export function SettingsProvider({ children }) {
     const saveSettings = async (newSettings = null) => {
         try {
             const settingsToSave = newSettings || settings;
-            const result = await window.electronAPI.saveSettings(settingsToSave);
             
-            if (result.success) {
+            // Check if running in Electron
+            if (window.electronAPI && window.electronAPI.saveSettings) {
+                const result = await window.electronAPI.saveSettings(settingsToSave);
+                if (result.success) {
+                    if (newSettings) {
+                        setSettings(newSettings);
+                    }
+                    return true;
+                }
+                return false;
+            } else {
+                // Use localStorage for browser mode
+                localStorage.setItem('army_system_settings', JSON.stringify(settingsToSave));
                 if (newSettings) {
                     setSettings(newSettings);
                 }
                 return true;
             }
-            return false;
         } catch (error) {
             console.error('Error saving settings:', error);
             return false;
@@ -66,10 +85,20 @@ export function SettingsProvider({ children }) {
     // تحديد مسار الحفظ
     const selectSavePath = async () => {
         try {
-            const result = await window.electronAPI.selectFolder('اختر مجلد الحفظ');
-            if (result.success && result.path) {
-                await updateSettings({ savePath: result.path });
-                return result.path;
+            // Check if running in Electron
+            if (window.electronAPI && window.electronAPI.selectFolder) {
+                const result = await window.electronAPI.selectFolder('اختر مجلد الحفظ');
+                if (result.success && result.path) {
+                    await updateSettings({ savePath: result.path });
+                    return result.path;
+                }
+            } else {
+                // Browser mode - use prompt as fallback
+                const path = prompt('أدخل مسار الحفظ:');
+                if (path) {
+                    await updateSettings({ savePath: path });
+                    return path;
+                }
             }
             return null;
         } catch (error) {

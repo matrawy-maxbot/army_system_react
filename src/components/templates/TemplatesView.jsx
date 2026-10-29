@@ -93,11 +93,16 @@ const TemplatesView = () => {
     };
 
     return (
-        <div className="templates-section card">
-            <div className="section-header">
-                <div>
-                    <h2>القوالب <span className="files-count">(<span id="templatesCount">{templates.length}</span>)</span></h2>
-                </div>
+        <div className="templates-section">
+            <div className="templates-header">
+                <h2>
+                    <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                    </svg>
+                    القوالب
+                    <span className="files-count">({templates.length})</span>
+                </h2>
                 <button className="btn-add-category" onClick={() => setShowAddModal(true)}>
                     <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 0 1 0 2h-5v5a1 1 0 0 1 -2 0v-5h-5a1 1 0 0 1 0 -2h5v-5a1 1 0 0 1 1 -1" />
@@ -107,17 +112,18 @@ const TemplatesView = () => {
             </div>
 
             {templates.length === 0 ? (
-                <div className="templates-empty" id="templatesEmpty">
-                    <div className="category-empty-icon">
+                <div className="templates-empty">
+                    <div className="empty-icon">
                         <svg className="svg-icon-xl" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M14 3v4a1 1 0 0 0 1 1h4" />
                             <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
                         </svg>
                     </div>
-                    <div>لا توجد قوالب</div>
+                    <p>لا توجد قوالب</p>
+                    <span className="empty-hint">أضف قوالب لإنشاء مستندات بسرعة</span>
                 </div>
             ) : (
-                <div className="templates-grid" id="templatesGrid">
+                <div className="templates-grid">
                     {templates.map(template => (
                         <TemplateCard
                             key={template.id}

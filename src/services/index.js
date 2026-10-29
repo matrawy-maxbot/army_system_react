@@ -17,3 +17,6 @@ export { default as thumbnailService } from './thumbnailService.js';
 export { default as printService } from './printService.js';
 export { default as dateService } from './dateService.js';
 export { default as storageService } from './storageService.js';
+
+// Re-export electronAPI specifically for imports like: import { electronAPI } from './services'
+export { electronAPI as electronAPIWrapper } from './electronAPI.js';

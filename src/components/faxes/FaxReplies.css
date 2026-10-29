@@ -1,0 +1,743 @@
+/**
+ * FaxReplies.css
+ * أنماط قسم الردود على الفاكسات
+ */
+
+/* قسم الردود الرئيسي */
+.replies-section {
+    padding: 24px;
+    background: var(--surface);
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.replies-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* شبكة الردود */
+.replies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+}
+
+/* بطاقة الرد */
+.reply-card {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reply-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+.reply-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.reply-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--background);
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.btn-delete-reply {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-delete-reply:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.reply-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reply-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.reply-fax-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: var(--primary-light);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary);
+    width: fit-content;
+}
+
+.reply-template-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.reply-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.reply-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.reply-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.status-draft .status-dot {
+    background: var(--text-secondary);
+}
+
+.status-in-progress .status-dot {
+    background: var(--warning);
+}
+
+.status-completed .status-dot {
+    background: var(--success);
+}
+
+.status-draft {
+    color: var(--text-secondary);
+}
+
+.status-in-progress {
+    color: var(--warning);
+}
+
+.status-completed {
+    color: var(--success);
+}
+
+.reply-date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* حالة فارغة */
+.replies-empty {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--text-secondary);
+}
+
+.replies-empty .empty-icon {
+    margin: 0 auto 24px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background);
+    border-radius: 50%;
+    color: var(--text-disabled);
+}
+
+.replies-empty p {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    color: var(--text-primary);
+}
+
+.replies-empty .empty-hint {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* نافذة اختيار الفاكس */
+.select-fax-modal,
+.select-template-modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-fax-info,
+.select-template-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--info-light);
+    border: 1px solid var(--info);
+    border-radius: 8px;
+    color: var(--info-dark);
+    margin-bottom: 24px;
+}
+
+.select-fax-info p,
+.select-template-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.faxes-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.fax-selection-card {
+    background: var(--surface);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.fax-selection-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.fax-selection-card.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
+}
+
+.fax-selection-image {
+    position: relative;
+    height: 200px;
+    background: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fax-selection-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fax-selection-placeholder {
+    color: var(--text-disabled);
+}
+
+.selection-checkmark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fax-selection-info {
+    padding: 16px;
+}
+
+.fax-selection-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.fax-selection-info .fax-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 8px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.fax-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.no-results {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--text-secondary);
+}
+
+/* نافذة اختيار القالب */
+.selected-fax-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--success-light);
+    border: 1px solid var(--success);
+    border-radius: 8px;
+    color: var(--success-dark);
+    margin-bottom: 24px;
+}
+
+.templates-section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.templates-count {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.templates-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.template-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.template-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.template-card.blank-document {
+    border: 2px dashed var(--primary);
+    background: var(--primary-light);
+}
+
+.template-card.blank-document:hover {
+    background: var(--primary-lighter);
+    border-style: solid;
+}
+
+.template-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: var(--background);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.template-info {
+    flex: 1;
+}
+
+.template-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.template-type {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0 0 8px 0;
+}
+
+.template-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.template-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--background);
+    border-radius: 8px;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.no-templates-message {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--text-secondary);
+}
+
+.no-templates-message .hint {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* نافذة تفاصيل الرد */
+.reply-detail-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.reply-header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.reply-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.reply-name-edit-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.reply-name-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.reply-detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 0;
+}
+
+.reply-file-icon-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    background: var(--background);
+    border-radius: 12px;
+}
+
+.reply-fax-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--info-light);
+    border: 1px solid var(--info);
+    border-radius: 8px;
+    color: var(--info-dark);
+    flex-wrap: wrap;
+}
+
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-link:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+}
+
+.reply-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reply-info-section label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.reply-template-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+    width: fit-content;
+}
+
+.status-selector {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.status-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.status-option:hover {
+    border-color: var(--text-secondary);
+}
+
+.status-option.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.reply-dates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.date-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: var(--background);
+    border-radius: 8px;
+}
+
+.date-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.date-item span:last-child {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.reply-note-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+}
+
+.reply-note-display {
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.note-header label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.reply-note-display p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.reply-note-add {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reply-note-add label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.reply-note-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.reply-note-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+.btn-add-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--background);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    width: fit-content;
+}
+
+.btn-add-note:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .replies-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .faxes-selection-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reply-dates {
+        grid-template-columns: 1fr;
+    }
+}

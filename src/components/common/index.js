@@ -14,3 +14,4 @@ export { default as IconPicker } from './IconPicker';
 export { default as EmojiPicker } from './EmojiPicker';
 export { default as DatePicker } from './DatePicker';
 export { default as ColorPicker } from './ColorPicker';
+export { default as AddToListsModal } from './AddToListsModal';

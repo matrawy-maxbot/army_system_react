@@ -1,26 +1,19 @@
 import React from 'react';
-import { dataAPI } from '../../services/electronAPI';
 import { useAppState } from '../../context/AppStateContext';
 
-const OriginalFaxSection = ({ onUploadClick, onEditClick, onDeleteClick, onFilterClick }) => {
-    const { appState, setAppState } = useAppState();
+const OriginalFaxSection = ({ onUploadClick, onEditClick, onDeleteClick, onFilterClick, onAddToLists }) => {
+    const { appState } = useAppState();
     const originalFax = appState.originalFax;
 
-    const toggleFavorite = async () => {
-        if (!originalFax) return;
+    // التحقق من وجود الفاكس في أي قائمة
+    const isInAnyList = () => {
+        if (!originalFax || !appState.lists) return false;
         
-        const updated = {
-            ...appState,
-            originalFax: {
-                ...originalFax,
-                isFavorite: !originalFax.isFavorite
-            }
-        };
-        
-        setAppState(updated);
-        
-        // حفظ البيانات
-        await dataAPI.saveData(updated);
+        return appState.lists.some(list => 
+            list.items?.some(item => 
+                item.type === 'originalFax' && item.itemId === originalFax.id
+            )
+        );
     };
 
     return (
@@ -74,11 +67,11 @@ const OriginalFaxSection = ({ onUploadClick, onEditClick, onDeleteClick, onFilte
                     </div>
                     <div className="original-fax-actions">
                         <button 
-                            className={`btn-icon-action ${originalFax.isFavorite ? 'favorite' : ''}`}
-                            onClick={toggleFavorite}
-                            title={originalFax.isFavorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}
+                            className={`btn-icon-action ${isInAnyList() ? 'in-list' : ''}`}
+                            onClick={onAddToLists}
+                            title={isInAnyList() ? 'موجود في القوائم' : 'إضافة إلى القوائم'}
                         >
-                            <svg className="svg-icon" viewBox="0 0 24 24" fill={originalFax.isFavorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg className="svg-icon" viewBox="0 0 24 24" fill={isInAnyList() ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/>
                             </svg>
                         </button>
@@ -90,7 +83,7 @@ const OriginalFaxSection = ({ onUploadClick, onEditClick, onDeleteClick, onFilte
                             </svg>
                         </button>
                         <button className="btn-icon-action btn-danger" onClick={onDeleteClick} title="حذف">
-                            <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <svg className="svg-icon" style={{transform:"scale(1.3)"}} viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007zm-10 4a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1m4 0a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1"/>
                                 <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005z"/>
                             </svg>

@@ -97,11 +97,16 @@ const ListsView = () => {
     };
 
     return (
-        <div className="lists-section card">
-            <div className="section-header">
-                <div>
-                    <h2>القوائم <span className="files-count">(<span id="listsCount">{lists.length}</span>)</span></h2>
-                </div>
+        <div className="lists-section">
+            <div className="lists-header">
+                <h2>
+                    <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                        <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                    </svg>
+                    القوائم
+                    <span className="files-count">({lists.length})</span>
+                </h2>
                 <button className="btn-add-category" onClick={() => setShowAddModal(true)}>
                     <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 0 1 0 2h-5v5a1 1 0 0 1 -2 0v-5h-5a1 1 0 0 1 0 -2h5v-5a1 1 0 0 1 1 -1" />
@@ -110,7 +115,7 @@ const ListsView = () => {
                 </button>
             </div>
 
-            <div className="lists-grid" id="listsGrid">
+            <div className="lists-grid">
                 {lists.map(list => (
                     <ListCard
                         key={list.id}

@@ -9,7 +9,8 @@ const Modal = ({
   children, 
   size = 'normal',
   showCloseButton = true,
-  closeOnOverlayClick = true 
+  closeOnOverlayClick = true,
+  customHeader = null
 }) => {
   useEffect(() => {
     if (isOpen) {
@@ -44,15 +45,21 @@ const Modal = ({
 
   return (
     <div className={`modal ${isOpen ? 'active' : ''}`} onClick={handleOverlayClick}>
-      <div className={`modal-content ${size === 'small' ? 'modal-small' : ''}`}>
-        <div className="modal-header">
-          <h2>{title}</h2>
-          {showCloseButton && (
-            <button className="btn-close" onClick={onClose} aria-label="إغلاق">
-              ✕
-            </button>
-          )}
-        </div>
+      <div className={`modal-content ${size === 'small' ? 'modal-small' : ''} ${size === 'medium' ? 'modal-medium' : ''} ${size === 'large' ? 'modal-large' : ''}`}>
+        {customHeader ? (
+          <div className="modal-header">
+            {customHeader}
+          </div>
+        ) : (
+          <div className="modal-header">
+            <h2>{title}</h2>
+            {showCloseButton && (
+              <button className="btn-close" onClick={onClose} aria-label="إغلاق">
+                ✕
+              </button>
+            )}
+          </div>
+        )}
         <div className="modal-body">
           {children}
         </div>
@@ -64,11 +71,12 @@ const Modal = ({
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   children: PropTypes.node.isRequired,
-  size: PropTypes.oneOf(['normal', 'small']),
+  size: PropTypes.oneOf(['normal', 'small', 'medium', 'large']),
   showCloseButton: PropTypes.bool,
-  closeOnOverlayClick: PropTypes.bool
+  closeOnOverlayClick: PropTypes.bool,
+  customHeader: PropTypes.node
 };
 
 export default Modal;

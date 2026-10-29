@@ -1,5 +1,7 @@
 /* Import all CSS files */
-@import './variables.css';
+/* Design System Foundation - Load First */
+@import './design-tokens.css';
+@import './animations.css';
 @import './reset.css';
 @import './typography.css';
 @import './rtl.css';
@@ -8,6 +10,19 @@
 @import './layout.css';
 @import './categories.css';
 @import './documents.css';
+@import './files.css';
+@import './fax.css';
+@import './reminders.css';
+@import './lists.css';
+@import './templates.css';
+@import './buttons.css';
+@import './modals.css';
+@import './emoji.css';
+@import './search.css';
+@import './toast.css';
+@import './archive.css';
+@import './utilities.css';
+@import './responsive.css';
 
 /* ========== SVG Icon Styles ========== */
 .svg-icon {
@@ -41,10 +56,11 @@
 /* Main App */
 .app {
     min-height: 100vh;
-    background: var(--color-background-primary);
+    background: var(--bg-app);
     padding-top: 105px; /* مسافة للـ custom titlebar + header الثابت */
     direction: rtl;
     overflow-x: hidden;
+    font-family: var(--font-family-base);
 }
 
 /* Main Content */
@@ -67,7 +83,6 @@
     flex-direction: row;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 1.5rem;
 }
 
 .filters-view-container {
@@ -77,7 +92,7 @@
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 2rem;
 }
 

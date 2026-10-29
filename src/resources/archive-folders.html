@@ -1,0 +1,329 @@
+<!-- قسم فئات الأرشيف والمجلدات -->
+<section class="archive-section" id="archiveSection">
+    <div class="archive-header">
+        <h2>
+            <svg class="svg-icon-md" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+                <path d="M10 12l4 0" />
+            </svg>
+            فئات الأرشيف والمجلدات
+        </h2>
+        <button class="btn-primary" id="addArchiveCategoryBtn">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 4a1 1 0 0 1 1 1v6h6a1 1 0 0 1 0 2h-6v6a1 1 0 0 1 -2 0v-6h-6a1 1 0 0 1 0 -2h6v-6a1 1 0 0 1 1 -1" />
+            </svg>
+            إضافة فئة أرشيف
+        </button>
+    </div>
+    
+    <div class="archive-categories" id="archiveCategories">
+        <!-- سيتم إدراج الفئات والمجلدات هنا -->
+    </div>
+    
+    <div class="archive-empty" id="archiveEmpty">
+        <div class="empty-icon">
+            <svg class="svg-icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+                <path d="M10 12l4 0" />
+            </svg>
+        </div>
+        <p>لا توجد فئات أرشيف بعد</p>
+        <p class="empty-hint">اضغط على "إضافة فئة أرشيف" للبدء</p>
+    </div>
+</section>
+
+<!-- مودال إضافة فئة أرشيف -->
+<div class="modal" id="addArchiveCategoryModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeAddArchiveCategoryModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>إضافة فئة أرشيف جديدة</h2>
+        </div>
+        <div class="modal-body">
+            <form id="addArchiveCategoryForm">
+                <div class="form-group">
+                    <label>اسم الفئة *</label>
+                    <input type="text" id="archiveCategoryName" placeholder="مثال: المستندات الإدارية" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelAddArchiveCategory">إلغاء</button>
+                    <button type="button" class="btn-success" id="saveArchiveCategoryBtn">حفظ الفئة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- مودال إضافة مجلد -->
+<div class="modal" id="addFolderModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeAddFolderModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>إضافة مجلد جديد</h2>
+        </div>
+        <div class="modal-body">
+            <form id="addFolderForm">
+                <div class="form-group">
+                    <label>اسم المجلد *</label>
+                    <input type="text" id="folderName" placeholder="مثال: مستندات 2026" required>
+                </div>
+                <div class="form-group">
+                    <label>وصف المجلد</label>
+                    <textarea id="folderDescription" placeholder="وصف اختياري للمجلد..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>الفئة التابع لها *</label>
+                    <select id="folderCategorySelect" required>
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelAddFolder">إلغاء</button>
+                    <button type="button" class="btn-success" id="saveFolderBtn">حفظ المجلد</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- صفحة المجلد -->
+<div class="modal" id="folderViewModal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <button class="btn-close" id="closeFolderViewModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2 id="folderViewTitle">مجلد</h2>
+        </div>
+        <div class="modal-body">
+            <div class="folder-info">
+                <div class="folder-info-item">
+                    <strong>الفئة:</strong>
+                    <span id="folderCategoryName">--</span>
+                </div>
+                <div class="folder-info-item">
+                    <strong>الوصف:</strong>
+                    <span id="folderDescriptionText">--</span>
+                </div>
+            </div>
+            
+            <div class="folder-actions-bar">
+                <button class="btn-primary" id="addFilesToFolderBtn">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"/>
+                        <path d="M12 11l0 6"/>
+                        <path d="M9 14l6 0"/>
+                    </svg>
+                    إضافة ملفات
+                </button>
+                <button class="btn-secondary" id="editFolderNameBtn">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/>
+                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"/>
+                        <path d="M16 5l3 3"/>
+                    </svg>
+                    تعديل الاسم
+                </button>
+                <button class="btn-secondary" id="editFolderDescBtn">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"/>
+                        <path d="M9 11h6"/>
+                        <path d="M9 15h4"/>
+                    </svg>
+                    تعديل الوصف
+                </button>
+                <button class="btn-secondary" id="moveFolderBtn">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 4h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2"/>
+                        <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2"/>
+                    </svg>
+                    نقل إلى فئة أخرى
+                </button>
+                <button class="btn-danger" id="deleteFolderBtn">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007zm-10 4a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1m4 0a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1"/>
+                        <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005z"/>
+                    </svg>
+                    حذف المجلد
+                </button>
+            </div>
+            
+            <div class="folder-files-grid" id="folderFilesGrid">
+                <!-- سيتم إدراج الملفات هنا -->
+            </div>
+            
+            <div class="folder-files-empty" id="folderFilesEmpty">
+                <div class="empty-icon">
+                    <svg class="svg-icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                        <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"/>
+                    </svg>
+                </div>
+                <p>لا توجد ملفات في هذا المجلد</p>
+                <p class="empty-hint">اضغط على "إضافة ملفات" لإضافة ملفات جديدة</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال تعديل اسم المجلد -->
+<div class="modal" id="editFolderNameModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeEditFolderNameModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>تعديل اسم المجلد</h2>
+        </div>
+        <div class="modal-body">
+            <form id="editFolderNameForm">
+                <div class="form-group">
+                    <label>اسم المجلد الجديد *</label>
+                    <input type="text" id="editFolderNameInput" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelEditFolderName">إلغاء</button>
+                    <button type="button" class="btn-success" id="saveEditFolderNameBtn">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- مودال تعديل وصف المجلد -->
+<div class="modal" id="editFolderDescModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeEditFolderDescModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>تعديل وصف المجلد</h2>
+        </div>
+        <div class="modal-body">
+            <form id="editFolderDescForm">
+                <div class="form-group">
+                    <label>وصف المجلد</label>
+                    <textarea id="editFolderDescInput" rows="4"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelEditFolderDesc">إلغاء</button>
+                    <button type="button" class="btn-success" id="saveEditFolderDescBtn">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- مودال نقل المجلد -->
+<div class="modal" id="moveFolderModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeMoveFolderModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>نقل المجلد إلى فئة أخرى</h2>
+        </div>
+        <div class="modal-body">
+            <form id="moveFolderForm">
+                <div class="form-group">
+                    <label>الفئة الحالية</label>
+                    <input type="text" id="currentFolderCategory" readonly>
+                </div>
+                <div class="form-group">
+                    <label>الفئة الجديدة *</label>
+                    <select id="moveFolderCategorySelect" required>
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelMoveFolder">إلغاء</button>
+                    <button type="button" class="btn-success" id="saveMoveFolderBtn">نقل المجلد</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- مودال حذف المجلد -->
+<div class="modal" id="deleteFolderModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeDeleteFolderModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>تأكيد حذف المجلد</h2>
+        </div>
+        <div class="modal-body">
+            <div class="warning-message">
+                <svg class="svg-icon-lg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm.01 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z"/>
+                </svg>
+                <p>هل أنت متأكد من حذف المجلد "<strong id="deleteFolderNameText"></strong>"؟</p>
+                <p class="warning-note">ملاحظة: حذف المجلد لن يؤدي إلى حذف الملفات الأصلية</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancelDeleteFolder">إلغاء</button>
+                <button type="button" class="btn-danger" id="confirmDeleteFolder">حذف المجلد</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال إضافة ملفات للمجلد -->
+<div class="modal" id="addFilesToFolderModal">
+    <div class="modal-content modal-small">
+        <div class="modal-header">
+            <button class="btn-close" id="closeAddFilesToFolderModal">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                </svg>
+            </button>
+            <h2>إضافة ملفات للمجلد</h2>
+        </div>
+        <div class="modal-body">
+            <div class="file-upload-area" id="folderFileUploadArea">
+                <svg class="svg-icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"/>
+                    <path d="M12 11l0 6"/>
+                    <path d="M9 14l6 0"/>
+                </svg>
+                <p>اضغط هنا لاختيار الملفات</p>
+                <p class="upload-hint">أو اسحب الملفات وأفلتها هنا</p>
+                <input type="file" id="folderFilesInput" multiple accept="*/*" style="display: none;">
+            </div>
+            
+            <div class="selected-files-preview" id="selectedFilesPreview" style="display: none;">
+                <h4>الملفات المختارة:</h4>
+                <div id="selectedFilesList"></div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancelAddFilesToFolder">إلغاء</button>
+                <button type="button" class="btn-success" id="confirmAddFilesToFolder" disabled>إضافة الملفات</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,7 +16,8 @@ const Input = ({
   name,
   ...props
 }) => {
-  const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`;
+  // استخدام id إذا تم تمريره، وإلا name، وإلا توليد id فريد
+  const inputId = id || (name ? `input-${name}` : `input-${Math.random().toString(36).substr(2, 9)}`);
   
   return (
     <div className={`form-group ${className}`}>

@@ -102,17 +102,18 @@ const ListItemsView = ({ list, onClose }) => {
 
                 <div className="modal-body">
                     {validItems.length === 0 ? (
-                        <div className="list-content-empty" id="listContentEmpty">
-                            <div className="category-empty-icon">
+                        <div className="list-content-empty">
+                            <div className="empty-icon">
                                 <svg className="svg-icon-xl" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
                                     <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
                                 </svg>
                             </div>
-                            <div>لا توجد عناصر في هذه القائمة</div>
+                            <p>لا توجد عناصر في هذه القائمة</p>
+                            <span className="empty-hint">أضف فاكسات أو ردود إلى هذه القائمة</span>
                         </div>
                     ) : (
-                        <div className="list-items-container" id="listItemsContainer">
+                        <div className="list-items-container">
                             {validItems.map((item, index) => (
                                 <div key={index} className="list-item">
                                     <div className={`list-item-icon ${item.type}`}>

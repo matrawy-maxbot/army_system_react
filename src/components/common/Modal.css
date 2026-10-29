@@ -116,3 +116,13 @@
 .modal-content::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+.modal-medium {
+  max-width: 700px;
+  width: 92%;
+}
+
+.modal-large {
+  max-width: 1000px;
+  width: 95%;
+}

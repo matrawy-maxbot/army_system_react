@@ -1,113 +1,154 @@
-/* ========== Lists Styles ========== */
+/* ========== Lists Section ========== */
 
+/* القسم الرئيسي */
 .lists-section {
-    margin-bottom: var(--spacing-24);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e8eaed;
 }
+
+/* Section header */
+.lists-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.lists-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0;
+}
+
+/* ========== Lists Grid ========== */
 
 .lists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: var(--spacing-24);
+    gap: 20px;
 }
 
+/* ========== List Card ========== */
+
 .list-card {
-    position: relative;
-    background: var(--bg-surface);
-    border-radius: var(--radius-card);
-    padding: var(--spacing-24);
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-base);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e8eaed;
+    transition: all 0.2s ease;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-16);
 }
 
 .list-card:hover {
-    border-color: var(--border-hover);
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
 }
 
+/* القائمة الافتراضية */
 .list-card.default {
-    border-color: var(--color-primary);
-    background: var(--color-primary-light);
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
 }
 
 .list-card.default:hover {
-    border-color: var(--color-primary-hover);
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
+
+/* ========== Card Header ========== */
 
 .list-card-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-12);
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
+/* الأيقونة */
 .list-icon {
-    color: var(--color-primary);
+    color: #3b82f6;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .list-card.default .list-icon {
-    color: var(--color-primary-hover);
+    color: #3b82f6;
 }
 
+/* اسم القائمة */
 .list-name {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a202c;
     margin: 0;
+    text-align: center;
 }
+
+/* ========== List Badge ========== */
 
 .list-badge {
-    display: inline-block;
-    padding: 3px 10px;
-    background: var(--color-primary);
-    color: #ffffff;
-    border-radius: var(--radius-card);
     font-size: 10px;
-    font-weight: var(--font-weight-semibold);
+    font-weight: 700;
+    color: #3b82f6;
+    background: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .list-badge-small {
     display: inline-block;
-    padding: 2px var(--spacing-8);
-    background: var(--bg-active);
-    color: var(--text-secondary);
-    border-radius: var(--radius-lg);
+    padding: 2px 8px;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 10px;
     font-size: 9px;
-    font-weight: var(--font-weight-semibold);
+    font-weight: 600;
     margin-right: 6px;
 }
+
+/* ========== Items Count ========== */
 
 .list-items-count {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-8);
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
-    padding-top: var(--spacing-12);
-    border-top: 1px solid var(--border-color);
+    gap: 6px;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 16px;
 }
+
+.list-items-count svg {
+    color: #94a3b8;
+}
+
+/* ========== List Actions ========== */
 
 .list-actions {
     display: flex;
     justify-content: center;
-    gap: var(--spacing-8);
-    margin-top: var(--spacing-8);
+    gap: 6px;
 }
 
-/* List Items Container */
+/* ========== List Items Container ========== */
+
 .list-items-container {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-12);
+    gap: 12px;
     max-height: 400px;
     overflow-y: auto;
 }
@@ -115,104 +156,115 @@
 .list-item {
     display: flex;
     align-items: center;
-    gap: var(--spacing-12);
-    padding: var(--spacing-12);
-    background: var(--bg-app);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-base);
+    gap: 12px;
+    padding: 12px;
+    background: #f8f9fb;
+    border-radius: 8px;
+    border: 1px solid #e8eaed;
+    transition: all 0.2s ease;
 }
 
 .list-item:hover {
-    background: var(--bg-hover);
-    border-color: var(--border-hover);
+    background: #ffffff;
+    border-color: #cbd5e1;
 }
 
+/* أيقونة العنصر */
 .list-item-icon {
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 8px;
     flex-shrink: 0;
 }
 
 .list-item-icon.fax {
-    background: var(--color-info-light);
-    color: var(--color-info);
+    background: #dbeafe;
+    color: #1e40af;
 }
 
 .list-item-icon.reply {
-    background: var(--color-success-light);
-    color: var(--color-success);
+    background: #d1fae5;
+    color: #065f46;
 }
 
+/* معلومات العنصر */
 .list-item-info {
     flex: 1;
-    min-width: 0;
 }
 
 .list-item-name {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a202c;
+    margin: 0 0 2px;
 }
 
 .list-item-type {
     font-size: 11px;
-    color: var(--text-tertiary);
-    font-weight: var(--font-weight-medium);
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
+
+/* ========== Empty State ========== */
 
 .list-content-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-64) var(--spacing-24);
-    color: var(--text-tertiary);
+    padding: 80px 20px;
+    color: #94a3b8;
     text-align: center;
 }
 
 .list-content-empty .empty-icon {
-    font-size: var(--icon-xl);
-    margin-bottom: var(--spacing-12);
+    font-size: 64px;
+    margin-bottom: 16px;
     opacity: 0.5;
 }
 
 .list-content-empty p {
-    margin-bottom: var(--spacing-8);
-    font-size: var(--font-size-sm);
+    font-size: 16px;
+    margin-bottom: 8px;
 }
 
 .list-content-empty .empty-hint {
-    font-size: var(--font-size-xs);
-    color: var(--text-disabled);
+    font-size: 13px;
+    color: #cbd5e1;
 }
 
-/* List Checkbox Items (for adding to lists) */
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+    .reminders-grid,
+    .lists-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========== List Checkbox Items (for adding to lists) ========== */
+
 .list-checkbox-item {
-    background: var(--bg-app);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-12);
-    transition: all var(--transition-base);
+    background: #f8f9fb;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    padding: 12px;
+    transition: all 0.2s ease;
 }
 
 .list-checkbox-item:hover {
-    background: var(--bg-hover);
-    border-color: var(--border-hover);
+    background: #ffffff;
+    border-color: #cbd5e1;
 }
 
 .list-checkbox-item label {
     display: flex;
     align-items: center;
-    gap: var(--spacing-12);
+    gap: 12px;
     cursor: pointer;
     user-select: none;
     margin: 0;
@@ -223,11 +275,12 @@
     height: 20px;
     cursor: pointer;
     flex-shrink: 0;
+    accent-color: #3b82f6;
 }
 
 .list-checkbox-item span {
     flex: 1;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a202c;
 }

@@ -195,6 +195,8 @@ const EditDocumentModal = ({ isOpen, onClose, document, categoryId, onSuccess, o
       <form onSubmit={handleSubmit}>
         <Input
           label="اسم المستند"
+          id="edit-document-name"
+          name="editDocumentName"
           value={formData.name}
           onChange={handleNameChange}
           placeholder="أدخل اسم المستند"
@@ -202,8 +204,8 @@ const EditDocumentModal = ({ isOpen, onClose, document, categoryId, onSuccess, o
         />
 
         <div className="form-group">
-          <label>الملف الحالي</label>
-          <div className="current-file-info">
+          <label htmlFor="current-file-info">الملف الحالي</label>
+          <div className="current-file-info" id="current-file-info">
             <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
               <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2"/>
@@ -213,12 +215,13 @@ const EditDocumentModal = ({ isOpen, onClose, document, categoryId, onSuccess, o
         </div>
 
         <div className="form-group">
-          <label>تغيير الملف (اختياري)</label>
+          <label htmlFor="edit-doc-file-selector">تغيير الملف (اختياري)</label>
           <div className="file-input-wrapper">
             <span className="file-input-text">
               {formData.docFile ? formData.docFileName : 'لم يتم اختيار ملف جديد'}
             </span>
             <Button
+              id="edit-doc-file-selector"
               type="button"
               variant="file"
               onClick={handleDocFileClick}
@@ -229,11 +232,13 @@ const EditDocumentModal = ({ isOpen, onClose, document, categoryId, onSuccess, o
         </div>
 
         <div className="form-group">
-          <label>اختر أيقونة</label>
-          <IconPicker
-            selectedIcon={formData.icon}
-            onSelectIcon={handleIconSelect}
-          />
+          <label htmlFor="edit-icon-picker">اختر أيقونة</label>
+          <div id="edit-icon-picker">
+            <IconPicker
+              selectedIcon={formData.icon}
+              onSelectIcon={handleIconSelect}
+            />
+          </div>
           <div style={{ marginTop: '10px' }}>
             <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '8px' }}>
               أو ارفع صورة مخصصة:
@@ -243,6 +248,7 @@ const EditDocumentModal = ({ isOpen, onClose, document, categoryId, onSuccess, o
                 {formData.iconFile ? formData.iconFile.split(/[\\/]/).pop() : 'لم يتم اختيار صورة'}
               </span>
               <Button
+                id="edit-icon-file-selector"
                 type="button"
                 variant="file"
                 onClick={handleIconFileClick}

@@ -1,0 +1,215 @@
+/**
+ * Animation System - Modern Minimalist
+ * Restrained, purposeful motion
+ * Respects prefers-reduced-motion
+ */
+
+/* ========== Modal Animations ========== */
+@keyframes modalBackdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalContentSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========== Toast Animations ========== */
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* ========== Fade Animations ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ========== Subtle Content Entrance (Optional) ========== */
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== Spinner Animation ========== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== Pulse for Loading States ========== */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ========== Skeleton Loading ========== */
+@keyframes skeletonShimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+/* ========== Button Press ========== */
+@keyframes buttonPress {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ========== Utility Classes ========== */
+.animate-fadeIn {
+  animation: fadeIn var(--transition-base) ease;
+}
+
+.animate-contentFadeIn {
+  animation: contentFadeIn var(--transition-slow) ease;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ========== Transition Utilities ========== */
+.transition-all {
+  transition: all var(--transition-base);
+}
+
+.transition-colors {
+  transition: color var(--transition-base), 
+              background-color var(--transition-base), 
+              border-color var(--transition-base);
+}
+
+.transition-transform {
+  transition: transform var(--transition-base);
+}
+
+.transition-opacity {
+  transition: opacity var(--transition-base);
+}
+
+/* ========== Reduced Motion Support ========== */
+/* @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Keep essential animations but make them instant */
+  /* .modal {
+    animation: none;
+  }
+  
+  .modal-content {
+    animation: none;
+  }
+  
+  .toast {
+    animation: none;
+  } */
+/* }  */
+
+/* ========== Hover Elevations (Minimal) ========== */
+.hover-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-lift-sm {
+  transition: transform var(--transition-base);
+}
+
+.hover-lift-sm:hover {
+  transform: translateY(-1px);
+}
+
+/* ========== Focus Visible Styles ========== */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ========== Animation Timing Functions ========== */
+:root {
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}

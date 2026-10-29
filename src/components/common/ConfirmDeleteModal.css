@@ -1,0 +1,118 @@
+/* ConfirmDeleteModal Styles */
+
+.confirm-delete-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 10px;
+}
+
+.confirm-delete-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc2626;
+}
+
+.confirm-delete-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.confirm-delete-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  width: 100%;
+}
+
+.confirm-delete-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.confirm-delete-item {
+  font-size: 15px;
+  color: #374151;
+  margin: 0;
+  padding: 8px 16px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.confirm-delete-item strong {
+  color: #dc2626;
+}
+
+.confirm-delete-count {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.confirm-delete-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #92400e;
+  margin: 8px 0 0 0;
+  line-height: 1.5;
+}
+
+.confirm-delete-warning svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: #f59e0b;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .confirm-delete-icon {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+    color: #fca5a5;
+  }
+
+  .confirm-delete-text {
+    color: #f3f4f6;
+  }
+
+  .confirm-delete-item {
+    background: #374151;
+    color: #e5e7eb;
+  }
+
+  .confirm-delete-item strong {
+    color: #f87171;
+  }
+
+  .confirm-delete-count {
+    color: #9ca3af;
+  }
+
+  .confirm-delete-warning {
+    background: #451a03;
+    border-color: #78350f;
+    color: #fbbf24;
+  }
+
+  .confirm-delete-warning svg {
+    color: #fbbf24;
+  }
+}
