@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { windowAPI } from '../../services/electronAPI';
 import '../../styles/titlebar.css';
 
 function TitleBar() {
@@ -18,15 +19,15 @@ function TitleBar() {
     }, []);
 
     const handleMinimize = () => {
-        window.electronAPI.minimizeWindow();
+        windowAPI.minimizeWindow();
     };
 
     const handleMaximize = () => {
-        window.electronAPI.maximizeWindow();
+        windowAPI.maximizeWindow();
     };
 
     const handleClose = () => {
-        window.electronAPI.closeWindow();
+        windowAPI.closeWindow();
     };
 
     const toggleDropdown = () => {
@@ -44,19 +45,24 @@ function TitleBar() {
                 window.location.reload(true);
                 break;
             case 'devtools':
-                window.electronAPI.toggleDevTools?.();
+                // Note: toggleDevTools is not wrapped yet - keeping original implementation
+                window.electronAPI && window.electronAPI.toggleDevTools?.();
                 break;
             case 'zoom-reset':
-                window.electronAPI.resetZoom?.();
+                // Note: resetZoom is not wrapped yet - keeping original implementation
+                window.electronAPI && window.electronAPI.resetZoom?.();
                 break;
             case 'zoom-in':
-                window.electronAPI.zoomIn?.();
+                // Note: zoomIn is not wrapped yet - keeping original implementation
+                window.electronAPI && window.electronAPI.zoomIn?.();
                 break;
             case 'zoom-out':
-                window.electronAPI.zoomOut?.();
+                // Note: zoomOut is not wrapped yet - keeping original implementation
+                window.electronAPI && window.electronAPI.zoomOut?.();
                 break;
             case 'fullscreen':
-                window.electronAPI.toggleFullscreen?.();
+                // Note: toggleFullscreen is not wrapped yet - keeping original implementation
+                window.electronAPI && window.electronAPI.toggleFullscreen?.();
                 break;
             default:
                 break;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { dataAPI } from '../../services/electronAPI';
 import { useAppState } from '../../context/AppStateContext';
 
 const OriginalFaxSection = ({ onUploadClick, onEditClick, onDeleteClick, onFilterClick }) => {
@@ -19,7 +20,7 @@ const OriginalFaxSection = ({ onUploadClick, onEditClick, onDeleteClick, onFilte
         setAppState(updated);
         
         // حفظ البيانات
-        await window.electronAPI.saveData(updated);
+        await dataAPI.saveData(updated);
     };
 
     return (

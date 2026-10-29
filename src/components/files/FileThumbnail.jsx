@@ -46,7 +46,8 @@ const FileThumbnail = ({ file }) => {
         thumbnailGenerationInProgress.add(file.path);
 
         try {
-            const result = await window.electronAPI.generateThumbnail(file.path);
+            // Note: generateThumbnail is not wrapped yet - keeping original implementation
+            const result = window.electronAPI && await window.electronAPI.generateThumbnail(file.path);
 
             if (!isMounted.current) return;
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { fileAPI } from '../../services/electronAPI';
 import FileItem from './FileItem';
 import SelectionToolbar from './SelectionToolbar';
 import DateFilter from './DateFilter';
@@ -27,12 +28,18 @@ const FilesList = () => {
         
         setIsLoading(true);
         try {
-            const dateStr = formatDateByPattern(selectedDate);
-            const result = await window.electronAPI.getTodayFiles(dateStr, '');
-            
-            if (result.success && result.files) {
-                setFiles(result.files);
+            // Note: getTodayFiles is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.getTodayFiles) {
+                const dateStr = formatDateByPattern(selectedDate);
+                const result = await window.electronAPI.getTodayFiles(dateStr, '');
+                
+                if (result.success && result.files) {
+                    setFiles(result.files);
+                } else {
+                    setFiles([]);
+                }
             } else {
+                // Browser mode - no files to load
                 setFiles([]);
             }
         } catch (error) {
@@ -82,9 +89,14 @@ const FilesList = () => {
         if (filePaths.length === 0) return;
 
         try {
-            const result = await window.electronAPI.printFiles(filePaths);
-            if (result.success) {
-                console.log('Files printed successfully');
+            // Note: printFiles is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.printFiles) {
+                const result = await window.electronAPI.printFiles(filePaths);
+                if (result.success) {
+                    console.log('Files printed successfully');
+                }
+            } else {
+                alert('ميزة الطباعة متاحة فقط في وضع Electron');
             }
         } catch (error) {
             console.error('Error printing files:', error);
@@ -99,10 +111,15 @@ const FilesList = () => {
         }
 
         try {
-            const result = await window.electronAPI.mergeFiles(filePaths);
-            if (result.success) {
-                console.log('Files merged successfully');
-                await loadFiles();
+            // Note: mergeFiles is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.mergeFiles) {
+                const result = await window.electronAPI.mergeFiles(filePaths);
+                if (result.success) {
+                    console.log('Files merged successfully');
+                    await loadFiles();
+                }
+            } else {
+                alert('ميزة الدمج متاحة فقط في وضع Electron');
             }
         } catch (error) {
             console.error('Error merging files:', error);
@@ -120,10 +137,15 @@ const FilesList = () => {
         if (!confirmDelete) return;
 
         try {
-            const result = await window.electronAPI.deleteFiles(filePaths);
-            if (result.success) {
-                setSelectedFiles(new Set());
-                await loadFiles();
+            // Note: deleteFiles is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.deleteFiles) {
+                const result = await window.electronAPI.deleteFiles(filePaths);
+                if (result.success) {
+                    setSelectedFiles(new Set());
+                    await loadFiles();
+                }
+            } else {
+                alert('ميزة الحذف متاحة فقط في وضع Electron');
             }
         } catch (error) {
             console.error('Error deleting files:', error);
@@ -132,9 +154,14 @@ const FilesList = () => {
 
     const handlePrintSingle = async (filePath) => {
         try {
-            const result = await window.electronAPI.printFiles([filePath]);
-            if (result.success) {
-                console.log('File printed successfully');
+            // Note: printFiles is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.printFiles) {
+                const result = await window.electronAPI.printFiles([filePath]);
+                if (result.success) {
+                    console.log('File printed successfully');
+                }
+            } else {
+                alert('ميزة الطباعة متاحة فقط في وضع Electron');
             }
         } catch (error) {
             console.error('Error printing file:', error);
@@ -146,9 +173,14 @@ const FilesList = () => {
         if (!confirmDelete) return;
 
         try {
-            const result = await window.electronAPI.deleteFiles([filePath]);
-            if (result.success) {
-                await loadFiles();
+            // Note: deleteFiles is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.deleteFiles) {
+                const result = await window.electronAPI.deleteFiles([filePath]);
+                if (result.success) {
+                    await loadFiles();
+                }
+            } else {
+                alert('ميزة الحذف متاحة فقط في وضع Electron');
             }
         } catch (error) {
             console.error('Error deleting file:', error);
@@ -157,7 +189,11 @@ const FilesList = () => {
 
     const handleOpenFolder = async (filePath) => {
         try {
-            await window.electronAPI.openFile(filePath);
+            if (fileAPI.openFile) {
+                await fileAPI.openFile(filePath);
+            } else {
+                alert('ميزة فتح الملف متاحة فقط في وضع Electron');
+            }
         } catch (error) {
             console.error('Error opening folder:', error);
         }
@@ -165,10 +201,15 @@ const FilesList = () => {
 
     const handleOpenTodayFolder = async () => {
         try {
-            const dateStr = formatDateByPattern(selectedDate);
-            const result = await window.electronAPI.openTodayCopiesFolder(dateStr, '');
-            if (!result.success) {
-                alert('فشل في فتح المجلد: ' + result.error);
+            // Note: openTodayCopiesFolder is not wrapped yet - keeping original implementation
+            if (window.electronAPI && window.electronAPI.openTodayCopiesFolder) {
+                const dateStr = formatDateByPattern(selectedDate);
+                const result = await window.electronAPI.openTodayCopiesFolder(dateStr, '');
+                if (!result.success) {
+                    alert('فشل في فتح المجلد: ' + result.error);
+                }
+            } else {
+                alert('ميزة فتح المجلد متاحة فقط في وضع Electron');
             }
         } catch (error) {
             console.error('Error opening folder:', error);

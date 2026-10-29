@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { settingsAPI, fileAPI } from '../../services/electronAPI';
 import './settings.css';
 
 const SettingsModal = ({ isOpen, onClose }) => {
@@ -21,7 +22,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
     const loadSettings = async () => {
         try {
-            const result = await window.electronAPI.loadSettings();
+            const result = await settingsAPI.loadSettings();
             if (result.success && result.settings) {
                 setSavePath(result.settings.savePath || '');
                 setDateFormat(result.settings.dateFormat || 'DD-MM-YYYY');
@@ -33,10 +34,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
     };
 
     const browseSavePath = async () => {
-        const result = await window.electronAPI.selectFolder({
-            title: 'اختر مجلد حفظ المستندات',
-            defaultPath: savePath
-        });
+        const result = await fileAPI.selectFolder('اختر مجلد حفظ المستندات');
         
         if (result.success && !result.canceled) {
             setSavePath(result.folderPath);
@@ -145,7 +143,8 @@ const SettingsModal = ({ isOpen, onClose }) => {
         }
         
         try {
-            const testResult = await window.electronAPI.testPathWritable(savePath);
+            // Note: testPathWritable is not wrapped yet - keeping original implementation
+            const testResult = window.electronAPI && await window.electronAPI.testPathWritable(savePath);
             if (!testResult.success) {
                 alert('المسار المحدد غير صالح أو لا يمكن الكتابة فيه. الرجاء اختيار مسار آخر.');
                 return;
@@ -162,7 +161,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
         };
         
         try {
-            const result = await window.electronAPI.saveSettings(settings);
+            const result = await settingsAPI.saveSettings(settings);
             if (result.success) {
                 console.log('✅ Settings saved successfully');
                 onClose();

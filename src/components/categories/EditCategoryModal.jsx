@@ -62,6 +62,7 @@ const EditCategoryModal = ({ isOpen, onClose, categoryId }) => {
     }
 
     // Delete all documents in category
+    // Note: deleteFileFromAssets is not wrapped yet - keeping original implementation
     if (hasDocuments) {
       for (const doc of currentCategory.documents) {
         if (doc.file && window.electronAPI) {

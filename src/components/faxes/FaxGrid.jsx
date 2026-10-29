@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { dataAPI } from '../../services/electronAPI';
 import { useAppState } from '../../context/AppStateContext';
 import FaxCard from './FaxCard';
 
@@ -33,7 +34,7 @@ const FaxGrid = () => {
             )
         };
         setAppState(updated);
-        await window.electronAPI.saveData(updated);
+        await dataAPI.saveData(updated);
     };
 
     const deleteSelected = async () => {
@@ -49,7 +50,7 @@ const FaxGrid = () => {
         };
         
         setAppState(updated);
-        await window.electronAPI.saveData(updated);
+        await dataAPI.saveData(updated);
         setSelectedFaxes(new Set());
     };
 
