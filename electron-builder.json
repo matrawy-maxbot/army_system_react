@@ -2,11 +2,11 @@
   "appId": "com.army.system",
   "productName": "Army System",
   "directories": {
-    "output": "dist",
+    "output": "build",
     "buildResources": "public"
   },
   "files": [
-    "dist/**/*",
+    "dist-vite/**/*",
     "electron/**/*",
     "package.json"
   ],
@@ -14,19 +14,25 @@
     "target": [
       {
         "target": "nsis",
-        "arch": [
-          "x64",
-          "ia32"
-        ]
+        "arch": ["x64"]
       }
     ],
-    "icon": "public/icons/icon.ico"
+    "icon": "public/icons/icon.png",
+    "requestedExecutionLevel": "asInvoker",
+    "legalTrademarks": "Army System"
   },
   "nsis": {
     "oneClick": false,
+    "allowElevation": true,
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true,
     "createStartMenuShortcut": true,
-    "shortcutName": "Army System"
+    "shortcutName": "Army System",
+    "deleteAppDataOnUninstall": false,
+    "runAfterFinish": true,
+    "artifactName": "Army-System-Setup-${version}-x64.${ext}"
+  },
+  "extraMetadata": {
+    "main": "electron/main.js"
   }
 }

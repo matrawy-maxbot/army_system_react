@@ -41,6 +41,11 @@
     border-radius: 10px;
 }
 
+.status-badge.active {
+    background: #c5e5da !important;
+    color: #058156 !important;
+}
+
 /* Radio filter group */
 .filter-group {
     display: flex;
@@ -92,123 +97,266 @@
 
 .reminders-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
 }
 
-/* ========== Reminder Card ========== */
+/* ========== New Reminder Card Design ========== */
 
-.reminder-card {
-    background: #ffffff;
-    border: 2px solid #e8eaed;
-    border-radius: 12px;
-    padding: 20px;
+.reminder-card-new {
+    width: 100%;
+    max-width: 390px;
     position: relative;
-    transition: all 0.2s ease;
+    padding: 17px 18px 15px;
+    border: 1.5px solid #08b981;
+    border-radius: 17px;
+    background: #f1fbf8;
+    box-shadow: 0 7px 20px rgba(24, 65, 55, 0.07);
+    transition: all 0.18s ease;
 }
 
-.reminder-card:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.reminder-card-new:hover {
     transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(24, 65, 55, 0.12);
 }
 
-/* حالات البطاقة */
-.reminder-card.active {
-    border-color: #10b981;
-    background: #f0fdf9;
-}
-
-.reminder-card.expired {
+/* Card states */
+.reminder-card-new.expired {
     border-color: #ef4444;
-    background: #fef2f2;
-    opacity: 0.7;
+    background: #fef5f5;
 }
 
-/* ========== Status Badge ========== */
-
-.reminder-status {
-    position: absolute;
-    top: 12px;
-    left: 12px;
+.reminder-card-new.expired:hover {
+    box-shadow: 0 12px 28px rgba(239, 68, 68, 0.12);
 }
 
-.reminder-status-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* حالة متوقف - ألوان رمادية */
+.reminder-card-new.paused {
+    border-color: #94a3b8;
+    background: #f8fafc;
 }
 
-.reminder-status-badge.active {
-    background: #d1fae5;
-    color: #065f46;
+.reminder-card-new.paused:hover {
+    box-shadow: 0 12px 28px rgba(148, 163, 184, 0.12);
 }
 
-.reminder-status-badge.expired {
-    background: #fee2e2;
-    color: #991b1b;
-}
+/* ========== Card Top Section ========== */
 
-/* ========== Card Content ========== */
-
-/* الأيقونة */
-.reminder-icon {
+.reminder-card-new .card-top {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-    color: #3b82f6;
+    justify-content: space-between;
+    min-height: 30px;
+    margin-bottom: 9px;
 }
 
-/* العنوان */
-.reminder-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1a202c;
-    margin-bottom: 8px;
+/* Status Badge */
+.reminder-card-new .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    color: #087f5b;
+    background: #d7f8e9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 }
 
-/* الوصف */
-.reminder-description {
-    font-size: 13px;
+.reminder-card-new .status-badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #08b981;
+}
+
+.reminder-card-new .status-badge.expired {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.reminder-card-new .status-badge.expired::before {
+    background: #ef4444;
+}
+
+.reminder-card-new .status-badge.paused {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.reminder-card-new .status-badge.paused::before {
+    background: #94a3b8;
+}
+
+/* Top Actions */
+.reminder-card-new .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.reminder-card-new .bell-icon {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    color: #347cf5;
+    background: #e8f0ff;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.reminder-card-new .bell-icon:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(52, 124, 245, 0.2);
+}
+
+.reminder-card-new .bell-icon.inactive {
+    color: #94a3b8;
+    background: #f1f5f9;
+}
+
+.reminder-card-new .bell-icon.inactive:hover {
     color: #64748b;
-    line-height: 1.5;
-    margin-bottom: 16px;
+    background: #e2e8f0;
+    box-shadow: 0 2px 6px rgba(148, 163, 184, 0.2);
 }
 
-/* ========== Dates Section ========== */
+.reminder-card-new .bell-icon svg {
+    width: 17px;
+    height: 17px;
+}
 
-.reminder-dates {
+/* حالة البطاقة المعطلة - تم إزالتها لصالح حالة paused */
+
+.reminder-card-new .edit-btn {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    color: #087f5b;
+    background: #dcf8eb;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.18s ease;
+    flex-shrink: 0;
+}
+
+.reminder-card-new .edit-btn:hover {
+    background: #c8f2df;
+    transform: translateY(-1px);
+}
+
+.reminder-card-new .edit-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* ========== Card Heading ========== */
+
+.reminder-card-new .card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 13px;
+}
+
+.reminder-card-new .heading-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.reminder-card-new .reminder-title-new {
+    margin: 0 0 5px;
+    color: #1c2d3b;
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 800;
+}
+
+.reminder-card-new .reminder-description-new {
+    margin: 0;
+    color: #71869a;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ========== Details Grid ========== */
+
+.reminder-card-new .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e5edf0;
+}
+
+.reminder-card-new .detail-item {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 10px;
+    border: 1px solid #e7f0ed;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.reminder-card-new .detail-icon {
+    flex: 0 0 25px;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    color: #087f5b;
+    background: #e8fbf3;
+}
+
+.reminder-card-new.expired .detail-icon {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.reminder-card-new.paused .detail-icon {
+    color: #64748b;
+    background: #f1f5f9;
+}
+
+.reminder-card-new .detail-icon svg {
+    width: 13px;
+    height: 13px;
+}
+
+.reminder-card-new .detail-text {
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #e8eaed;
+    gap: 3px;
 }
 
-.reminder-date {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #64748b;
+.reminder-card-new .detail-label {
+    display: block;
+    color: #8799a5;
+    font-size: 10px;
+    font-weight: 500;
 }
 
-.reminder-date svg {
-    color: #94a3b8;
-}
-
-/* ========== Actions ========== */
-
-.reminder-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 6px;
+.reminder-card-new .detail-value {
+    display: block;
+    color: #526b7b;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ========== Empty State ========== */
@@ -242,8 +390,7 @@
 /* ========== Responsive Design ========== */
 
 @media (max-width: 768px) {
-    .reminders-grid,
-    .lists-grid {
+    .reminders-grid {
         grid-template-columns: 1fr;
     }
 
@@ -254,6 +401,21 @@
 
     .filter-group {
         flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 360px) {
+    .reminder-card-new {
+        padding: 14px;
+    }
+
+    .reminder-card-new .details-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .reminder-card-new .detail-item {
+        padding: 7px 9px;
     }
 }
 
@@ -295,4 +457,4048 @@
     outline: none;
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.reminder-modal .modal-footer {
+    padding: var(--spacing-24) 0 !important;
+}
+
+
+/* ========== Linked Fax Display ========== */
+
+.linked-fax-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1.5px solid #e8eaed;
+    border-radius: 10px;
+    background: #f8f9fb;
+}
+
+.linked-fax-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.linked-fax-info .svg-icon {
+    width: 20px;
+    height: 20px;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.linked-fax-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.linked-fax-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.linked-fax-subject {
+    font-size: 11px;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-icon-small {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-danger-ghost {
+    color: #ef4444;
+}
+
+.btn-danger-ghost:hover {
+    background: #fef2f2;
+    transform: scale(1.05);
+}
+
+.btn-icon-small .svg-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-link-fax {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #3b82f6;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-link-fax:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.btn-link-fax .svg-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* ========== Attachments Container ========== */
+
+.attachments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.attachments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.attachment-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    background: #f8f9fb;
+}
+
+.attachment-preview {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #f1f5f9;
+    display: grid;
+    place-items: center;
+}
+
+.attachment-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.attachment-file-icon {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #dbeafe;
+    flex-shrink: 0;
+}
+
+.attachment-file-icon .svg-icon {
+    width: 24px;
+    height: 24px;
+    color: #3b82f6;
+}
+
+.attachment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.attachment-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a202c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.attachment-size {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.btn-add-attachment {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-attachment:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    color: #3b82f6;
+}
+
+.btn-add-attachment .svg-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* ========== Fax Selector Modal ========== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal-medium {
+    width: 90%;
+    max-width: 550px;
+}
+
+.search-box {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 40px 10px 14px;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.fax-list {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fax-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: right;
+}
+
+.fax-item:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.fax-item-number {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.fax-item-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fax-item-subject {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a202c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fax-item-sender {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* ========== Reminder Detail Modal - Compact Version ========== */
+
+.reminder-detail-modal .modal-content {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.reminder-detail-modal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px !important;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.reminder-detail-modal .modal-header h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0;
+}
+
+.reminder-detail-modal .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-icon-action {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: #f8f9fb;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-icon-action:hover {
+    background: #e8eaed;
+    color: #1a202c;
+}
+
+.btn-icon-action .svg-icon {
+    width: 15px;
+    height: 15px;
+}
+
+/* زر الحذف في الفوتر */
+.reminder-detail-modal .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-top: 1px solid #e8eaed;
+}
+
+.reminder-detail-modal .btn-danger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 6px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-detail-modal .btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.reminder-detail-modal .btn-danger .svg-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.reminder-detail-modal .btn-secondary {
+    padding: 8px 18px;
+    border: 0;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-detail-modal .btn-secondary:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.reminder-detail-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Status Section */
+.detail-status-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+    border-radius: 10px;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+/* Bell Toggle Button في detail-status-section */
+.bell-toggle-status {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.bell-toggle-status.active {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.bell-toggle-status.active:hover {
+    background: #bfdbfe;
+    color: #1e3a8a;
+    transform: translateY(-1px);
+}
+
+.bell-toggle-status.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.bell-toggle-status.inactive:hover {
+    background: #fecaca;
+    color: #7f1d1d;
+    transform: translateY(-1px);
+}
+
+.bell-toggle-status svg {
+    width: 16px;
+    height: 16px;
+}
+
+.status-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.status-badge-large.active {
+    color: #087f5b;
+    background: #d7f8e9;
+}
+
+.status-badge-large.active::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #08b981;
+}
+
+.status-badge-large.expired {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.status-badge-large.expired::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+}
+
+.status-badge-large.paused {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.status-badge-large.paused::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #94a3b8;
+}
+
+.status-note {
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+/* Main Section */
+.detail-main-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.detail-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 0;
+}
+
+.detail-description {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Dates Section */
+.detail-dates-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.date-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.date-icon {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.date-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.date-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.date-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.date-value {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+/* Detail Sections */
+.detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0;
+}
+
+.section-title .svg-icon {
+    width: 15px;
+    height: 15px;
+    color: #3b82f6;
+}
+
+/* Linked Fax Card */
+.linked-fax-card {
+    border: 1.5px solid #e8eaed;
+    border-radius: 10px;
+    background: #f8f9fb;
+    overflow: hidden;
+}
+
+.fax-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.fax-number {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.fax-date {
+    font-size: 9px;
+    color: #94a3b8;
+}
+
+.fax-card-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fax-field {
+    display: flex;
+    gap: 6px;
+}
+
+.fax-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.fax-value {
+    font-size: 10px;
+    color: #1a202c;
+    flex: 1;
+}
+
+/* Attachments Grid */
+.attachments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+}
+
+.attachment-card {
+    position: relative;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.attachment-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.attachment-image-preview {
+    width: 100%;
+    height: 120px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: #f1f5f9;
+}
+
+.attachment-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.attachment-image-preview:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay .svg-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.image-overlay span {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.attachment-file-preview {
+    width: 100%;
+    height: 120px;
+    display: grid;
+    place-items: center;
+    background: #dbeafe;
+}
+
+.file-icon:not(.sidebar .file-icon) {
+    width: 36px;
+    height: 36px;
+    color: #3b82f6;
+}
+
+.attachment-card-info {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.attachment-card-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #1a202c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.attachment-card-size {
+    font-size: 9px;
+    color: #94a3b8;
+}
+
+.btn-download-attachment {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #3b82f6;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-download-attachment:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+}
+
+.btn-download-attachment .svg-icon {
+    width: 13px;
+    height: 13px;
+}
+
+/* No Additional Data State */
+.no-additional-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    text-align: center;
+}
+
+.svg-icon-lg {
+    width: 48px;
+    height: 48px;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.no-additional-data p {
+    font-size: 11px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* ========== Confirm Delete Modal - Compact Version ========== */
+
+.confirm-delete-overlay {
+    z-index: 10001 !important;
+}
+
+.confirm-delete-modal {
+    max-width: 360px;
+    width: 90%;
+    padding: 24px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.confirm-delete-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fef2f2;
+    color: #ef4444;
+    margin-bottom: 6px;
+}
+
+.confirm-delete-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.confirm-delete-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 0;
+}
+
+.confirm-delete-message {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
+}
+
+.confirm-delete-message strong {
+    color: #1a202c;
+    font-weight: 700;
+    display: block;
+    margin: 6px 0;
+}
+
+.delete-warning {
+    display: block;
+    margin-top: 6px;
+    font-size: 10px;
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.confirm-delete-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.btn-confirm-delete {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-confirm-delete:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+}
+
+.btn-confirm-delete .svg-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.btn-cancel-delete {
+    flex: 1;
+    padding: 9px 16px;
+    border: 2px solid #e8eaed;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel-delete:hover {
+    border-color: #cbd5e1;
+    background: #f8f9fb;
+    color: #1a202c;
+}
+
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+    .detail-dates-section {
+        grid-template-columns: 1fr;
+    }
+
+    .attachments-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-large {
+        width: 95%;
+        max-width: none;
+    }
+}
+
+
+/* ========== Main Reminders Section (الصفحة الرئيسية) ========== */
+
+.main-reminders-section {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e8eaed;
+}
+
+/* Section Header */
+.main-reminders-section .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.main-reminders-section .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0;
+}
+
+.main-reminders-section .section-title .svg-icon {
+    width: 20px;
+    height: 20px;
+    color: #3b82f6;
+}
+
+.main-reminders-section .section-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 12px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.btn-add-reminder {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-reminder:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-add-reminder .svg-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Empty State */
+.main-reminders-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.main-reminders-empty .empty-icon {
+    width: 48px;
+    height: 48px;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.main-reminders-empty p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0 0 16px;
+}
+
+.btn-add-first {
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-first:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* ========== Reminders Grid (نفس تصميم الكروت) ========== */
+
+.main-reminders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.main-reminder-card {
+    width: 100%;
+    max-width: 390px;
+    position: relative;
+    padding: 17px 18px 15px;
+    border: 1.5px solid #08b981;
+    border-radius: 17px;
+    background: #f1fbf8;
+    box-shadow: 0 7px 20px rgba(24, 65, 55, 0.07);
+    transition: all 0.18s ease;
+    cursor: pointer;
+}
+
+.main-reminder-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(24, 65, 55, 0.12);
+}
+
+/* Card states */
+.main-reminder-card.expired {
+    border-color: #ef4444;
+    background: #fef5f5;
+}
+
+.main-reminder-card.expired:hover {
+    box-shadow: 0 12px 28px rgba(239, 68, 68, 0.12);
+}
+
+.main-reminder-card.paused {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+.main-reminder-card.paused:hover {
+    box-shadow: 0 12px 28px rgba(148, 163, 184, 0.12);
+}
+
+/* Card Top Section */
+.main-reminder-card .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 30px;
+    margin-bottom: 9px;
+}
+
+/* Status Badge */
+.main-reminder-card .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    color: #087f5b;
+    background: #d7f8e9;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.main-reminder-card .status-badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #08b981;
+}
+
+.main-reminder-card .status-badge.expired {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.main-reminder-card .status-badge.expired::before {
+    background: #ef4444;
+}
+
+.main-reminder-card .status-badge.paused {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.main-reminder-card .status-badge.paused::before {
+    background: #94a3b8;
+}
+
+/* Top Actions (Icons) */
+.main-reminder-card .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* زر الجرس في الكارت */
+.main-reminder-card .bell-icon {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: transparent;
+}
+
+.main-reminder-card .bell-icon.active {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.12);
+}
+
+.main-reminder-card .bell-icon.active:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+.main-reminder-card .bell-icon.inactive {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.12);
+}
+
+.main-reminder-card .bell-icon.inactive:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: translateY(-1px);
+}
+
+.main-reminder-card .bell-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* أيقونات المؤشرات - تصميم محسّن */
+.main-reminder-card .icon-indicator {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+}
+
+/* أيقونة الربط بالفاكس */
+.main-reminder-card .icon-indicator.fax-link {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.main-reminder-card .icon-indicator.fax-link:hover {
+    background: #bae6fd;
+    transform: translateY(-1px);
+}
+
+/* أيقونة المرفقات */
+.main-reminder-card .icon-indicator.attachments {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.main-reminder-card .icon-indicator.attachments:hover {
+    background: #fde68a;
+    transform: translateY(-1px);
+}
+
+.main-reminder-card .icon-indicator svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* Card Heading */
+.main-reminder-card .card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 13px;
+}
+
+.main-reminder-card .heading-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.main-reminder-card .reminder-title-new {
+    margin: 0 0 5px;
+    color: #1c2d3b;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.main-reminder-card .reminder-description-new {
+    margin: 0;
+    color: #71869a;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* Details Grid */
+.main-reminder-card .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e5edf0;
+}
+
+.main-reminder-card .detail-item {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 10px;
+    border: 1px solid #e7f0ed;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.main-reminder-card .detail-icon {
+    flex: 0 0 25px;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    color: #087f5b;
+    background: #e8fbf3;
+}
+
+.main-reminder-card.expired .detail-icon {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.main-reminder-card.paused .detail-icon {
+    color: #64748b;
+    background: #f1f5f9;
+}
+
+.main-reminder-card .detail-icon svg {
+    width: 13px;
+    height: 13px;
+}
+
+.main-reminder-card .detail-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.main-reminder-card .detail-label {
+    display: block;
+    color: #8799a5;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.main-reminder-card .detail-value {
+    display: block;
+    color: #526b7b;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Days Remaining Section */
+.main-reminder-card .days-remaining-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e5edf0;
+}
+
+.main-reminder-card .days-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 16px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-reminders-section .section-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .btn-add-reminder {
+        justify-content: center;
+    }
+
+    .main-reminders-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-reminder-card {
+        max-width: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .main-reminder-card {
+        padding: 14px;
+    }
+
+    .main-reminder-card .details-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .main-reminder-card .detail-item {
+        padding: 7px 9px;
+    }
+}
+
+
+/* ========== Create/Edit Reminder Modal - New Design ========== */
+
+.reminder-create-modal .modal-create-reminder {
+    max-width: 680px;
+    width: 92%;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+.reminder-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    border-bottom: 1px solid #e8eaed;
+    background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.title-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.title-icon.edit-icon {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.title-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.header-title h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 0 0 4px;
+    line-height: 1.2;
+}
+
+.header-title p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.btn-close-modal {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-modal:hover {
+    background: #e2e8f0;
+    color: #1a202c;
+    transform: rotate(90deg);
+}
+
+.btn-close-modal svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Body */
+.reminder-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Form Section */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.section-icon {
+    width: 22px;
+    height: 22px;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.section-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0;
+    flex: 1;
+}
+
+.section-badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #d97706;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.form-grid.two-cols {
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-field.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Field Label */
+.field-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.field-label .required {
+    color: #ef4444;
+    font-weight: 800;
+}
+
+.field-label .optional {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+/* Field Input */
+.field-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e8eaed;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a202c;
+    background: #ffffff;
+    transition: all 0.2s;
+}
+
+.field-input:hover {
+    border-color: #cbd5e1;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+}
+
+.field-input::placeholder {
+    color: #cbd5e1;
+}
+
+/* Field with Icon */
+.field-with-icon {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.field-with-icon .field-input {
+    padding-right: 44px;
+}
+
+/* Textarea */
+.field-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e8eaed;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a202c;
+    background: #ffffff;
+    transition: all 0.2s;
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.6;
+}
+
+.field-textarea:hover {
+    border-color: #cbd5e1;
+}
+
+.field-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+}
+
+.field-textarea::placeholder {
+    color: #cbd5e1;
+}
+
+/* Linked Fax Card */
+.linked-fax-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 12px;
+    background: #eff6ff;
+}
+
+.fax-card-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #3b82f6;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.fax-card-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.fax-card-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fax-card-number {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.fax-card-name {
+    font-size: 12px;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-remove-link {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-remove-link:hover {
+    background: #fee2e2;
+    transform: scale(1.05);
+}
+
+.btn-remove-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Select Fax Button */
+.btn-select-fax {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #3b82f6;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-select-fax:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    transform: translateY(-1px);
+}
+
+.btn-select-fax svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Attachments Grid */
+.attachments-grid-new {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+}
+
+.attachment-card-new {
+    position: relative;
+    border: 1.5px solid #e8eaed;
+    border-radius: 12px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.attachment-card-new:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.btn-remove-attachment {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.95);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-remove-attachment:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+.btn-remove-attachment svg {
+    width: 14px;
+    height: 14px;
+}
+
+.attachment-preview-new {
+    width: 100%;
+    height: 140px;
+    background: #f8f9fb;
+    overflow: hidden;
+}
+
+.attachment-preview-new img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.attachment-file-new {
+    width: 100%;
+    height: 140px;
+    display: grid;
+    place-items: center;
+    background: #dbeafe;
+    color: #3b82f6;
+}
+
+.attachment-file-new svg {
+    width: 48px;
+    height: 48px;
+}
+
+.attachment-info-new {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.attachment-name-new {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a202c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.attachment-size-new {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* Upload Attachment Button */
+.btn-upload-attachment {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-upload-attachment:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.btn-upload-attachment svg {
+    width: 40px;
+    height: 40px;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.btn-upload-attachment > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: right;
+}
+
+.upload-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.upload-subtitle {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* Footer */
+.reminder-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    border-top: 1px solid #e8eaed;
+    background: #f8f9fb;
+    border-radius: 0 0 16px 16px;
+}
+
+.footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-cancel-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border: 2px solid #e8eaed;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel-new:hover {
+    border-color: #cbd5e1;
+    background: #f8f9fb;
+    color: #1a202c;
+}
+
+.btn-cancel-new svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-save-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-save-new:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.btn-save-new svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-delete-edit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 2px solid #fecaca;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-delete-edit:hover {
+    border-color: #ef4444;
+    background: #fecaca;
+    transform: translateY(-1px);
+}
+
+.btn-delete-edit svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Fax Selector Modal */
+.modal-fax-selector {
+    max-width: 560px;
+    width: 90%;
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.fax-selector-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.fax-selector-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0;
+}
+
+.btn-close-selector {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-selector:hover {
+    background: #e2e8f0;
+    color: #1a202c;
+}
+
+.btn-close-selector svg {
+    width: 18px;
+    height: 18px;
+}
+
+.fax-selector-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 24px;
+}
+
+.fax-search-box {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.fax-search-box .search-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: #94a3b8;
+}
+
+.fax-search-box input {
+    width: 100%;
+    padding: 12px 46px 12px 16px;
+    border: 1.5px solid #e8eaed;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a202c;
+}
+
+.fax-search-box input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+}
+
+.fax-results-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fax-result-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1.5px solid #e8eaed;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: right;
+}
+
+.fax-result-item:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    transform: translateX(-2px);
+}
+
+.fax-result-number {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.fax-result-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fax-result-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fax-result-note {
+    font-size: 12px;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fax-result-arrow {
+    width: 20px;
+    height: 20px;
+    color: #cbd5e1;
+    flex-shrink: 0;
+}
+
+.fax-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.fax-empty-state svg {
+    width: 64px;
+    height: 64px;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+}
+
+.fax-empty-state p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reminder-create-modal .modal-create-reminder {
+        width: 96%;
+        max-height: 96vh;
+    }
+
+    .form-grid.two-cols {
+        grid-template-columns: 1fr;
+    }
+
+    .attachments-grid-new {
+        grid-template-columns: 1fr;
+    }
+
+    .reminder-modal-footer {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .footer-actions {
+        width: 100%;
+        flex-direction: column-reverse;
+    }
+
+    .btn-cancel-new,
+    .btn-save-new,
+    .btn-delete-edit {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* ========== Simple Reminder Modal ========== */
+
+.reminder-simple-modal .modal-content.modal-simple-reminder {
+    width: 90%;
+    max-width: 560px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.simple-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.simple-modal-header h2,
+.simple-modal-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0;
+}
+
+.btn-close-simple {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.btn-close-simple:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.btn-close-simple svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Body */
+.simple-modal-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Question */
+.reminder-question {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: -8px;
+}
+
+/* Main Input - Textarea */
+.reminder-main-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+    color: #1e293b;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.2s;
+}
+
+.reminder-main-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.reminder-main-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Date Inputs Row */
+.date-inputs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date-input-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.date-input-group input[type="date"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Tajawal', sans-serif;
+    color: #1e293b;
+    transition: all 0.2s;
+}
+
+.date-input-group input[type="date"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Simple Links Section */
+.simple-links-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #e8eaed;
+}
+
+.simple-add-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #3b82f6;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+    align-self: flex-start;
+}
+
+.simple-add-link:hover {
+    color: #2563eb;
+}
+
+/* Linked Item */
+.simple-linked-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.simple-linked-item svg {
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.simple-linked-item span {
+    flex: 1;
+}
+
+.btn-unlink-simple {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-unlink-simple:hover {
+    background: #e2e8f0;
+    color: #ef4444;
+}
+
+/* Attachments List */
+.simple-attachments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.simple-attachment-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #fef3c7;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #78350f;
+}
+
+.simple-attachment-item svg {
+    color: #d97706;
+    flex-shrink: 0;
+}
+
+.simple-attachment-item span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Footer */
+.simple-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    border-top: 1px solid #e8eaed;
+    gap: 12px;
+}
+
+.footer-actions-right {
+    display: flex;
+    gap: 12px;
+    margin-right: auto;
+}
+
+.btn-simple-cancel {
+    padding: 10px 20px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-simple-cancel:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.btn-simple-save {
+    padding: 10px 24px;
+    border: none;
+    background: #3b82f6;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-simple-save:hover {
+    background: #2563eb;
+}
+
+.btn-simple-delete {
+    padding: 10px 20px;
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-simple-delete:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+/* Fax Selector Modal */
+.modal-fax-selector-simple {
+    width: 90%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.simple-selector-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.simple-search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+    transition: all 0.2s;
+}
+
+.simple-search-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.simple-fax-list {
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.simple-fax-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: right;
+}
+
+.simple-fax-item:hover {
+    background: #f8fafc;
+    border-color: #3b82f6;
+}
+
+.simple-fax-item .fax-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: #3b82f6;
+}
+
+.simple-fax-item .fax-name {
+    flex: 1;
+    font-size: 13px;
+    color: #475569;
+}
+
+.simple-empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* Delete Confirmation Modal */
+.modal-delete-confirm {
+    width: 90%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px 28px;
+    text-align: center;
+}
+
+.delete-confirm-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    background: #fef2f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-confirm-icon svg {
+    width: 28px;
+    height: 28px;
+    color: #dc2626;
+}
+
+.modal-delete-confirm h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+}
+
+.modal-delete-confirm p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0 0 24px;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-cancel-delete {
+    padding: 10px 24px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel-delete:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.btn-confirm-delete {
+    padding: 10px 24px;
+    border: none;
+    background: #dc2626;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-confirm-delete:hover {
+    background: #b91c1c;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+}
+
+
+/* ========== Clean Reminder Modal (Matching Reference Design) ========== */
+
+:root {
+  --clean-blue: #3478f6;
+  --clean-text: #202b3c;
+  --clean-muted: #98a2b3;
+  --clean-line: #e9edf2;
+  --clean-bg: #ffffff;
+}
+
+.reminder-clean-modal .modal-content.modal-clean-reminder {
+    width: min(650px, 100%);
+    background: var(--clean-bg);
+    border: 1px solid #e2e6ec;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(30, 40, 60, 0.05);
+}
+
+/* Top bar */
+.clean-topbar {
+    height: 65px;
+    padding: 0 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse; /* تبديل اتجاه العناصر لنقل X إلى اليسار */
+    border-bottom: 1px solid var(--clean-line);
+}
+
+.clean-topbar h2 {
+    font-size: 15px;
+    font-weight: 650;
+    margin: 0;
+    color: var(--clean-text);
+}
+
+.clean-close {
+    border: 0;
+    background: transparent;
+    color: #8995a6;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.clean-close:hover {
+    color: var(--clean-text);
+}
+
+/* Composer */
+.clean-composer {
+    padding: 28px 30px 24px;
+}
+
+.clean-title-input {
+    display: block;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    font-size: 22px;
+    font-weight: 650;
+    color: var(--clean-text);
+    background: transparent;
+    padding: 5px 0 13px;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.clean-title-input::placeholder {
+    color: #c1c8d2;
+}
+
+.clean-description {
+    display: block;
+    width: 100%;
+    min-height: 105px;
+    resize: vertical;
+    border: 0;
+    outline: 0;
+    padding: 8px 0;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #475467;
+    background: transparent;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.clean-description::placeholder {
+    color: #b5bdc9;
+}
+
+/* Schedule */
+.clean-schedule {
+    margin-top: 25px;
+    padding: 17px 0;
+    border-top: 1px solid var(--clean-line);
+    border-bottom: 1px solid var(--clean-line);
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.clean-date-field {
+    flex: 1;
+    min-width: 0;
+}
+
+.clean-date-field label {
+    display: block;
+    color: #8995a6;
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.clean-date-field input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    color: #344054;
+    background: transparent;
+    font-size: 13px;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.clean-date-separator {
+    width: 1px;
+    height: 34px;
+    background: var(--clean-line);
+    flex-shrink: 0;
+}
+
+/* Relations */
+.clean-utilities {
+    padding-top: 20px;
+}
+
+.clean-utility-row {
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.clean-utility-label {
+    font-size: 12px;
+    color: #667085;
+}
+
+.clean-utility-action {
+    border: 0;
+    padding: 7px 0;
+    background: transparent;
+    color: var(--clean-blue);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.clean-utility-action:hover {
+    color: #205bc7;
+}
+
+.clean-selected-value {
+    color: #475467;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.clean-file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 8px 0;
+}
+
+.clean-file-chip {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 9px;
+    border: 1px solid var(--clean-line);
+    border-radius: 6px;
+    font-size: 11px;
+    color: #536176;
+}
+
+.clean-file-chip span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.clean-file-chip button {
+    border: 0;
+    background: transparent;
+    color: #98a2b3;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.clean-file-chip button:hover {
+    color: #dc2626;
+}
+
+.clean-hidden-input {
+    display: none;
+}
+
+/* Footer */
+.clean-footer {
+    min-height: 72px;
+    padding: 12px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafbfc;
+    border-top: 1px solid var(--clean-line);
+}
+
+.clean-footer-edit {
+    justify-content: space-between;
+}
+
+.clean-footer-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.clean-cancel {
+    border: 0;
+    background: transparent;
+    color: #667085;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 7px 12px;
+    transition: color 0.2s;
+}
+
+.clean-cancel:hover {
+    color: var(--clean-text);
+}
+
+.clean-save {
+    height: 39px;
+    padding: 0 22px;
+    border: 1px solid var(--clean-blue);
+    border-radius: 7px;
+    background: var(--clean-blue);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.clean-save:hover {
+    background: #2869df;
+}
+
+.clean-delete {
+    border: 0;
+    background: transparent;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 7px 12px;
+    transition: color 0.2s;
+}
+
+.clean-delete:hover {
+    color: #b91c1c;
+}
+
+/* Fax Selector Modal */
+.modal-fax-selector-clean {
+    width: min(480px, 100%);
+    background: var(--clean-bg);
+    border: 1px solid #e2e6ec;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(30, 40, 60, 0.05);
+}
+
+.clean-selector-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.clean-search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--clean-line);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Tajawal', sans-serif;
+    color: var(--clean-text);
+    transition: all 0.2s;
+}
+
+.clean-search-input:focus {
+    outline: none;
+    border-color: var(--clean-blue);
+}
+
+.clean-search-input::placeholder {
+    color: var(--clean-muted);
+}
+
+.clean-fax-list {
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.clean-fax-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: right;
+}
+
+.clean-fax-item:hover {
+    background: #f8fafc;
+    border-color: var(--clean-blue);
+}
+
+.clean-fax-item .fax-number {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--clean-blue);
+}
+
+.clean-fax-item .fax-name {
+    flex: 1;
+    font-size: 12px;
+    color: #475569;
+}
+
+.clean-empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--clean-muted);
+    font-size: 13px;
+}
+
+/* Delete Confirmation Modal */
+.modal-delete-confirm-clean {
+    width: min(420px, 100%);
+    background: var(--clean-bg);
+    border: 1px solid #e2e6ec;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(30, 40, 60, 0.05);
+}
+
+.delete-confirm-content {
+    padding: 32px 28px;
+    text-align: center;
+}
+
+.delete-confirm-content h3 {
+    font-size: 17px;
+    font-weight: 650;
+    color: var(--clean-text);
+    margin: 0 0 12px;
+}
+
+.delete-confirm-content p {
+    font-size: 13px;
+    color: #667085;
+    line-height: 1.6;
+    margin: 0 0 24px;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.clean-confirm-delete {
+    height: 39px;
+    padding: 0 22px;
+    border: 1px solid #dc2626;
+    border-radius: 7px;
+    background: #dc2626;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.clean-confirm-delete:hover {
+    background: #b91c1c;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+    .reminder-clean-modal .modal-content.modal-clean-reminder {
+        border-radius: 0;
+        min-height: 100vh;
+        width: 100%;
+    }
+
+    .clean-composer {
+        padding: 22px 18px;
+    }
+
+    .clean-schedule {
+        gap: 12px;
+    }
+
+    .clean-topbar,
+    .clean-footer {
+        padding-inline: 18px;
+    }
+}
+
+
+/* زر عرض الفاكس في ReminderDetailModal - Compact Version */
+.btn-view-fax {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: 1px solid var(--clean-blue, #3478f6);
+    background: rgba(52, 120, 246, 0.05);
+    color: var(--clean-blue, #3478f6);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-view-fax:hover {
+    background: rgba(52, 120, 246, 0.1);
+    border-color: #2869df;
+    color: #2869df;
+}
+
+.btn-view-fax .svg-icon {
+    width: 15px;
+    height: 15px;
+}
+
+/* ========== Order Buttons for Reminders ========== */
+
+.order-buttons-reminder {
+    display: flex;
+    gap: 4px;
+    margin-left: 8px;
+}
+
+.order-buttons-reminder .order-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: #f0f2f6;
+    border: 1px solid #e2e6eb;
+    color: #657187;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.order-buttons-reminder .order-btn:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.order-buttons-reminder .order-btn:active {
+    transform: translateY(0);
+}
+
+.order-buttons-reminder .order-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* تحديث top-actions لتضمين أزرار الترتيب */
+.reminder-card-new .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ========== Reminders Header Actions ========== */
+
+.reminders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.reminders-header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-reorder {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #f8f9fb;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #3b82f6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-reorder:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.btn-reorder svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* ========================================== */
+/* REMINDER DETAIL MODAL - MODERN REDESIGN */
+/* Exact match to reference design */
+/* ========================================== */
+
+.reminder-detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(27, 39, 57, 0.3);
+    backdrop-filter: blur(5px);
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    z-index: 10000;
+    animation: reminderFadeIn 0.2s ease-out;
+}
+
+@keyframes reminderFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.reminder-detail-modal {
+    width: min(900px, 100%);
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.67);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(23, 36, 59, 0.19);
+    animation: reminderPop 0.2s ease-out;
+}
+
+@keyframes reminderPop {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ========== Header ========== */
+
+.reminder-modal-header {
+    height: 68px;
+    flex: none;
+    padding: 0 24px;
+    border-bottom: 1px solid #e4e9f1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-head {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.modal-head-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #edf4ff;
+    color: #3478f6;
+    display: grid;
+    place-items: center;
+}
+
+.modal-main-title {
+    font-size: 15px;
+    margin: 0;
+    font-weight: 800;
+    color: #172033;
+}
+
+.modal-subhead {
+    font-size: 9px;
+    color: #8290a5;
+    margin-top: 2px;
+}
+
+.modal-head-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.modal-icon-btn {
+    height: 34px;
+    width: 34px;
+    border: 1px solid #e4e9f1;
+    border-radius: 8px;
+    background: white;
+    color: #75849a;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.modal-icon-btn:hover {
+    color: #3478f6;
+    background: #f6f9ff;
+}
+
+/* ========== Main Content ========== */
+
+.reminder-modal-main {
+    padding: 20px 24px 23px;
+    overflow: auto;
+    flex: 1;
+}
+
+/* Summary Card */
+
+.reminder-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px;
+    border: 1px solid #e8edf4;
+    border-radius: 12px;
+    background: linear-gradient(110deg, #fbfcfe, #f6f8fb);
+}
+
+.summary-bell-icon {
+    height: 42px;
+    width: 42px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #e8f0ff;
+    color: #285ac8;
+}
+
+.summary-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.summary-eyebrow {
+    font-size: 9px;
+    color: #8290a5;
+}
+
+.summary-title {
+    font-size: 17px;
+    margin: 1px 0 2px;
+    font-weight: 800;
+    color: #172033;
+}
+
+.summary-description {
+    font-size: 10px;
+    color: #8290a5;
+}
+
+.reminder-status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 6px 11px;
+    border-radius: 30px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.reminder-status-badge.active {
+    color: #0b9e70;
+    background: #e5f8f0;
+}
+
+.reminder-status-badge.active:before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-left: 6px;
+}
+
+.reminder-status-badge.expired {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.reminder-status-badge.expired:before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-left: 6px;
+}
+
+.reminder-status-badge.paused {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.reminder-status-badge.paused:before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-left: 6px;
+}
+
+/* Sections */
+
+.reminder-section {
+    margin-top: 19px;
+}
+
+.reminder-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 9px;
+}
+
+.reminder-section-head h3 {
+    font-size: 12px;
+    margin: 0;
+    font-weight: 800;
+    color: #172033;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.reminder-section-head h3 svg {
+    color: #3478f6;
+}
+
+.section-hint {
+    font-size: 9px;
+    color: #8290a5;
+}
+
+.reminder-add-file-btn {
+    font-size: 9px;
+    color: #3478f6;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.reminder-add-file-btn:hover {
+    color: #285ac8;
+}
+
+/* Dates Grid */
+
+.reminder-dates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.reminder-date-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid #e4e9f1;
+    border-radius: 10px;
+    background: white;
+    min-height: 60px;
+}
+
+.reminder-date-icon {
+    height: 34px;
+    width: 34px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #edf4ff;
+    color: #3478f6;
+    font-size: 18px;
+}
+
+.reminder-date-label {
+    font-size: 9px;
+    color: #8290a5;
+}
+
+.reminder-date-value {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 2px;
+    color: #172033;
+}
+
+/* Linked Fax */
+
+.reminder-linked-fax {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px;
+    border: 1px solid #d8e6ff;
+    background: #f5f8ff;
+    border-radius: 11px;
+}
+
+.linked-fax-paper {
+    width: 59px;
+    height: 69px;
+    flex: none;
+    border: 1px solid #e5ebf4;
+    border-radius: 7px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.linked-fax-paper b {
+    font-size: 8px;
+    color: #3478f6;
+}
+
+.linked-fax-paper i {
+    height: 2px;
+    width: 27px;
+    background: #e5ebf2;
+    display: block;
+}
+
+.linked-fax-paper i:nth-child(3) {
+    width: 21px;
+}
+
+.linked-fax-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.linked-fax-title {
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #172033;
+}
+
+.fax-tag {
+    font-size: 8px;
+    font-weight: 600;
+    color: #3478f6;
+    background: #e5efff;
+    border-radius: 4px;
+    padding: 3px 7px;
+}
+
+.linked-fax-meta {
+    font-size: 9px;
+    color: #8290a5;
+    margin-top: 5px;
+    line-height: 1.8;
+}
+
+.reminder-view-btn {
+    border: 1px solid #d9e6ff;
+    border-radius: 8px;
+    background: #e8f1ff;
+    color: #286be7;
+    padding: 9px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.reminder-view-btn:hover {
+    background: #dceaff;
+}
+
+/* Files Grid */
+
+.reminder-files-grid {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.reminder-file-card {
+    width: 174px;
+    border: 1px solid #e4e9f1;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    transition: box-shadow 0.2s;
+}
+
+.reminder-file-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.reminder-file-preview {
+    height: 108px;
+    position: relative;
+    background: #e9eef4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reminder-file-preview img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.reminder-file-icon-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: #3478f6;
+}
+
+.reminder-download-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 29px;
+    height: 29px;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #3478f6;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.reminder-download-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.reminder-delete-attachment-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 29px;
+    height: 29px;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #ef4444;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-delete-attachment-btn:hover {
+    background: #fee2e2;
+    transform: scale(1.1);
+}
+
+.reminder-delete-attachment-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.reminder-file-info {
+    padding: 8px 10px;
+}
+
+.reminder-filename {
+    font-size: 9px;
+    font-weight: 700;
+    direction: ltr;
+    text-align: right;
+    color: #172033;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.reminder-filesize {
+    font-size: 8px;
+    color: #9aa6b8;
+    margin-top: 3px;
+}
+
+.reminder-file-placeholder {
+    flex: 1;
+    border: 1px dashed #e0e6ef;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    color: #9aa6b8;
+    font-size: 10px;
+    min-height: 108px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-file-placeholder:hover {
+    border-color: #3478f6;
+    background: #f6f9ff;
+    color: #3478f6;
+}
+
+.reminder-file-placeholder-full {
+    width: 100%;
+}
+
+/* ========== Footer ========== */
+
+.reminder-modal-footer {
+    height: 64px;
+    flex: none;
+    border-top: 1px solid #e4e9f1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.reminder-btn-close {
+    padding: 8px 15px;
+    border: 1px solid #e4e9f1;
+    border-radius: 8px;
+    background: white;
+    color: #536176;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reminder-btn-close:hover {
+    background: #f6f8fb;
+}
+
+.reminder-btn-delete {
+    padding: 8px 15px;
+    border: 1px solid #fee2e2;
+    border-radius: 8px;
+    background: #fff5f5;
+    color: #e33f45;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-btn-delete:hover {
+    background: #ffe9e9;
+}
+
+/* ========== Delete Confirmation ========== */
+
+.reminder-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 10001;
+    padding: 20px;
+}
+
+.reminder-confirm-modal {
+    max-width: 360px;
+    width: 90%;
+    padding: 24px 20px;
+    background: white;
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.reminder-confirm-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fef2f2;
+    color: #ef4444;
+    margin-bottom: 6px;
+}
+
+.reminder-confirm-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #172033;
+    margin: 0;
+}
+
+.reminder-confirm-message {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
+}
+
+.reminder-confirm-message strong {
+    color: #172033;
+    font-weight: 700;
+    display: block;
+    margin: 6px 0;
+}
+
+.reminder-confirm-warning {
+    display: block;
+    margin-top: 6px;
+    font-size: 10px;
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.reminder-confirm-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.reminder-confirm-cancel {
+    flex: 1;
+    padding: 9px 16px;
+    border: 2px solid #e4e9f1;
+    border-radius: 8px;
+    background: white;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-confirm-cancel:hover {
+    border-color: #cbd5e1;
+    background: #f8f9fb;
+    color: #172033;
+}
+
+.reminder-confirm-delete {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: #ef4444;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reminder-confirm-delete:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+}
+
+.reminder-confirm-delete svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========== Responsive Design ========== */
+
+@media (max-width: 768px) {
+    .reminder-dates-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reminder-linked-fax {
+        flex-wrap: wrap;
+    }
+
+    .linked-fax-copy {
+        min-width: calc(100% - 85px);
+    }
+
+    .reminder-view-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .reminder-files-grid {
+        flex-wrap: wrap;
+    }
+
+    .reminder-file-card {
+        width: calc(50% - 6px);
+    }
+
+    .reminder-file-placeholder {
+        min-width: 100%;
+        min-height: 54px;
+    }
+
+    .reminder-modal-footer {
+        padding: 0 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .reminder-detail-overlay {
+        padding: 9px;
+    }
+
+    .reminder-detail-modal {
+        max-height: calc(100vh - 18px);
+        border-radius: 12px;
+    }
+
+    .reminder-modal-header {
+        padding: 0 14px;
+        height: 60px;
+    }
+
+    .reminder-modal-main {
+        padding: 14px;
+    }
+
+    .reminder-summary-card {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .summary-title {
+        font-size: 14px;
+    }
 }

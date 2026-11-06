@@ -3,11 +3,16 @@ import { dataAPI } from '../../services/electronAPI';
 import ListCard from './ListCard';
 import AddListModal from './AddListModal';
 import ListItemsView from './ListItemsView';
+import ConfirmDeleteModal from '../common/ConfirmDeleteModal';
+import ReorderListsModal from './ReorderListsModal';
 
 const ListsView = () => {
     const [lists, setLists] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedList, setSelectedList] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [listToDelete, setListToDelete] = useState(null);
+    const [showReorderModal, setShowReorderModal] = useState(false);
 
     useEffect(() => {
         loadLists();
@@ -17,10 +22,16 @@ const ListsView = () => {
         try {
             const result = await dataAPI.loadData();
             if (result.success && result.data && result.data.lists) {
-                setLists(result.data.lists);
+                // ترتيب القوائم حسب حقل order
+                const sortedLists = (result.data.lists || []).sort((a, b) => {
+                    const orderA = a.order !== undefined ? a.order : 999999;
+                    const orderB = b.order !== undefined ? b.order : 999999;
+                    return orderA - orderB;
+                });
+                setLists(sortedLists);
             } else {
                 // إنشاء قائمة المفضلة الافتراضية
-                const defaultLists = [{id: 1, name: "المفضلة", isDefault: true, items: []}];
+                const defaultLists = [{id: 1, name: "المفضلة", isDefault: true, items: [], order: 0}];
                 setLists(defaultLists);
             }
         } catch (error) {
@@ -38,11 +49,15 @@ const ListsView = () => {
                     return;
                 }
 
+                // حساب أعلى order موجود
+                const maxOrder = Math.max(0, ...(result.data.lists || []).map(l => l.order || 0));
+
                 const newList = {
                     id: Date.now(),
                     name: listName,
                     isDefault: false,
-                    items: []
+                    items: [],
+                    order: maxOrder + 1
                 };
 
                 const updatedLists = [...(result.data.lists || []), newList];
@@ -68,14 +83,17 @@ const ListsView = () => {
             return;
         }
 
-        if (!confirm(`هل أنت متأكد من حذف القائمة "${list.name}"؟`)) {
-            return;
-        }
+        setListToDelete(list);
+        setShowDeleteModal(true);
+    };
+
+    const confirmDeleteList = async () => {
+        if (!listToDelete) return;
 
         try {
             const result = await dataAPI.loadData();
             if (result.success && result.data) {
-                const updatedLists = result.data.lists.filter(l => l.id !== listId);
+                const updatedLists = result.data.lists.filter(l => l.id !== listToDelete.id);
                 result.data.lists = updatedLists;
 
                 await dataAPI.saveData(result.data);
@@ -84,6 +102,9 @@ const ListsView = () => {
         } catch (error) {
             console.error('Error deleting list:', error);
             alert('حدث خطأ أثناء حذف القائمة');
+        } finally {
+            setShowDeleteModal(false);
+            setListToDelete(null);
         }
     };
 
@@ -94,6 +115,20 @@ const ListsView = () => {
     const handleCloseListItems = () => {
         setSelectedList(null);
         loadLists(); // إعادة تحميل لتحديث عدد العناصر
+    };
+
+    const handleSaveOrder = async (orderedLists) => {
+        try {
+            const result = await dataAPI.loadData();
+            if (result.success && result.data) {
+                result.data.lists = orderedLists;
+                await dataAPI.saveData(result.data);
+                setLists(orderedLists);
+            }
+        } catch (error) {
+            console.error('Error saving lists order:', error);
+            alert('حدث خطأ أثناء حفظ الترتيب');
+        }
     };
 
     return (
@@ -107,16 +142,28 @@ const ListsView = () => {
                     القوائم
                     <span className="files-count">({lists.length})</span>
                 </h2>
-                <button className="btn-add-category" onClick={() => setShowAddModal(true)}>
-                    <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 0 1 0 2h-5v5a1 1 0 0 1 -2 0v-5h-5a1 1 0 0 1 0 -2h5v-5a1 1 0 0 1 1 -1" />
-                    </svg>
-                    إنشاء قائمة جديدة
-                </button>
+                <div className="lists-header-actions">
+                    {lists.length > 1 && (
+                        <button className="btn-reorder" onClick={() => setShowReorderModal(true)}>
+                            <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M3 8h18" />
+                                <path d="M3 16h18" />
+                                <path d="M11 3v18" />
+                            </svg>
+                            إعادة الترتيب
+                        </button>
+                    )}
+                    <button className="btn-add-category" onClick={() => setShowAddModal(true)}>
+                        <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 0 1 0 2h-5v5a1 1 0 0 1 -2 0v-5h-5a1 1 0 0 1 0 -2h5v-5a1 1 0 0 1 1 -1" />
+                        </svg>
+                        إنشاء قائمة جديدة
+                    </button>
+                </div>
             </div>
 
             <div className="lists-grid">
-                {lists.map(list => (
+                {lists.map((list) => (
                     <ListCard
                         key={list.id}
                         list={list}
@@ -137,6 +184,28 @@ const ListsView = () => {
                 <ListItemsView
                     list={selectedList}
                     onClose={handleCloseListItems}
+                />
+            )}
+
+            <ConfirmDeleteModal
+                isOpen={showDeleteModal}
+                onClose={() => {
+                    setShowDeleteModal(false);
+                    setListToDelete(null);
+                }}
+                onConfirm={confirmDeleteList}
+                title="تأكيد حذف القائمة"
+                message="هل أنت متأكد من حذف هذه القائمة؟"
+                itemName={listToDelete?.name}
+                itemCount={listToDelete?.items?.length > 0 ? `تحتوي على ${listToDelete.items.length} عنصر` : null}
+                warningNote="لا يمكن التراجع عن هذا الإجراء"
+            />
+
+            {showReorderModal && (
+                <ReorderListsModal
+                    lists={lists}
+                    onClose={() => setShowReorderModal(false)}
+                    onSave={handleSaveOrder}
                 />
             )}
         </div>

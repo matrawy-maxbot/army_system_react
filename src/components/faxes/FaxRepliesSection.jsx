@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { useAppState } from '../../context/AppStateContext';
+import { useToast } from '../common/ToastContainer';
 import './FaxReplies.css';
 import SelectFaxModal from './SelectFaxModal';
 import SelectTemplateModal from './SelectTemplateModal';
@@ -14,6 +15,7 @@ import ConfirmDeleteModal from '../common/ConfirmDeleteModal';
 
 const FaxRepliesSection = () => {
     const { appState, updateState } = useAppState();
+    const toast = useToast();
     const [tempSelectedFaxId, setTempSelectedFaxId] = useState(null);
     const [showSelectFaxModal, setShowSelectFaxModal] = useState(false);
     const [showSelectTemplateModal, setShowSelectTemplateModal] = useState(false);
@@ -22,6 +24,8 @@ const FaxRepliesSection = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [replyToDelete, setReplyToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [selectedReplies, setSelectedReplies] = useState(new Set());
+    const [showDeleteMultipleModal, setShowDeleteMultipleModal] = useState(false);
 
     const filteredFaxes = appState.filteredFaxes || [];
     const replies = appState.faxReplies || [];
@@ -74,7 +78,12 @@ const FaxRepliesSection = () => {
 
         // في المرحلة النهائية، سيتم فتح الملف هنا
         console.log('Reply created:', newReply);
-        alert(`تم إنشاء الرد "${newReply.name}" بنجاح للفاكس "${selectedFax?.name}"\nفي المرحلة النهائية، سيتم فتح الملف تلقائياً`);
+        
+        // عرض toast احترافي
+        toast.success(
+            `سيتم فتح الملف تلقائياً في المرحلة النهائية`,
+            `تم إنشاء الرد "${newReply.name}" بنجاح للفاكس "${selectedFax?.name}"`
+        );
     };
 
     const handleReplyClick = (replyId) => {
@@ -98,7 +107,48 @@ const FaxRepliesSection = () => {
             setReplyToDelete(null);
         } catch (error) {
             console.error('Error deleting reply:', error);
-            alert('حدث خطأ أثناء حذف الرد');
+            toast.error('حدث خطأ أثناء حذف الرد', 'خطأ');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const toggleSelection = (replyId) => {
+        const newSelection = new Set(selectedReplies);
+        if (newSelection.has(replyId)) {
+            newSelection.delete(replyId);
+        } else {
+            newSelection.add(replyId);
+        }
+        setSelectedReplies(newSelection);
+    };
+
+    const selectAll = () => {
+        setSelectedReplies(new Set(allReplies.map(r => r.id)));
+    };
+
+    const clearSelection = () => {
+        setSelectedReplies(new Set());
+    };
+
+    const deleteSelected = () => {
+        if (selectedReplies.size === 0) return;
+        setShowDeleteMultipleModal(true);
+    };
+
+    const confirmDeleteSelected = async () => {
+        if (selectedReplies.size === 0) return;
+
+        setIsDeleting(true);
+        try {
+            const updatedReplies = replies.filter(r => !selectedReplies.has(r.id));
+            await updateState({ faxReplies: updatedReplies });
+            setSelectedReplies(new Set());
+            setShowDeleteMultipleModal(false);
+            toast.success(`تم حذف ${selectedReplies.size} رد بنجاح`, 'تم الحذف');
+        } catch (error) {
+            console.error('Error deleting replies:', error);
+            toast.error('حدث خطأ أثناء حذف الردود', 'خطأ');
         } finally {
             setIsDeleting(false);
         }
@@ -118,6 +168,32 @@ const FaxRepliesSection = () => {
                         <span className="replies-count">({allReplies.length})</span>
                     </h2>
                     <div className="replies-header-actions">
+                        {allReplies.length > 0 && selectedReplies.size === 0 ? (
+                            <button className="btn-secondary" onClick={selectAll}>
+                                <svg className="svg-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M9 11l3 3l8 -8"/>
+                                    <path d="M7 21h-4a2 2 0 0 1 -2 -2v-4"/>
+                                    <path d="M7 3h-4a2 2 0 0 0 -2 2v4"/>
+                                    <path d="M17 3h4a2 2 0 0 1 2 2v4"/>
+                                    <path d="M17 21h4a2 2 0 0 0 2 -2v-4"/>
+                                </svg>
+                                تحديد الكل
+                            </button>
+                        ) : selectedReplies.size > 0 ? (
+                            <div className="faxes-actions">
+                                <span className="selection-count">{selectedReplies.size} محدد</span>
+                                <button className="btn-secondary" onClick={clearSelection}>
+                                    إلغاء التحديد
+                                </button>
+                                <button className="btn-danger" onClick={deleteSelected}>
+                                    <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007zm-10 4a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1m4 0a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1"/>
+                                        <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005z"/>
+                                    </svg>
+                                    حذف المحدد
+                                </button>
+                            </div>
+                        ) : null}
                         <button 
                             className="btn-success" 
                             onClick={handleAddReply}
@@ -138,6 +214,8 @@ const FaxRepliesSection = () => {
                             <ReplyCard
                                 key={reply.id}
                                 reply={reply}
+                                isSelected={selectedReplies.has(reply.id)}
+                                onSelect={toggleSelection}
                                 onClick={() => handleReplyClick(reply.id)}
                                 onDelete={() => handleDeleteReply(reply)}
                             />
@@ -154,7 +232,7 @@ const FaxRepliesSection = () => {
                             </svg>
                         </div>
                         <p>لا توجد ردود على الفاكسات</p>
-                        <p className="empty-hint">
+                        <p className="empty-hint" style={{maxWidth: 'unset'}}>
                             {filteredFaxes.length === 0 
                                 ? 'قم بفلترة الفاكسات أولاً لإضافة ردود' 
                                 : 'اضغط على "إضافة رد" لإنشاء رد جديد'}
@@ -209,6 +287,18 @@ const FaxRepliesSection = () => {
                 title="تأكيد حذف الرد"
                 message="هل أنت متأكد من حذف هذا الرد؟"
                 itemName={replyToDelete?.name}
+                warningNote="لا يمكن التراجع عن هذا الإجراء"
+                loading={isDeleting}
+            />
+
+            {/* Modal تأكيد حذف المحدد */}
+            <ConfirmDeleteModal
+                isOpen={showDeleteMultipleModal}
+                onClose={() => setShowDeleteMultipleModal(false)}
+                onConfirm={confirmDeleteSelected}
+                title="تأكيد حذف الردود"
+                message="هل أنت متأكد من حذف الردود المحددة؟"
+                itemCount={`عدد الردود المحددة: ${selectedReplies.size}`}
                 warningNote="لا يمكن التراجع عن هذا الإجراء"
                 loading={isDeleting}
             />

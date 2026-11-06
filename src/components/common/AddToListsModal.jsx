@@ -110,7 +110,12 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
   const itemName = item.name || `${item.type === 'fax' ? 'فاكس رقم ' + item.faxNumber : item.fileName}`;
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="إضافة إلى القوائم">
+    <Modal 
+      isOpen={isOpen} 
+      onClose={handleClose} 
+      title="إضافة إلى القوائم"
+      modalId={`add-to-lists-${item?.type}-${item?.id}`}
+    >
       <div className="add-to-lists-content">
         <div className="add-to-lists-item-info">
           <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">

@@ -13,6 +13,7 @@
 @import './files.css';
 @import './fax.css';
 @import './reminders.css';
+@import './tasks.css';
 @import './lists.css';
 @import './templates.css';
 @import './buttons.css';
@@ -57,7 +58,7 @@
 .app {
     min-height: 100vh;
     background: var(--bg-app);
-    padding-top: 105px; /* مسافة للـ custom titlebar + header الثابت */
+    padding-top: 32px; /* مسافة للـ custom titlebar + header الثابت */
     direction: rtl;
     overflow-x: hidden;
     font-family: var(--font-family-base);
@@ -65,14 +66,18 @@
 
 /* Main Content */
 .container {
+    margin-left: 80px; /* مساحة للـ app-sidebar */
+    margin-right: 390px; /* مساحة للـ sidebar */
+}
+
+.container-content {
     flex: 1;
     max-width: 100%;
     padding: 24px 40px 40px 40px;
+    padding-top: 32px;
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 105px);
-    margin-left: 80px; /* مساحة للـ app-sidebar */
-    margin-right: 280px; /* مساحة للـ sidebar */
+    max-height: calc(100vh - 91px);
 }
 
 .container-header {
@@ -182,10 +187,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #b9b9b9;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #9b9b9b;
 }

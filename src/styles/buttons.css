@@ -1,7 +1,7 @@
 /* ========== Button System - Modern Minimalist ========== */
 
 /* Base Button Styles */
-button {
+button:not(.sidebar button)  {
     font-family: var(--font-family-base);
     font-weight: var(--font-weight-semibold);
     border: none;

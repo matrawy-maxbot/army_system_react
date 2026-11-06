@@ -1,120 +1,138 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const TemplateCard = ({ template, onOpen, onEdit, onDelete }) => {
-    const [showMenu, setShowMenu] = useState(false);
-    const [isEditingName, setIsEditingName] = useState(false);
-    const [newName, setNewName] = useState(template.name);
-
-    const getFileTypeIcon = (fileName) => {
-        const ext = fileName?.split('.').pop()?.toLowerCase();
-        
-        const iconMap = {
-            'docx': (
-                <svg className="svg-icon-lg" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#2B579A' }}>
-                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-                    <path d="M9 9l1 0" />
-                    <path d="M9 13l6 0" />
-                    <path d="M9 17l6 0" />
-                </svg>
-            ),
-            'xlsx': (
-                <svg className="svg-icon-lg" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#217346' }}>
-                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-                    <path d="M7 14l5 -5" />
-                    <path d="M12 14l-5 -5" />
-                </svg>
-            ),
-            'pptx': (
-                <svg className="svg-icon-lg" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#D24726' }}>
-                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-                    <path d="M11 16.5l-5 -3l5 -3z" />
-                </svg>
-            ),
-            'pdf': (
-                <svg className="svg-icon-lg" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#F40F02' }}>
-                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-                    <path d="M9 9l1 0" />
-                    <path d="M9 13l3 0" />
-                    <path d="M9 17l2 0" />
-                </svg>
-            )
-        };
-
-        return iconMap[ext] || iconMap['pdf'];
+    const getNormalizedType = () => {
+        const raw = (template.fileType || template.fileName?.split('.').pop() || 'DOCX').toUpperCase();
+        if (raw === 'WORD' || raw === 'DOC') return 'DOCX';
+        if (raw === 'EXCEL' || raw === 'XLS' || raw === 'CSV') return 'XLSX';
+        if (raw === 'POWERPOINT' || raw === 'PPT') return 'PPTX';
+        return raw;
     };
 
-    const handleSaveName = () => {
-        if (newName.trim() && newName !== template.name) {
-            onEdit(newName.trim());
-        }
-        setIsEditingName(false);
-    };
+    const type = getNormalizedType();
 
-    const handleCardClick = (e) => {
-        if (!e.target.closest('.btn-icon-small') && !isEditingName) {
-            onOpen();
+    // عرض صورة مصغرة إذا كانت موجودة، وإلا عرض no-preview
+    const hasThumbnail = template.thumbnailPath || template.thumbnail;
+
+    const renderPreview = () => {
+        if (hasThumbnail) {
+            // في المستقبل: عرض الصورة المصغرة الحقيقية
+            return (
+                <div className="document" aria-hidden="true">
+                    <img 
+                        src={template.thumbnailPath || template.thumbnail} 
+                        alt={template.name}
+                        style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'contain' 
+                        }}
+                    />
+                </div>
+            );
         }
+
+        // عرض no-preview بشكل افتراضي
+        return (
+            <div className="no-preview" aria-hidden="true">
+                <div className="no-preview-icon">▤</div>
+                <span className="no-preview-title">لا توجد معاينة متاحة</span>
+                <span className="no-preview-subtitle">افتح الملف للاطلاع على محتواه</span>
+            </div>
+        );
     };
 
     return (
-        <div className="template-card" onClick={handleCardClick}>
-            <div className="template-icon">
-                {getFileTypeIcon(template.fileName)}
-            </div>
-            
-            {isEditingName ? (
-                <div style={{ width: '100%', padding: '0 10px' }}>
-                    <input
-                        type="text"
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                        onBlur={handleSaveName}
-                        onKeyPress={(e) => e.key === 'Enter' && handleSaveName()}
-                        autoFocus
-                        style={{ width: '100%', padding: '5px', fontSize: '13px' }}
-                    />
-                </div>
-            ) : (
-                <h3 className="template-name">{template.name}</h3>
-            )}
-            
-            <div className="template-file-type">{template.fileType}</div>
-            <div className="template-file-name">{template.fileName}</div>
+        <article className="template-card" data-name={template.name} data-file-type={type}>
+            <div
+                className="template-preview"
+                onClick={onOpen}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && onOpen()}
+            >
+                {renderPreview()}
 
-            <div className="template-actions">
-                <button
-                    className="btn-icon-small"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setIsEditingName(true);
-                    }}
-                    title="تعديل الاسم"
-                >
-                    <svg className="svg-icon-sm" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                        <path d="M16 5l3 3" />
-                    </svg>
-                </button>
-                <button
-                    className="btn-icon-small danger"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onDelete();
-                    }}
-                    title="حذف"
-                >
-                    <svg className="svg-icon-sm" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007zm-10 4a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1m4 0a1 1 0 0 0 -1 1v6a1 1 0 0 0 2 0v-6a1 1 0 0 0 -1 -1" />
-                        <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005z" />
-                    </svg>
-                </button>
+                {/* File Type Badge */}
+                <div className="file-type-badge">{type}</div>
+
+                <div className="template-overlay">
+                    <div className="template-actions" onClick={(e) => e.stopPropagation()}>
+                        <button
+                            type="button"
+                            className="action-open"
+                            data-action="open"
+                            onClick={onOpen}
+                            title="فتح الملف"
+                        >
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            <span>فتح الملف</span>
+                        </button>
+                        <button
+                            type="button"
+                            className="action-edit"
+                            data-action="edit"
+                            title="تعديل الاسم"
+                            onClick={onEdit}
+                        >
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M12 20h9" />
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                            </svg>
+                        </button>
+                        <button
+                            type="button"
+                            className="action-delete"
+                            data-action="delete"
+                            title="حذف"
+                            onClick={onDelete}
+                        >
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                <line x1="10" y1="11" x2="10" y2="17" />
+                                <line x1="14" y1="11" x2="14" y2="17" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div className="template-info">
+                <span className="template-name">{template.name}</span>
+            </div>
+        </article>
     );
 };
 

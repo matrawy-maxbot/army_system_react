@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { settingsAPI, fileAPI } from '../../services/electronAPI';
+import ModalPortal from '../common/ModalPortal';
+import DateFormatModal from './DateFormatModal';
 import './settings.css';
 
 const SettingsModal = ({ isOpen, onClose }) => {
+    // إعدادات المسار والتاريخ
     const [savePath, setSavePath] = useState('');
     const [dateFormat, setDateFormat] = useState('DD-MM-YYYY');
     const [customPattern, setCustomPattern] = useState('');
     const [pathPreview, setPathPreview] = useState('');
+    const [showDateFormatModal, setShowDateFormatModal] = useState(false);
+
+    // إعدادات كلمة المرور
+    const [hasPassword, setHasPassword] = useState(false);
+    const [showPasswordSection, setShowPasswordSection] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+    // إعدادات بدء التشغيل
+    const [autoStart, setAutoStart] = useState(false);
+
+    // إعدادات النسخ الاحتياطية
+    const [maxBackups, setMaxBackups] = useState(10);
+    const [maxBackupsError, setMaxBackupsError] = useState('');
 
     // تحميل الإعدادات عند فتح النافذة
     useEffect(() => {
@@ -27,6 +46,15 @@ const SettingsModal = ({ isOpen, onClose }) => {
                 setSavePath(result.settings.savePath || '');
                 setDateFormat(result.settings.dateFormat || 'DD-MM-YYYY');
                 setCustomPattern(result.settings.customPattern || '');
+                
+                // تحميل إعدادات كلمة المرور
+                setHasPassword(result.settings.hasPassword || false);
+                
+                // تحميل إعدادات بدء التشغيل
+                setAutoStart(result.settings.autoStart || false);
+                
+                // تحميل إعدادات النسخ الاحتياطية
+                setMaxBackups(result.settings.maxBackups || 10);
             }
         } catch (error) {
             console.error('Error loading settings:', error);
@@ -34,11 +62,101 @@ const SettingsModal = ({ isOpen, onClose }) => {
     };
 
     const browseSavePath = async () => {
+        // التحقق من وجود Electron API
+        if (!window.electronAPI) {
+            alert('⚠️ اختيار المجلدات متاح فقط في نسخة Electron\n\nيمكنك إدخال المسار يدويًا في وضع المتصفح للاختبار.');
+            // تمكين الحقل للإدخال اليدوي مؤقتًا
+            const input = document.getElementById('savePathInput');
+            if (input) {
+                input.removeAttribute('readonly');
+                input.focus();
+                input.select();
+            }
+            return;
+        }
+        
         const result = await fileAPI.selectFolder('اختر مجلد حفظ المستندات');
         
         if (result.success && !result.canceled) {
             setSavePath(result.folderPath);
         }
+    };
+
+    // ========== وظائف كلمة المرور ==========
+    const handlePasswordSubmit = () => {
+        setPasswordError('');
+
+        if (!hasPassword) {
+            // إنشاء كلمة مرور جديدة
+            if (!newPassword.trim()) {
+                setPasswordError('الرجاء إدخال كلمة المرور');
+                return false;
+            }
+            if (newPassword !== confirmPassword) {
+                setPasswordError('كلمة المرور وتأكيدها غير متطابقين');
+                return false;
+            }
+            if (newPassword.length < 4) {
+                setPasswordError('كلمة المرور يجب أن تكون 4 أحرف على الأقل');
+                return false;
+            }
+            return true;
+        } else {
+            // تغيير كلمة المرور
+            if (!oldPassword.trim()) {
+                setPasswordError('الرجاء إدخال كلمة المرور القديمة');
+                return false;
+            }
+            if (!newPassword.trim()) {
+                setPasswordError('الرجاء إدخال كلمة المرور الجديدة');
+                return false;
+            }
+            if (newPassword !== confirmPassword) {
+                setPasswordError('كلمة المرور الجديدة وتأكيدها غير متطابقين');
+                return false;
+            }
+            if (newPassword.length < 4) {
+                setPasswordError('كلمة المرور يجب أن تكون 4 أحرف على الأقل');
+                return false;
+            }
+            // في التطبيق الحقيقي، يتم التحقق من كلمة المرور القديمة
+            return true;
+        }
+    };
+
+    const resetPasswordForm = () => {
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setPasswordError('');
+        setShowPasswordSection(false);
+    };
+
+    // ========== وظائف النسخ الاحتياطية ==========
+    const handleMaxBackupsChange = (value) => {
+        setMaxBackupsError('');
+        
+        const num = parseInt(value);
+        
+        if (isNaN(num)) {
+            setMaxBackupsError('الرجاء إدخال رقم صحيح');
+            setMaxBackups(value);
+            return;
+        }
+        
+        if (num < 1) {
+            setMaxBackupsError('الحد الأدنى هو 1');
+            setMaxBackups(value);
+            return;
+        }
+        
+        if (num > 50) {
+            setMaxBackupsError('الحد الأقصى هو 50');
+            setMaxBackups(value);
+            return;
+        }
+        
+        setMaxBackups(num);
     };
 
     const formatDateByPattern = (date, pattern, customPat = '') => {
@@ -115,6 +233,29 @@ const SettingsModal = ({ isOpen, onClose }) => {
         }
     };
 
+    const getFormatDisplayName = (format, custom = '') => {
+        if (format === 'CUSTOM' && custom) {
+            return `نمط مخصص: ${custom}`;
+        }
+        
+        const names = {
+            'YYYY/MM/DD': 'سنة/شهر/يوم',
+            'YYYY/MM-DD': 'سنة/شهر-يوم',
+            'YYYY-MM-DD': 'سنة-شهر-يوم',
+            'DD-MM-YYYY': 'يوم-شهر-سنة (عربي)',
+            'YYYY': 'السنة فقط',
+            'YYYY/MM': 'سنة/شهر',
+            'CUSTOM': 'نمط مخصص'
+        };
+        
+        return names[format] || format;
+    };
+
+    const handleDateFormatSave = (newFormat, newCustomPattern) => {
+        setDateFormat(newFormat);
+        setCustomPattern(newCustomPattern);
+    };
+
     const updatePathPreview = () => {
         if (!savePath) {
             setPathPreview('الرجاء اختيار المسار والنمط');
@@ -141,29 +282,62 @@ const SettingsModal = ({ isOpen, onClose }) => {
             alert('الرجاء إدخال نمط مخصص');
             return;
         }
-        
-        try {
-            // Note: testPathWritable is not wrapped yet - keeping original implementation
-            const testResult = window.electronAPI && await window.electronAPI.testPathWritable(savePath);
-            if (!testResult.success) {
-                alert('المسار المحدد غير صالح أو لا يمكن الكتابة فيه. الرجاء اختيار مسار آخر.');
+
+        // التحقق من كلمة المرور إذا كان القسم مفتوحًا
+        if (showPasswordSection) {
+            if (!handlePasswordSubmit()) {
                 return;
             }
-        } catch (error) {
-            alert('خطأ في التحقق من المسار: ' + error.message);
+        }
+
+        // التحقق من النسخ الاحتياطية
+        if (maxBackupsError) {
+            alert('الرجاء تصحيح خطأ الحد الأقصى للنسخ الاحتياطية');
             return;
+        }
+
+        const maxBackupsNum = parseInt(maxBackups);
+        if (isNaN(maxBackupsNum) || maxBackupsNum < 1 || maxBackupsNum > 50) {
+            alert('الحد الأقصى للنسخ الاحتياطية يجب أن يكون بين 1 و 50');
+            return;
+        }
+        
+        // التحقق من المسار في نسخة Electron فقط
+        if (window.electronAPI) {
+            try {
+                // Note: testPathWritable is not wrapped yet - keeping original implementation
+                const testResult = await window.electronAPI.testPathWritable(savePath);
+                if (!testResult.success) {
+                    alert('المسار المحدد غير صالح أو لا يمكن الكتابة فيه. الرجاء اختيار مسار آخر.');
+                    return;
+                }
+            } catch (error) {
+                alert('خطأ في التحقق من المسار: ' + error.message);
+                return;
+            }
+        } else {
+            // في وضع المتصفح، نقبل أي مسار للاختبار
+            console.log('Browser mode: Path validation skipped');
         }
         
         const settings = {
             savePath,
             dateFormat,
-            customPattern: dateFormat === 'CUSTOM' ? customPattern.trim() : ''
+            customPattern: dateFormat === 'CUSTOM' ? customPattern.trim() : '',
+            // إعدادات كلمة المرور (في التطبيق الحقيقي يتم تشفيرها)
+            hasPassword: showPasswordSection ? true : hasPassword,
+            password: showPasswordSection ? newPassword : undefined,
+            // إعدادات بدء التشغيل (مجرد حالة تجريبية)
+            autoStart: autoStart,
+            // إعدادات النسخ الاحتياطية
+            maxBackups: maxBackupsNum
         };
         
         try {
             const result = await settingsAPI.saveSettings(settings);
             if (result.success) {
                 console.log('✅ Settings saved successfully');
+                resetPasswordForm();
                 onClose();
             } else {
                 alert('فشل حفظ الإعدادات. الرجاء المحاولة مرة أخرى.');
@@ -177,20 +351,22 @@ const SettingsModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
+        <ModalPortal>
+        <>
         <div className="modal active" onClick={onClose}>
             <div className="modal-content modal-small" onClick={e => e.stopPropagation()}>
                 <div className="modal-header">
-                    <button className="btn-close" onClick={onClose}>
-                        <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
-                        </svg>
-                    </button>
                     <h2>
                         <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: '-0.2em' }}>
                             <path d="M14.647 4.081a.724 .724 0 0 0 1.08 .448c2.439 -1.485 5.23 1.305 3.745 3.744a.724 .724 0 0 0 .447 1.08c2.775 .673 2.775 4.62 0 5.294a.724 .724 0 0 0 -.448 1.08c1.485 2.439 -1.305 5.23 -3.744 3.745a.724 .724 0 0 0 -1.08 .447c-.673 2.775 -4.62 2.775 -5.294 0a.724 .724 0 0 0 -1.08 -.448c-2.439 1.485 -5.23 -1.305 -3.745 -3.744a.724 .724 0 0 0 -.447 -1.08c-2.775 -.673 -2.775 -4.62 0 -5.294a.724 .724 0 0 0 .448 -1.08c-1.485 -2.439 1.305 -5.23 3.744 -3.745a.722 .722 0 0 0 1.08 -.447c.673 -2.775 4.62 -2.775 5.294 0zm-2.647 4.919a3 3 0 1 0 0 6a3 3 0 0 0 0 -6" />
                         </svg>
                         إعدادات التطبيق
                     </h2>
+                    <button className="btn-close" onClick={onClose}>
+                        <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.707 5.293l5.293 5.292l5.293 -5.292a1 1 0 0 1 1.414 1.414l-5.292 5.293l5.292 5.293a1 1 0 0 1 -1.414 1.414l-5.293 -5.292l-5.293 5.292a1 1 0 1 1 -1.414 -1.414l5.292 -5.293l-5.292 -5.293a1 1 0 0 1 1.414 -1.414" />
+                        </svg>
+                    </button>
                 </div>
                 
                 <div className="modal-body">
@@ -202,8 +378,9 @@ const SettingsModal = ({ isOpen, onClose }) => {
                                     type="text" 
                                     id="savePathInput"
                                     value={savePath}
-                                    readOnly
-                                    placeholder="اختر مجلد الحفظ..."
+                                    onChange={(e) => setSavePath(e.target.value)}
+                                    readOnly={!!window.electronAPI}
+                                    placeholder={window.electronAPI ? "اختر مجلد الحفظ..." : "أدخل مسار المجلد (وضع المتصفح)"}
                                 />
                                 <button type="button" className="btn-browse" onClick={browseSavePath}>
                                     <svg className="svg-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -212,190 +389,45 @@ const SettingsModal = ({ isOpen, onClose }) => {
                                     استعراض
                                 </button>
                             </div>
-                            <small>المجلد الذي سيتم حفظ النسخ الجديدة فيه</small>
+                            <small>
+                                {window.electronAPI 
+                                    ? 'المجلد الذي سيتم حفظ النسخ الجديدة فيه'
+                                    : '⚠️ وضع المتصفح: يمكنك إدخال المسار يدويًا للاختبار. استعراض المجلدات متاح في نسخة Electron فقط.'
+                                }
+                            </small>
                         </div>
                         
                         <div className="form-group">
                             <label>نمط تنظيم المجلدات حسب التاريخ</label>
-                            <div className="date-format-options">
-                                <label className="radio-option" htmlFor="dateFormatYMD">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatYMD"
-                                        name="dateFormat" 
-                                        value="YYYY/MM/DD"
-                                        checked={dateFormat === 'YYYY/MM/DD'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">سنة/شهر/يوم</span>
-                                        <span className="format-example">مثال: 2026/10/11</span>
-                                    </span>
-                                </label>
-                                
-                                <label className="radio-option" htmlFor="dateFormatYMD2">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatYMD2"
-                                        name="dateFormat" 
-                                        value="YYYY/MM-DD"
-                                        checked={dateFormat === 'YYYY/MM-DD'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">سنة/شهر-يوم</span>
-                                        <span className="format-example">مثال: 2026/10-11</span>
-                                    </span>
-                                </label>
-                                
-                                <label className="radio-option" htmlFor="dateFormatYMD3">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatYMD3"
-                                        name="dateFormat" 
-                                        value="YYYY-MM-DD"
-                                        checked={dateFormat === 'YYYY-MM-DD'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">سنة-شهر-يوم</span>
-                                        <span className="format-example">مثال: 2026-10-11</span>
-                                    </span>
-                                </label>
-                                
-                                <label className="radio-option" htmlFor="dateFormatDMY">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatDMY"
-                                        name="dateFormat" 
-                                        value="DD-MM-YYYY"
-                                        checked={dateFormat === 'DD-MM-YYYY'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">يوم-شهر-سنة (أرقام عربية)</span>
-                                        <span className="format-example">مثال: ١١-١٠-٢٠٢٦</span>
-                                    </span>
-                                </label>
-                                
-                                <label className="radio-option" htmlFor="dateFormatY">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatY"
-                                        name="dateFormat" 
-                                        value="YYYY"
-                                        checked={dateFormat === 'YYYY'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">السنة فقط</span>
-                                        <span className="format-example">مثال: 2026</span>
-                                    </span>
-                                </label>
-                                
-                                <label className="radio-option" htmlFor="dateFormatYM">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatYM"
-                                        name="dateFormat" 
-                                        value="YYYY/MM"
-                                        checked={dateFormat === 'YYYY/MM'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">سنة/شهر</span>
-                                        <span className="format-example">مثال: 2026/10</span>
-                                    </span>
-                                </label>
-                                
-                                <label className="radio-option" htmlFor="dateFormatCustom">
-                                    <input 
-                                        type="radio" 
-                                        id="dateFormatCustom"
-                                        name="dateFormat" 
-                                        value="CUSTOM"
-                                        checked={dateFormat === 'CUSTOM'}
-                                        onChange={(e) => setDateFormat(e.target.value)}
-                                    />
-                                    <span className="radio-label">
-                                        <span className="format-name">نمط مخصص ✨</span>
-                                        <span className="format-example">استخدم الكلمات المفتاحية لإنشاء نمطك الخاص</span>
-                                    </span>
-                                </label>
-                            </div>
-                        
-                        {/* Custom Pattern Input (shown only when CUSTOM is selected) */}
-                        {dateFormat === 'CUSTOM' && (
-                            <div id="customPatternSection" className="custom-pattern-section">
-                                <div className="form-group">
-                                    <label>النمط المخصص</label>
-                                    <input 
-                                        type="text" 
-                                        id="customPatternInput"
-                                        className="custom-pattern-input"
-                                        value={customPattern}
-                                        onChange={(e) => setCustomPattern(e.target.value)}
-                                        placeholder="مثال: YYYY/MM/DD أو DD أو MM-MMMM/YYYY"
-                                    />
-                                    <small>استخدم الكلمات المفتاحية أدناه لإنشاء نمطك الخاص</small>
-                                </div>
-                                
-                                <div className="keywords-reference">
-                                    <div className="keywords-header">
-                                        <svg className="svg-icon-sm" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1.996l3.221 3.221a1 1 0 0 1 .083 1.32l-.083 .094l-3.221 3.221v5.648a1 1 0 0 1 -1.993 .117l-.007 -.117v-5.648l-3.221 -3.221a1 1 0 0 1 -.083 -1.32l.083 -.094l3.221 -3.221v-1.996a1 1 0 0 1 1 -1z" />
-                                        </svg>
-                                        الكلمات المفتاحية المتاحة
+                            <div className="format-selector-box">
+                                <div className="format-current">
+                                    <div className="format-info">
+                                        <span className="format-label">النمط الحالي:</span>
+                                        <span className="format-value">{getFormatDisplayName(dateFormat, customPattern)}</span>
                                     </div>
-                                    <div className="keywords-grid">
-                                        <div className="keyword-item">
-                                            <code>YYYY</code>
-                                            <span>السنة (4 أرقام): 2026</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>YY</code>
-                                            <span>السنة (رقمان): 26</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>MM</code>
-                                            <span>الشهر (رقمان): 01-12</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>M</code>
-                                            <span>الشهر (رقم بدون صفر): 1-12</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>MMMM</code>
-                                            <span>اسم الشهر كامل: أكتوبر</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>MMM</code>
-                                            <span>اسم الشهر مختصر: أكت</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>DD</code>
-                                            <span>اليوم (رقمان): 01-31</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>D</code>
-                                            <span>اليوم (رقم بدون صفر): 1-31</span>
-                                        </div>
-                                        <div className="keyword-item">
-                                            <code>[AR]</code>
-                                            <span>تحويل للأرقام العربية: ١١-١٠-٢٠٢٦</span>
-                                        </div>
-                                    </div>
-                                    <div className="keywords-examples">
-                                        <strong>أمثلة:</strong>
-                                        <div className="example-item"><code>DD</code> → <span>11</span></div>
-                                        <div className="example-item"><code>MM-MMMM/YYYY</code> → <span>10-أكتوبر/2026</span></div>
-                                        <div className="example-item"><code>[AR]DD-MM-YYYY</code> → <span>١١-١٠-٢٠٢٦</span></div>
-                                        <div className="example-item"><code>YYYY/MMMM/DD</code> → <span>2026/أكتوبر/11</span></div>
+                                    <div className="format-example-preview">
+                                        مثال: {formatDateByPattern(new Date(), dateFormat, customPattern)}
                                     </div>
                                 </div>
+                                <button 
+                                    type="button" 
+                                    className="btn-change-format"
+                                    onClick={() => setShowDateFormatModal(true)}
+                                >
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" />
+                                        <path d="M16 3v4" />
+                                        <path d="M8 3v4" />
+                                        <path d="M4 11h16" />
+                                        <path d="M11 15h1" />
+                                        <path d="M12 15v3" />
+                                    </svg>
+                                    تغيير النمط
+                                </button>
                             </div>
-                        )}
-                    </div>
+                            <small>يحدد طريقة تنظيم المجلدات الفرعية حسب التاريخ</small>
+                        </div>
+                    
                     
                     <div className="form-group">
                         <label>معاينة المسار الناتج</label>
@@ -404,6 +436,187 @@ const SettingsModal = ({ isOpen, onClose }) => {
                                 <path d="M5 19l2.757 -7.351a1 1 0 0 1 .936 -.649h12.307a1 1 0 0 1 .986 1.164l-.996 5.211a2 2 0 0 1 -1.964 1.625h-14.026a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v2" />
                             </svg>
                             <span id="pathPreviewText">{pathPreview}</span>
+                        </div>
+                    </div>
+
+                    {/* فاصل بين الأقسام */}
+                    <div className="settings-divider"></div>
+
+                    {/* ========== قسم كلمة المرور ========== */}
+                    <div className="settings-section">
+                        <div className="setting-label">
+                            <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2a5 5 0 0 1 5 5v3a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3v-3a5 5 0 0 1 5 -5m0 12a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m0 -10a3 3 0 0 0 -3 3v3h6v-3a3 3 0 0 0 -3 -3" />
+                            </svg>
+                            كلمة مرور البرنامج
+                        </div>
+                        
+                        <div className="password-status">
+                            {hasPassword ? (
+                                <div className="status-badge status-active">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0 -20m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0 -16m-1 5.5a1 1 0 0 1 1 1v4a1 1 0 0 1 -2 0v-4a1 1 0 0 1 1 -1m0 8a1 1 0 1 1 0 2a1 1 0 0 1 0 -2" />
+                                    </svg>
+                                    كلمة المرور محمية
+                                </div>
+                            ) : (
+                                <div className="status-badge status-inactive">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2a10 10 0 0 1 9.995 9.75l.005 .25a10 10 0 1 1 -10 -10m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0 -16m.01 7l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993m-.01 -5a1 1 0 0 1 .993 .883l.007 .117v4l-.007 .117a1 1 0 0 1 -1.986 0l-.007 -.117v-4l.007 -.117a1 1 0 0 1 .993 -.883" />
+                                    </svg>
+                                    لا توجد كلمة مرور
+                                </div>
+                            )}
+                            
+                            <button 
+                                type="button"
+                                className={`btn-toggle-password ${showPasswordSection ? 'active' : ''}`}
+                                onClick={() => setShowPasswordSection(!showPasswordSection)}
+                            >
+                                {showPasswordSection ? (
+                                    <>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M18 6l-12 12M6 6l12 12"/>
+                                        </svg>
+                                        إلغاء
+                                    </>
+                                ) : (
+                                    <>
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2a5 5 0 0 1 5 5v3a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-6a3 3 0 0 1 3 -3v-3a5 5 0 0 1 5 -5m0 12a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m0 -10a3 3 0 0 0 -3 3v3h6v-3a3 3 0 0 0 -3 -3" />
+                                        </svg>
+                                        {hasPassword ? 'تغيير كلمة المرور' : 'إنشاء كلمة مرور'}
+                                    </>
+                                )}
+                            </button>
+                        </div>
+
+                        {showPasswordSection && (
+                            <div className="password-form">
+                                {hasPassword && (
+                                    <div className="form-group">
+                                        <label>كلمة المرور القديمة</label>
+                                        <input
+                                            type="password"
+                                            value={oldPassword}
+                                            onChange={(e) => setOldPassword(e.target.value)}
+                                            placeholder="أدخل كلمة المرور الحالية"
+                                            className="password-input"
+                                        />
+                                    </div>
+                                )}
+                                
+                                <div className="form-group">
+                                    <label>كلمة المرور {hasPassword ? 'الجديدة' : ''}</label>
+                                    <input
+                                        type="password"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                        placeholder="أدخل كلمة المرور"
+                                        className="password-input"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>تأكيد كلمة المرور {hasPassword ? 'الجديدة' : ''}</label>
+                                    <input
+                                        type="password"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        placeholder="أعد إدخال كلمة المرور"
+                                        className="password-input"
+                                    />
+                                </div>
+                                
+                                {passwordError && (
+                                    <div className="error-message">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0 -20m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0 -16m.01 11l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993m-.01 -8a1 1 0 0 1 .993 .883l.007 .117v4l-.007 .117a1 1 0 0 1 -1.986 0l-.007 -.117v-4l.007 -.117a1 1 0 0 1 .993 -.883" />
+                                        </svg>
+                                        {passwordError}
+                                    </div>
+                                )}
+
+                                <div className="password-hint">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0 -20m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0 -16m.01 11l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993m-.01 -8a1 1 0 0 1 .993 .883l.007 .117v4l-.007 .117a1 1 0 0 1 -1.986 0l-.007 -.117v-4l.007 -.117a1 1 0 0 1 .993 -.883" />
+                                    </svg>
+                                    <span>ملاحظة: هذه واجهة تجريبية. في الإصدار النهائي، سيتم تشفير كلمة المرور وحفظها بشكل آمن.</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* فاصل بين الأقسام */}
+                    <div className="settings-divider"></div>
+
+                    {/* ========== قسم بدء التشغيل التلقائي ========== */}
+                    <div className="settings-section">
+                        <div className="setting-label">
+                            <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.906 14.534l.993 .995a1 1 0 1 1 -1.413 1.414l-.992 -.995a1 1 0 0 1 1.413 -1.414zm8.188 0a1 1 0 0 1 1.414 0l.992 .995a1 1 0 1 1 -1.413 1.414l-.993 -.995a1 1 0 0 1 0 -1.414zM12 3a8.094 8.094 0 0 1 7.071 4.241a1 1 0 1 1 -1.736 .998a6.093 6.093 0 0 0 -10.67 0a1 1 0 0 1 -1.736 -.998a8.094 8.094 0 0 1 7.071 -4.24zm0 5a3 3 0 0 1 2.995 2.824l.005 .176v4a3 3 0 0 1 -5.995 .176l-.005 -.176v-4a3 3 0 0 1 3 -3z" />
+                            </svg>
+                            تشغيل البرنامج مع بدء الجهاز
+                        </div>
+                        
+                        <div className="toggle-container">
+                            <label className="toggle-switch">
+                                <input
+                                    type="checkbox"
+                                    checked={autoStart}
+                                    onChange={(e) => setAutoStart(e.target.checked)}
+                                />
+                                <span className="toggle-slider"></span>
+                            </label>
+                            <span className="toggle-label">
+                                {autoStart ? 'مُفعّل' : 'غير مُفعّل'}
+                            </span>
+                        </div>
+
+                        <div className="setting-hint">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0 -20m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0 -16m.01 11l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993m-.01 -8a1 1 0 0 1 .993 .883l.007 .117v4l-.007 .117a1 1 0 0 1 -1.986 0l-.007 -.117v-4l.007 -.117a1 1 0 0 1 .993 -.883" />
+                            </svg>
+                            <span>ملاحظة: هذا إعداد تجريبي. لن يتم تطبيقه على نظام التشغيل في الإصدار الحالي.</span>
+                        </div>
+                    </div>
+
+                    {/* فاصل بين الأقسام */}
+                    <div className="settings-divider"></div>
+
+                    {/* ========== قسم النسخ الاحتياطية ========== */}
+                    <div className="settings-section">
+                        <div className="setting-label">
+                            <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2a5 5 0 0 1 4.995 4.783l.005 .217v.126a7 7 0 0 1 5.98 5.967l.015 .24l.005 .217a7 7 0 0 1 -7 7h-9a5 5 0 0 1 -5 -5l.005 -.217a5 5 0 0 1 4.995 -4.783v-.126a5 5 0 0 1 5 -5m0 9a1 1 0 0 0 -.993 .883l-.007 .117v3l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-3l-.007 -.117a1 1 0 0 0 -.993 -.883m2.828 -.828a1 1 0 0 0 -1.414 0l-2.121 2.12a1 1 0 0 0 1.414 1.415l2.121 -2.121a1 1 0 0 0 0 -1.414" />
+                            </svg>
+                            الحد الأقصى للنسخ الاحتياطية
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>عدد النسخ الاحتياطية المحفوظة</label>
+                            <input
+                                type="number"
+                                min="1"
+                                max="50"
+                                value={maxBackups}
+                                onChange={(e) => handleMaxBackupsChange(e.target.value)}
+                                className={`number-input ${maxBackupsError ? 'input-error' : ''}`}
+                                placeholder="من 1 إلى 50"
+                            />
+                            <small>
+                                القيمة الحالية: <strong>{maxBackups}</strong> نسخة
+                                {maxBackupsError && (
+                                    <span className="error-inline"> • {maxBackupsError}</span>
+                                )}
+                            </small>
+                        </div>
+
+                        <div className="backup-hint">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2a10 10 0 1 1 0 20a10 10 0 0 1 0 -20m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0 -16m.01 11l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993m-.01 -8a1 1 0 0 1 .993 .883l.007 .117v4l-.007 .117a1 1 0 0 1 -1.986 0l-.007 -.117v-4l.007 -.117a1 1 0 0 1 .993 -.883" />
+                            </svg>
+                            <span>يحتفظ البرنامج بالعدد المحدد من النسخ الاحتياطية. عند تجاوز الحد، يتم حذف النسخ الأقدم تلقائيًا.</span>
                         </div>
                     </div>
                     
@@ -417,10 +630,22 @@ const SettingsModal = ({ isOpen, onClose }) => {
                         </button>
                     </div>
                 </form>
-            </div>
-            </div>
-        </div>
-    );
+            </div> {/* نهاية modal-body */}
+        </div> {/* نهاية modal-content */}
+    </div> {/* نهاية modal active */}
+
+    {/* مودال اختيار نمط التاريخ */}
+    <DateFormatModal
+        isOpen={showDateFormatModal}
+        onClose={() => setShowDateFormatModal(false)}
+        currentFormat={dateFormat}
+        currentCustomPattern={customPattern}
+        onSave={handleDateFormatSave}
+    />
+    </>
+    </ModalPortal>
+);
 };
 
 export default SettingsModal;
+

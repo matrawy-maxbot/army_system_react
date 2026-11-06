@@ -44,6 +44,19 @@ function TabBar({ onSectionChange, activeSection }) {
                 <span>التذكيرات</span>
             </button>
             <button 
+                className={`sidebar-btn ${activeSection === 'tasks' ? 'active' : ''}`}
+                data-section="tasks" 
+                title="المهمات"
+                onClick={() => handleButtonClick('tasks')}
+            >
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2"/>
+                    <rect x="9" y="3" width="6" height="4" rx="2"/>
+                    <path d="M9 12l2 2l4 -4"/>
+                </svg>
+                <span>المهمات</span>
+            </button>
+            <button 
                 className={`sidebar-btn ${activeSection === 'lists' ? 'active' : ''}`}
                 data-section="lists" 
                 title="القوائم"
@@ -68,6 +81,17 @@ function TabBar({ onSectionChange, activeSection }) {
                     <path d="M10 12l4 0" />
                 </svg>
                 <span>الأرشفة</span>
+            </button>
+            <button 
+                className={`sidebar-btn sidebar-btn-backup ${activeSection === 'backup' ? 'active' : ''}`}
+                data-section="backup" 
+                title="النسخ الاحتياطية"
+                onClick={() => handleButtonClick('backup')}
+            >
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 18a4 4 0 0 1-.5-8A6.5 6.5 0 0 1 18 8a5 5 0 0 1 0 10H6Z"/>
+                </svg>
+                <span>النسخ الاحتياطي</span>
             </button>
         </aside>
     );

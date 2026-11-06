@@ -1,77 +1,162 @@
+/* Folder card - Exact HTML Match */
 .folder-card {
-  background: white;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  position: relative;
+  min-width: 0;
+  min-height: 166px;
+  padding: 17px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 8px;
+  align-items: flex-start;
+  background: white;
+  border: 1px solid var(--border, #e6eaf0);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: border-color .16s, background .16s;
 }
 
 .folder-card:hover {
-  border-color: #3b82f6;
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+  border-color: #b7ccef;
+  background: #fcfdff;
 }
 
-.folder-card:active {
-  transform: translateY(-2px);
+.folder-card:focus-visible {
+  outline: 2px solid var(--primary, #3478f6);
+  outline-offset: 2px;
 }
 
-.folder-card-icon {
-  color: #3b82f6;
-  margin-bottom: 4px;
+.card-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.svg-icon-lg {
-  width: 48px;
-  height: 48px;
+.folder-card-icon,
+.folder-icon {
+  width: 37px;
+  height: 37px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dce7fa;
+  border-radius: 8px;
+  background: var(--primary-soft, #f1f6ff);
+  color: var(--primary, #3478f6);
 }
 
-.folder-card-name {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1e293b;
-  word-break: break-word;
+.folder-card-icon svg,
+.folder-icon svg {
+  width: 21px;
+  height: 21px;
 }
 
-.folder-card-desc {
+.card-menu,
+.card-pin-button {
+  width: 29px;
+  height: 29px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #a0aaba;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+}
+
+.folder-card:hover .card-menu,
+.folder-card:hover .card-pin-button {
+  opacity: 1;
+}
+
+.card-menu:hover,
+.card-pin-button:hover {
+  background: #f2f4f7;
+  color: var(--text, #202b3c);
+}
+
+.card-pin-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.card-pin-button.pinned {
+  opacity: 1;
+  background: var(--primary, #3478f6);
+  color: white;
+}
+
+.card-pin-button.pinned:hover {
+  background: #2869df;
+}
+
+.folder-card-name,
+.folder-name {
+  width: 100%;
+  margin-top: 14px;
   font-size: 13px;
-  color: #64748b;
-  line-height: 1.4;
-  max-height: 2.8em;
+  font-weight: 650;
+  color: var(--text, #202b3c);
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
-.folder-card-files-count {
-  font-size: 13px;
-  color: #94a3b8;
-  margin-top: auto;
-  padding-top: 8px;
-  border-top: 1px solid #f1f5f9;
+.folder-card-path,
+.folder-path {
   width: 100%;
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--muted, #929dad);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+.card-bottom {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f0f2f5;
+}
+
+.folder-card-files-count,
+.file-count {
+  color: #778397;
+  font-size: 10px;
+}
+
+.folder-card-files-count strong,
+.file-count strong {
+  color: #475467;
+  font-weight: 600;
+}
+
+.open-label {
+  font-size: 10px;
+  color: var(--primary, #3478f6);
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+.folder-card:hover .open-label {
+  opacity: 1;
+}
+
+@media(max-width: 650px) {
   .folder-card {
-    padding: 16px;
+    min-height: 155px;
+    padding: 12px;
   }
-  
-  .folder-card-name {
-    font-size: 14px;
-  }
-  
-  .svg-icon-lg {
-    width: 40px;
-    height: 40px;
-  }
+}
+
+@media(max-width: 390px) {
+  /* Mobile adjustments */
 }

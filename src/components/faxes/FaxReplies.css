@@ -20,168 +20,450 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.replies-header-actions {
+    display: flex;
+    gap: .5rem;
+}
+
 /* شبكة الردود */
 .replies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px;
+    justify-content: start;
 }
 
-/* بطاقة الرد */
-.reply-card {
-    background: var(--surface);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 14px;
+/* بطاقة الرد - تصميم مبسط مع تلوين البوردر حسب الحالة */
+.replies-section .fax-reply-card {
+    --fc-bg: #ffffff;
+    --fc-border: #e2e8f0;
+    --fc-border-soft: #e7edf7;
+    --fc-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    --fc-shadow-hover: 0 16px 32px rgba(15, 23, 42, 0.11);
+    --fc-primary: #3478f6;
+    --fc-primary-hover: #2f6fe2;
+    --fc-title: #172b4d;
+    --fc-muted: #7283a0;
+    --fc-preview-bg: #f1f5fc;
+    --fc-danger: #ef4444;
+    --fc-radius-card: 22px;
+    --fc-radius-preview: 16px;
+    --fc-radius-control: 10px;
+    --fc-radius-pill: 999px;
+    --fc-space-1: 8px;
+    --fc-space-2: 10px;
+    --fc-space-3: 14px;
+    --overlay-opacity: 0;
+    
+    position: relative;
+    background: var(--fc-bg);
+    border: 1px solid var(--fc-border);
+    border-radius: 22px;
+    overflow: hidden;
+    padding: 3px;
+    width: 100%;
+    max-width: 340px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    box-shadow: var(--fc-shadow);
+    direction: rtl;
+}
+
+/* حالات البوردر حسب حالة الرد */
+.replies-section .fax-reply-card--completed {
+    border-color: #22c55e6b;
+}
+
+.replies-section .fax-reply-card--in_progress {
+    border-color: #f59e0b75;
+}
+
+.replies-section .fax-reply-card--draft {
+    border-color: #94a3b8;
+}
+
+.replies-section .fax-reply-card:hover {
+    border-color: var(--fc-primary);
+    box-shadow: var(--fc-shadow-hover);
+    transform: translateY(-1px);
+    --overlay-opacity: 1;
+}
+
+.replies-section .fax-reply-card:focus-visible {
+    outline: 0;
+    border-color: var(--fc-primary);
+    box-shadow: 0 0 0 3px rgba(52, 120, 246, 0.15), var(--fc-shadow-hover);
+}
+
+/* Badge اسم الفاكس الثابت في الأعلى */
+.replies-section .fax-reply-card__fax-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #334155;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.replies-section .fax-reply-card__fax-badge svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.7;
+}
+
+.replies-section .fax-reply-card__actions-overlay {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 11;
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+}
+
+/* زر التحديد في overlay */
+.replies-section .fax-reply-card__checkbox-overlay {
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.replies-section .fax-reply-card:hover .fax-reply-card__checkbox-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.replies-section .fax-reply-checkbox {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 2px solid rgba(52, 120, 246, 0.4);
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.replies-section .fax-reply-checkbox svg {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    color: white;
+}
+
+.replies-section .fax-reply-checkbox.checked {
+    background: var(--fc-primary);
+    border-color: var(--fc-primary);
+    box-shadow: 0 2px 12px rgba(52, 120, 246, 0.4);
+}
+
+.replies-section .fax-reply-checkbox.checked svg {
+    opacity: 1;
+}
+
+.replies-section .fax-reply-checkbox:hover {
+    border-color: var(--fc-primary);
+    transform: scale(1.05);
+}
+
+/* تنسيق البطاقة عند التحديد */
+.replies-section .fax-reply-card.selected {
+    border-color: var(--fc-primary);
+    box-shadow: 0 0 0 3px rgba(52, 120, 246, 0.15), var(--fc-shadow-hover);
+}
+
+.replies-section .fax-reply-card.selected .fax-reply-card__checkbox-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* زر الحذف في overlay */
+.replies-section .fax-reply-card__delete-overlay {
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.replies-section .fax-reply-card:hover .fax-reply-card__delete-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.replies-section .fax-reply-card__delete-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(239, 68, 68, 0.95);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 12px rgba(239, 68, 68, 0.4);
+}
+
+.replies-section .fax-reply-card__delete-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6);
+}
+
+.replies-section .fax-reply-card__delete-btn:active {
+    transform: scale(0.95);
+}
+
+.replies-section .fax-reply-card__preview-box {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    border-radius: var(--fc-radius-preview);
+    background: var(--fc-preview-bg);
+    border: 1px solid #e4ebf8;
+    overflow: visible; /* تغيير من hidden إلى visible للسماح بالتكديس */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    margin-top: 0;
+}
+
+/* الملفات المكدسة خلف البطاقة */
+.replies-section .reply-attachments-stack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.replies-section .attachment-card-stacked {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: white;
+    border: 2px solid #e4ebf8;
+    border-radius: var(--fc-radius-preview);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.replies-section .fax-reply-card:hover .attachment-card-stacked {
+    transform: translateX(-12px) translateY(-12px) !important;
+}
+
+.replies-section .attachment-card-stacked img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.replies-section .attachment-card-stacked .attachment-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.replies-section .attachment-card-stacked .attachment-placeholder .svg-icon-sm {
+    width: 48px;
+    height: 48px;
+    opacity: 0.9;
+}
+
+.replies-section .attachments-count-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 15;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.replies-section .fax-reply-card__preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(23, 43, 77, 0.16) 0%, rgba(23, 43, 77, 0) 40%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 12px 12px;
+    pointer-events: none;
+}
+
+.replies-section .fax-reply-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.replies-section .fax-reply-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2f6fe2;
+    gap: 0.5rem;
+}
+
+.replies-section .fax-reply-card__placeholder-icon-wrap {
+    width: 68px;
+    height: 78px;
+    border-radius: 13px;
+    background: rgba(81, 131, 242, 0.08);
+    color: var(--fc-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.replies-section .fax-reply-card__placeholder-icon-wrap .svg-icon-md {
+    width: 34px;
+    height: 34px;
+}
+
+.replies-section .fax-reply-card__preview-caption {
+    margin: 0;
+    text-align: center;
+    font-size: 11px;
+    color: #8a9ab3;
+}
+
+.replies-section .fax-reply-card__actions-row {
+    margin: 0 -14px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--fc-border-soft);
+    border-bottom: 1px solid var(--fc-border-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fdfefe;
+}
+
+.replies-section .fax-reply-card__open-btn {
+    height: 34px;
+    border: none;
+    min-width: 88px;
+    border-radius: var(--fc-radius-control);
+    background: var(--fc-primary);
+    color: white;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+    pointer-events: auto;
+    opacity: var(--overlay-opacity);
+}
+
+.replies-section .fax-reply-card__open-btn:hover {
+    background: var(--fc-primary-hover);
+}
+
+.replies-section .fax-reply-card__actions-row {
+    display: none;
+}
+
+.replies-section .fax-reply-card__info-row {
+    margin: 0 -14px;
+    padding: 12px 14px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
 }
 
-.reply-card:hover {
-    border-color: var(--primary);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
+.replies-section .fax-reply-card__info-main {
+    min-width: 0;
+    text-align: right;
 }
 
-.reply-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.reply-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--background);
-    border-radius: 8px;
-    flex-shrink: 0;
-}
-
-.btn-delete-reply {
-    background: none;
-    border: none;
-    padding: 6px;
-    cursor: pointer;
-    color: var(--text-secondary);
-    border-radius: 6px;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.btn-delete-reply:hover {
-    background: var(--danger-light);
-    color: var(--danger);
-}
-
-.reply-card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.reply-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
+.replies-section .fax-reply-card__title {
     margin: 0;
-    line-height: 1.4;
-}
-
-.reply-fax-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    background: var(--primary-light);
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--primary);
-    width: fit-content;
-}
-
-.reply-template-info {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.reply-note {
-    font-size: 13px;
-    color: var(--text-secondary);
+    color: var(--fc-title);
+    font-size: 14px;
+    font-weight: 700;
     line-height: 1.5;
-    margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
 }
 
-.reply-card-footer {
+.replies-section .fax-reply-card__meta {
+    margin-top: 4px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-top: 10px;
-    border-top: 1px solid var(--border-color);
+    justify-content: flex-start;
+    gap: 7px;
+    color: var(--fc-muted);
+    font-size: 11px;
 }
 
-.reply-status {
+.replies-section .fax-reply-card__meta-separator {
+    color: #9dafc8;
+}
+
+.replies-section .fax-reply-card__time-block {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 5px;
+    justify-content: flex-end;
+    gap: 4px;
+    min-width: 62px;
+    color: var(--fc-muted);
     font-size: 12px;
-    font-weight: 500;
+    text-align: left;
 }
 
-.status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+.replies-section .fax-reply-card__time-label {
+    color: #4b5d7c;
+    font-weight: 700;
+    font-size: 13px;
 }
 
-.status-draft .status-dot {
-    background: var(--text-secondary);
-}
-
-.status-in-progress .status-dot {
-    background: var(--warning);
-}
-
-.status-completed .status-dot {
-    background: var(--success);
-}
-
-.status-draft {
-    color: var(--text-secondary);
-}
-
-.status-in-progress {
-    color: var(--warning);
-}
-
-.status-completed {
-    color: var(--success);
-}
-
-.reply-date {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.replies-section .fax-reply-card__time-value {
+    color: #7789a7;
     font-size: 12px;
-    color: var(--text-secondary);
 }
 
 /* حالة فارغة */
@@ -321,6 +603,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
@@ -731,6 +1014,18 @@
 @media (max-width: 768px) {
     .replies-grid {
         grid-template-columns: 1fr;
+    }
+
+    .replies-section .fax-reply-card {
+        max-width: 100%;
+    }
+
+    .replies-section .fax-reply-card__preview-box {
+        height: 185px;
+    }
+
+    .replies-section .fax-reply-card__top-badges {
+        gap: 6px;
     }
     
     .faxes-selection-grid {

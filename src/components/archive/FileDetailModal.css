@@ -1,0 +1,340 @@
+/**
+ * FileDetailModal Styles - Minimal Enterprise UX
+ * Based on the provided reference design
+ */
+
+:root {
+  --ink: #172334;
+  --muted: #7d8999;
+  --line: #e8edf2;
+  --blue: #2868d7;
+  --blue-bg: #f1f6ff;
+  --red: #c74646;
+  --red-bg: #fff5f5;
+  --surface: #fff;
+  --canvas: #eef1f5;
+}
+
+.file-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  background: #17233426;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.file-detail-dialog {
+  width: min(620px, 100%);
+  background: var(--surface);
+  border: 1px solid #e5e9ef;
+  border-radius: 14px;
+  box-shadow: 0 22px 70px #17233424;
+  overflow: visible;
+  position: relative;
+}
+
+.file-detail-head {
+  height: 58px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.file-detail-head h1 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+
+.file-detail-close {
+  border: 0;
+  background: transparent;
+  color: #8793a2;
+  font-size: 22px;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.file-detail-close:hover {
+  background: #f3f5f8;
+  color: var(--ink);
+}
+
+.file-detail-main {
+  padding: 25px 28px 26px;
+}
+
+.file-identity {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.file-mark {
+  width: 46px;
+  height: 52px;
+  border: 1px solid #dfe6ef;
+  border-radius: 9px;
+  background: #f8fafc;
+  display: grid;
+  place-items: center;
+  color: #66758a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  flex: none;
+}
+
+.file-identity-text {
+  min-width: 0;
+  flex: 1;
+}
+
+.file-identity-filename {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+
+.file-identity-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.file-actions-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.file-action-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: #66758a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.file-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.file-action-btn.pin-btn:hover {
+  background: #fff8f0;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.file-action-btn.delete-btn:hover {
+  background: #fff5f5;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.file-more-wrap {
+  position: relative;
+}
+
+.file-summary {
+  margin-top: 24px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.file-meta {
+}
+
+.file-meta-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.file-meta-value {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink);
+}
+
+.file-location {
+  margin-top: 17px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.file-location strong {
+  font-weight: 500;
+  color: #526176;
+}
+
+.file-pin-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a2adba;
+  flex-shrink: 0;
+}
+
+.file-pin-dot.active {
+  background: #249a75;
+}
+
+.file-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 28px 19px;
+  gap: 12px;
+}
+
+.file-open-btn {
+  border: 0;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 18px;
+  min-width: 145px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 5px #2868d72a;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.file-open-btn:hover {
+  background: #1e58bd;
+}
+
+.file-hint {
+  font-size: 10px;
+  color: #9aa4b1;
+}
+
+.file-confirm-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: #ffffffed;
+  backdrop-filter: blur(3px);
+  border-radius: 14px;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.file-confirm-overlay.show {
+  display: flex;
+}
+
+.file-confirm-box {
+  width: min(330px, 100%);
+  text-align: center;
+}
+
+.file-confirm-box h2 {
+  font-size: 15px;
+  margin: 0 0 7px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.file-confirm-box p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0 0 20px;
+  line-height: 1.6;
+}
+
+.file-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.file-confirm-actions button {
+  border-radius: 7px;
+  padding: 8px 17px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.file-confirm-cancel {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: #526176;
+}
+
+.file-confirm-cancel:hover {
+  background: #f7f9fb;
+}
+
+.file-confirm-delete {
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: #fff;
+}
+
+.file-confirm-delete:hover {
+  background: #b33d3d;
+}
+
+@media (max-width: 520px) {
+  .file-detail-backdrop {
+    padding: 12px;
+  }
+
+  .file-detail-dialog {
+    border-radius: 12px;
+  }
+
+  .file-detail-main {
+    padding: 22px 19px;
+  }
+
+  .file-detail-footer {
+    padding: 14px 19px 18px;
+  }
+
+  .file-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .file-meta:last-child {
+    grid-column: 1 / -1;
+  }
+}

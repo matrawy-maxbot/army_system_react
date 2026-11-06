@@ -13,3 +13,4 @@ export { default as FolderViewModal } from './FolderViewModal';
 export { default as EditFolderModal } from './EditFolderModal';
 export { default as MoveFolderModal } from './MoveFolderModal';
 export { default as DeleteFolderModal } from './DeleteFolderModal';
+export { default as FileDetailModal } from './FileDetailModal';

@@ -1,113 +1,143 @@
-.archive-category-card {
+/* Archive category - Exact HTML Match */
+.archive-category-card,
+.archive-section {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border, #e6eaf0);
+  border-radius: 11px;
+  margin-bottom: 22px;
   overflow: hidden;
-  transition: all 0.3s ease;
 }
 
-.archive-category-header {
-  padding: 20px 24px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s;
-}
-
-.archive-category-header:hover {
-  background-color: #f8f9fb;
-}
-
-.archive-category-title {
+.archive-category-header,
+.category-header {
+  min-height: 66px;
+  padding: 0 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  border-bottom: 1px solid var(--border, #e6eaf0);
+}
+
+.archive-category-title,
+.category-info {
+  display: flex;
+  align-items: center;
+  gap: 11px;
 }
 
 .archive-category-toggle {
   display: flex;
   align-items: center;
+  gap: 9px;
+}
+
+.archive-category-toggle span,
+.category-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text, #202b3c);
+}
+
+.category-count {
+  font-size: 11px;
+  color: var(--muted, #929dad);
+  font-weight: normal;
+}
+
+.archive-category-actions,
+.category-actions {
+  display: flex;
+  align-items: center;
   gap: 12px;
-  font-size: 18px;
+}
+
+.btn-add-folder,
+.add-folder {
+  padding: 7px 11px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--primary, #3478f6);
+  font-size: 12px;
   font-weight: 600;
-  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
-.toggle-icon {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.3s ease;
+.btn-add-folder:hover,
+.add-folder:hover {
+  background: var(--primary-soft, #f1f6ff);
 }
 
-.archive-category-card.collapsed .toggle-icon {
+.collapse {
+  border: 0;
+  background: transparent;
+  color: #8995a6;
+  font-size: 20px;
+  line-height: 1;
+  transition: all .2s ease;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.collapse:hover {
+  background: #f2f4f7;
+  color: #5a6677;
+}
+
+.collapse svg {
+  width: 18px;
+  height: 18px;
+  transition: transform .2s ease;
+}
+
+.archive-category-card.collapsed .collapse svg,
+.archive-section.closed .collapse svg {
   transform: rotate(-90deg);
 }
 
-.archive-category-actions {
-  display: flex;
-  gap: 8px;
+.archive-folders-grid,
+.folder-grid {
+  padding: 21px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  gap: 13px;
 }
 
-.btn-add-folder {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-add-folder:hover {
-  background: #2563eb;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.btn-add-folder:active {
-  transform: translateY(0);
-}
-
-.archive-folders-grid {
-  padding: 0 24px 24px;
-  animation: slideDown 0.3s ease;
-}
-
-.archive-category-card.collapsed .archive-folders-grid {
+.archive-category-card.collapsed .archive-folders-grid,
+.archive-section.closed .folder-grid {
   display: none;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+@media(max-width: 650px) {
+  .archive-category-header,
+  .category-header { 
+    padding: 0 13px; 
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .archive-folders-grid,
+  .folder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 13px;
+    gap: 10px;
+  }
+  
+  .archive-category-title,
+  .category-info { 
+    gap: 7px; 
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .archive-category-header {
-    padding: 16px;
-  }
-  
-  .archive-folders-grid {
-    padding: 0 16px 16px;
-  }
-  
-  .archive-category-toggle {
-    font-size: 16px;
-  }
-  
-  .btn-add-folder {
-    padding: 6px 12px;
-    font-size: 13px;
+@media(max-width: 390px) {
+  .archive-folders-grid,
+  .folder-grid { 
+    grid-template-columns: 1fr; 
   }
 }

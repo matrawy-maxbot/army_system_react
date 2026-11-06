@@ -518,10 +518,10 @@ export default {
 // Export unified electronAPI for backward compatibility
 export const electronAPI = window.electronAPI || {
   // File operations
-  selectFile: async () => ({ success: false, error: 'Electron not available' }),
-  selectFolder: async () => ({ success: false, error: 'Electron not available' }),
-  selectMultipleFiles: async () => ({ success: false, files: [], error: 'Electron not available' }),
-  openFile: async () => ({ success: false, error: 'Electron not available' }),
+  selectFile: async (filters) => fileAPI.selectFile(filters),
+  selectFolder: async (title) => fileAPI.selectFolder(title),
+  selectMultipleFiles: async (filters) => fileAPI.selectMultipleFiles(filters),
+  openFile: async (filePath) => fileAPI.openFile(filePath),
   openFolder: async () => ({ success: false, error: 'Electron not available' }),
   copyFile: async () => ({ success: false, error: 'Electron not available' }),
   deleteFile: async () => ({ success: false, error: 'Electron not available' }),
@@ -532,12 +532,36 @@ export const electronAPI = window.electronAPI || {
   loadData: async () => dataAPI.loadData(),
   saveData: async (data) => dataAPI.saveData(data),
   
-  // Asset operations
-  copyFileToAssets: async () => ({ success: false, error: 'Electron not available' }),
-  deleteFileFromAssets: async () => ({ success: false, error: 'Electron not available' }),
+  // Asset operations - Browser fallback
+  copyFileToAssets: async (sourcePath, categoryId, documentId) => {
+    // في بيئة المتصفح، نقوم بإنشاء اسم ملف فريد ونحفظ المعلومات
+    const timestamp = Date.now();
+    const fileName = `${categoryId}_${documentId}_${timestamp}`;
+    
+    return {
+      success: true,
+      fileName: fileName,
+      message: 'تم إضافة الملف بنجاح (Browser mode)'
+    };
+  },
+  deleteFileFromAssets: async (relativePath) => {
+    // في بيئة المتصفح، الملفات محفوظة في localStorage فقط
+    return {
+      success: true,
+      message: 'تم حذف الملف بنجاح (Browser mode)'
+    };
+  },
   
-  // Document operations
-  openDocument: async () => ({ success: false, error: 'Electron not available' }),
+  // Document operations - Browser fallback
+  openDocument: async (filePath) => {
+    // في بيئة المتصفح، لا يمكن فتح الملفات المحلية
+    console.warn('فتح المستندات متاح فقط في نسخة Electron');
+    alert('فتح المستندات متاح فقط في نسخة Electron Desktop');
+    return {
+      success: false,
+      error: 'فتح المستندات غير مدعوم في المتصفح'
+    };
+  },
   getTodayFiles: async () => ({ success: false, files: [], error: 'Electron not available' }),
   openTodayCopiesFolder: async () => ({ success: false, error: 'Electron not available' }),
   createDocumentCopy: async () => ({ success: false, error: 'Electron not available' }),

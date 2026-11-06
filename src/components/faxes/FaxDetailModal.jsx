@@ -169,7 +169,13 @@ const FaxDetailModal = ({ isOpen, onClose, faxId, onAddToLists, onDelete }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={null} size="normal" customHeader={
+    <Modal 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      title={null} 
+      size="normal"
+      modalId={`fax-detail-${faxId}`}
+      customHeader={
       <div className="fax-detail-modal-header">
         <div className="fax-header-right">
           {isEditingName ? (

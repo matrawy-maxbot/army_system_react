@@ -1,135 +1,672 @@
-.folder-view-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+/* FolderViewModal - Minimal Enterprise Design - Exact HTML Match */
+
+/* CSS Variables */
+:root {
+  --fvm-ink: #202b3a;
+  --fvm-muted: #7b8796;
+  --fvm-line: #e6eaf0;
+  --fvm-soft: #f7f8fa;
+  --fvm-blue: #2868d7;
+  --fvm-blue-bg: #eef4ff;
+  --fvm-red: #c44848;
+  --fvm-green: #16865d;
 }
 
-.folder-info {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background: #f8f9fb;
-  border-radius: 8px;
+/* Reset */
+* {
+  box-sizing: border-box;
 }
 
-.folder-info-item {
-  display: flex;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.folder-info-item strong {
-  color: #1e293b;
-  min-width: 80px;
-}
-
-.folder-info-item span {
-  color: #64748b;
-  flex: 1;
-}
-
-.folder-actions-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 16px;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-}
-
-.folder-files-section h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 16px;
-}
-
-.folder-files-grid {
+/* Backdrop */
+.fvm-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(21, 32, 51, 0.33);
+  backdrop-filter: blur(2px);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
+  place-items: center;
+  z-index: 9999;
+  padding: 22px;
 }
 
-.folder-file-card {
-  background: white;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+/* Main Modal Container */
+.fvm-overlay {
+  width: min(1040px, 100%);
+  min-height: 610px;
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  box-shadow: 0 18px 55px rgba(27, 39, 53, 0.11);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+.fvm-header {
+  height: 62px;
+  padding: 0 27px;
+  border-bottom: 1px solid var(--fvm-line);
+  display: flex;
   align-items: center;
-  text-align: center;
-  gap: 8px;
+  justify-content: space-between;
 }
 
-.folder-file-card:hover {
-  border-color: #3b82f6;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+.fvm-head-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--fvm-ink);
 }
 
-.folder-file-icon {
-  color: #64748b;
+.fvm-close {
+  border: 0;
+  background: none;
+  color: #8591a0;
+  font-size: 25px;
+  line-height: 1;
+  padding: 4px;
+  cursor: pointer;
+  transition: color 0.15s;
 }
 
-.folder-file-name {
+.fvm-close:hover {
+  color: var(--fvm-ink);
+}
+
+/* Content */
+.fvm-content {
+  padding: 25px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Folder Summary */
+.fvm-folder-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 17px;
+  background: var(--fvm-soft);
+  border: 1px solid #f0f2f5;
+  border-radius: 8px;
+}
+
+.fvm-details {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-width: 0;
+}
+
+.fvm-detail {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.fvm-detail-label {
+  font-size: 12px;
+  color: var(--fvm-muted);
+  white-space: nowrap;
+}
+
+.fvm-detail-value {
   font-size: 13px;
-  font-weight: 500;
-  color: #1e293b;
-  word-break: break-word;
+  color: #344054;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  max-width: 260px;
 }
 
-.folder-file-size {
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.folder-files-empty {
+/* Folder Actions */
+.fvm-folder-actions {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.fvm-text-btn {
+  border: 0;
+  background: transparent;
+  color: var(--fvm-blue);
+  font-size: 12px;
+  padding: 6px 7px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: text-decoration 0.15s;
+}
+
+.fvm-text-btn:hover {
+  text-decoration: underline;
+}
+
+.fvm-small-btn {
+  border: 1px solid var(--fvm-line);
+  background: #fff;
+  color: #536174;
+  border-radius: 6px;
+  padding: 6px 11px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fvm-small-btn:hover {
+  background: var(--fvm-soft);
+}
+
+.fvm-small-btn.danger {
+  color: var(--fvm-red);
+  border-color: #f1dada;
+}
+
+.fvm-small-btn.danger:hover {
+  background: #fff8f8;
+}
+
+.fvm-folder-delete-btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
-  text-align: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid #f0dada;
+  border-radius: 7px;
+  background: #fff8f8;
+  color: #b83f45;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  cursor: pointer;
 }
 
-.folder-files-empty .empty-icon {
-  color: #cbd5e1;
-  margin-bottom: 16px;
+.fvm-folder-delete-btn svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
 }
 
-.folder-files-empty p {
-  font-size: 16px;
-  color: #64748b;
-  margin: 8px 0;
+.fvm-folder-delete-btn:hover {
+  background: #ffeded;
+  border-color: #e8bcbc;
+  color: #a92f36;
 }
 
-.folder-files-empty .empty-hint {
+.fvm-folder-delete-btn:focus-visible {
+  outline: 3px solid #f4caca;
+  outline-offset: 2px;
+}
+
+.fvm-folder-delete-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* File Section */
+.fvm-file-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fvm-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+}
+
+.fvm-section-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--fvm-ink);
+}
+
+.fvm-count {
+  color: var(--fvm-muted);
+  font-size: 12px;
+  font-weight: 400;
+  margin-right: 5px;
+}
+
+.fvm-primary {
+  border: 1px solid var(--fvm-blue);
+  background: var(--fvm-blue);
+  color: white;
+  border-radius: 7px;
+  padding: 9px 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(40, 104, 215, 0.13);
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 12px;
+}
+
+.fvm-primary:hover {
+  background: #1e58bd;
+}
+
+.fvm-primary svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Bulk Actions Bar */
+.fvm-bulk {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--fvm-line);
+  border-radius: 7px;
+  background: #fff;
+}
+
+.fvm-bulk.visible {
+  display: flex;
+}
+
+.fvm-selected-label {
+  font-size: 12px;
+  color: var(--fvm-muted);
+  margin-left: 4px;
+}
+
+/* File List */
+.fvm-file-list {
+  border-top: 1px solid var(--fvm-line);
+}
+
+.fvm-file-row {
+  min-height: 67px;
+  display: grid;
+  grid-template-columns: 22px 38px minmax(0, 1fr) auto 60px;
+  gap: 13px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--fvm-line);
+  transition: background 0.12s;
+}
+
+.fvm-file-row:hover {
+  background: #fbfcfe;
+}
+
+.fvm-file-row.selected {
+  background: #f7faff;
+}
+
+/* Checkbox */
+.fvm-check {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #c2cad4;
+  border-radius: 4px;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s;
+}
+
+.fvm-check:checked {
+  background: var(--fvm-blue);
+  border-color: var(--fvm-blue);
+}
+
+.fvm-check:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 1.6px 1.6px 0;
+  transform: rotate(45deg);
+}
+
+/* File Type Badge */
+.fvm-file-type {
+  width: 34px;
+  height: 38px;
+  border: 1px solid #e6eaf0;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #738093;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* File Name & Details */
+.fvm-file-name {
   font-size: 13px;
-  color: #94a3b8;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: ltr;
+  text-align: right;
+  color: var(--fvm-ink);
+}
+
+.fvm-file-sub {
+  font-size: 11px;
+  color: #97a1ae;
+  margin-top: 3px;
+}
+
+.fvm-file-size {
+  font-size: 12px;
+  color: var(--fvm-muted);
+  white-space: nowrap;
+  direction: ltr;
+}
+
+/* More Button */
+.fvm-more {
+  border: 0;
+  background: transparent;
+  color: #8490a0;
+  font-size: 18px;
+  border-radius: 5px;
+  width: 26px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.fvm-more:hover {
+  background: #edf1f6;
+  color: var(--fvm-ink);
+}
+
+/* File Actions (Pin & Delete) */
+.fvm-file-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fvm-pin-btn,
+.fvm-delete-btn {
+  border: 0;
+  background: transparent;
+  border-radius: 5px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.fvm-pin-btn svg,
+.fvm-delete-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Pin Button */
+.fvm-pin-btn {
+  color: #8490a0;
+}
+
+.fvm-pin-btn:hover {
+  background: #edf1f6;
+  color: var(--fvm-blue);
+}
+
+.fvm-pin-btn.pinned {
+  color: var(--fvm-blue);
+  background: var(--fvm-blue-bg);
+}
+
+.fvm-pin-btn.pinned:hover {
+  background: #dce9ff;
+  color: #1e58bd;
+}
+
+/* Delete Button */
+.fvm-delete-btn {
+  color: #8490a0;
+}
+
+.fvm-delete-btn:hover {
+  background: #fff5f5;
+  color: var(--fvm-red);
+}
+
+/* Pinned Folder Button */
+.fvm-small-btn.pinned-folder {
+  color: var(--fvm-blue);
+  border-color: var(--fvm-blue);
+  background: var(--fvm-blue-bg);
+}
+
+.fvm-small-btn.pinned-folder:hover {
+  background: #dce9ff;
+}
+
+.fvm-small-btn svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+/* Empty State */
+.fvm-empty {
+  padding: 42px 12px;
+  text-align: center;
+  color: var(--fvm-muted);
+  font-size: 13px;
+}
+
+/* Footer */
+.fvm-footer {
+  border-top: 1px solid var(--fvm-line);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #929cab;
+  font-size: 11px;
+}
+
+/* Delete Confirmation Dialog */
+.fvm-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(21, 32, 51, 0.4);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  z-index: 10001;
+}
+
+.fvm-dialog {
+  width: min(420px, calc(100% - 28px));
+  background: #fff;
+  border: 1px solid var(--fvm-line);
+  border-radius: 10px;
+  box-shadow: 0 18px 60px rgba(24, 34, 48, 0.15);
+  animation: fvm-dialog-in 0.2s ease;
+}
+
+@keyframes fvm-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fvm-dialog-content {
+  padding: 22px;
+}
+
+.fvm-dialog-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--fvm-ink);
+  margin: 0 0 17px;
+}
+
+.fvm-dialog-message {
+  color: var(--fvm-muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0 0 20px;
+}
+
+.fvm-dialog-message strong {
+  color: var(--fvm-ink);
+  font-weight: 500;
+}
+
+.fvm-dialog-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.fvm-dialog-btn {
+  flex: 1;
+  border-radius: 7px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid;
+}
+
+.fvm-dialog-btn.danger {
+  background: var(--fvm-red);
+  border-color: var(--fvm-red);
+  color: white;
+}
+
+.fvm-dialog-btn.danger:hover {
+  background: #b33838;
+  border-color: #b33838;
+}
+
+.fvm-dialog-btn.secondary {
+  background: #fff;
+  border-color: var(--fvm-line);
+  color: var(--fvm-ink);
+}
+
+.fvm-dialog-btn.secondary:hover {
+  background: var(--fvm-soft);
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .folder-actions-bar {
+@media (max-width: 650px) {
+  .fvm-overlay-backdrop {
+    padding: 8px;
+  }
+
+  .fvm-overlay {
+    min-height: calc(100vh - 16px);
+    border-radius: 9px;
+  }
+
+  .fvm-header {
+    padding: 0 17px;
+  }
+
+  .fvm-content {
+    padding: 18px 15px;
+    gap: 18px;
+  }
+
+  .fvm-folder-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fvm-details {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fvm-detail-value {
+    max-width: 220px;
+  }
+
+  .fvm-folder-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .fvm-file-row {
+    grid-template-columns: 20px 34px minmax(0, 1fr) 60px;
+    gap: 9px;
+    padding: 10px 5px;
+  }
+
+  .fvm-file-size {
+    display: none;
+  }
+
+  .fvm-file-actions {
+    gap: 2px;
+  }
+
+  .fvm-pin-btn,
+  .fvm-delete-btn {
+    width: 26px;
+    height: 26px;
+  }
+
+  .fvm-pin-btn svg,
+  .fvm-delete-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .fvm-footer {
+    padding: 12px 16px;
+  }
+
+  .fvm-bulk {
+    flex-wrap: wrap;
+  }
+
+  .fvm-section-head {
+    align-items: flex-start;
+    gap: 8px;
     flex-direction: column;
   }
-  
-  .folder-files-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 12px;
-  }
-  
-  .folder-file-card {
-    padding: 12px;
+
+  .fvm-primary {
+    padding: 8px 10px;
   }
 }

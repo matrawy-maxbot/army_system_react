@@ -1,5 +1,8 @@
 /* Typography Styles */
 
+/* IBM Plex Sans Arabic - Google Fonts (Fallback) */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+
 /* Tajawal Font - Arabic */
 @font-face {
   font-family: 'Tajawal';
@@ -43,7 +46,7 @@
 
 /* Base Typography */
 body {
-  font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Tajawal', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
   font-weight: var(--font-weight-normal);

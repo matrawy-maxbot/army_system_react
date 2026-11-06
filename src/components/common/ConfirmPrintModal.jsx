@@ -17,10 +17,17 @@ const ConfirmPrintModal = ({
   itemName,
   itemCount,
   pagesCount,
-  loading = false 
+  loading = false,
+  modalId = 'confirm-print-modal'
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} size="small">
+    <Modal 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      title={title} 
+      size="small"
+      modalId={modalId}
+    >
       <div className="confirm-print-content">
         <div className="confirm-print-icon">
           <svg className="svg-icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

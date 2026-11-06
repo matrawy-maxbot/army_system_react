@@ -1,16 +1,17 @@
 /* ========== Header ========== */
 .header {
     background: var(--bg-surface);
-    padding: 15px var(--spacing-40);
+    padding: 12px var(--spacing-40);
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 0;
-    position: fixed;
-    top: 32px; /* أسفل الـ titlebar */
+    position: sticky;
+    top: 0;
     left: 0;
     right: 0;
     z-index: var(--z-header);
-    height: 73px; /* ارتفاع ثابت */
+    height: 59px;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .header-content {

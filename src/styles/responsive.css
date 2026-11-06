@@ -5,7 +5,7 @@
 /* Large Desktops (1440px and above) */
 @media (min-width: 1440px) {
     .container {
-        padding: 32px 60px 60px 60px;
+        /* padding: 32px 60px 60px 60px; */
     }
     
     .category-documents-grid {
@@ -116,10 +116,10 @@
     .sidebar {
         position: fixed;
         right: -100%; /* مخفي خارج الشاشة */
-        top: 105px; /* أسفل titlebar + header */
+        top: 32px; /* أسفل titlebar + header */
         width: 100%;
         max-width: 320px;
-        height: calc(100vh - 105px);
+        height: calc(100vh - 32px);
         background: #ffffff;
         box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
         z-index: 999;

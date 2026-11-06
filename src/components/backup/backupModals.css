@@ -1,0 +1,606 @@
+/* ========== Backup Modals Styles ========== */
+.backup-modal {
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1050; /* Ensure modal is above everything */
+    position: relative;
+}
+
+.backup-modal .form-group {
+    margin-bottom: 16px;
+}
+
+.backup-modal .form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.backup-modal .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 7px;
+}
+
+.backup-modal .form-group small {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.backup-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    background-color: white;
+    color: #1a202c;
+    transition: all 0.2s ease;
+}
+
+.backup-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========== Info Boxes ========== */
+.backup-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.backup-info-box svg {
+    width: 20px;
+    height: 20px;
+    color: #3b82f6;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.backup-info-box strong {
+    display: block;
+    font-size: 14px;
+    color: #1e40af;
+    margin-bottom: 6px;
+}
+
+.backup-info-box p {
+    font-size: 13px;
+    color: #1e3a8a;
+    margin: 0 0 6px 0;
+    line-height: 1.5;
+}
+
+.backup-limit-info {
+    font-size: 12px;
+    color: #3b82f6;
+    font-weight: 600;
+    background: white;
+    padding: 6px 11px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 6px;
+}
+
+/* ========== Warning Box ========== */
+.backup-warning-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1px solid #fbbf24;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.backup-warning-box svg {
+    width: 18px;
+    height: 18px;
+    color: #f59e0b;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.backup-warning-box span {
+    font-size: 12px;
+    color: #78350f;
+    line-height: 1.5;
+}
+
+/* ========== Danger Box ========== */
+.backup-danger-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border: 1px solid #ef4444;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.backup-danger-box svg {
+    width: 20px;
+    height: 20px;
+    color: #ef4444;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.backup-danger-box strong {
+    display: block;
+    font-size: 14px;
+    color: #991b1b;
+    margin-bottom: 6px;
+}
+
+.backup-danger-box p {
+    font-size: 13px;
+    color: #7f1d1d;
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+}
+
+.backup-danger-box ul {
+    margin: 0;
+    padding: 0 0 0 20px;
+    color: #7f1d1d;
+}
+
+.backup-danger-box li {
+    font-size: 13px;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+/* ========== Error Message ========== */
+.backup-error-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 13px;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    color: #991b1b;
+    font-size: 13px;
+    margin-top: 14px;
+}
+
+.backup-error-message svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* ========== Checkbox Option ========== */
+.backup-checkbox-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #f8f9fb;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.backup-checkbox-option:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.backup-checkbox-option input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
+    margin-top: 1px;
+    cursor: pointer;
+    accent-color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.backup-checkbox-option label {
+    flex: 1;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.backup-checkbox-option label strong {
+    font-size: 14px;
+    color: #1a202c;
+}
+
+.backup-checkbox-option label span {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* ========== Restore Backup Info ========== */
+.restore-backup-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #f8f9fb 0%, #e8eaed 100%);
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.restore-backup-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.restore-backup-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.restore-backup-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.restore-backup-details h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 7px 0;
+}
+
+.restore-backup-meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.restore-backup-meta span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* ========== Progress Modal ========== */
+.progress-modal {
+    max-width: 600px;
+}
+
+.progress-circle-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 32px auto;
+}
+
+.progress-circle {
+    width: 100%;
+    height: 100%;
+}
+
+.progress-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.percentage-text {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.success-icon,
+.error-icon {
+    width: 64px;
+    height: 64px;
+}
+
+.success-icon {
+    color: #10b981;
+}
+
+.error-icon {
+    color: #ef4444;
+}
+
+/* ========== Progress Bar ========== */
+.progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: #e8eaed;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+/* ========== Stage Information ========== */
+.progress-stage-info {
+    padding: 24px;
+    background: #f8f9fb;
+    border: 2px solid #e8eaed;
+    border-radius: 12px;
+}
+
+.stage-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.stage-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.stage-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #3b82f6;
+}
+
+.stage-text {
+    flex: 1;
+}
+
+.stage-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 8px 0;
+}
+
+.stage-details {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.stage-progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.progress-label {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.progress-value {
+    font-size: 15px;
+    color: #1a202c;
+    font-weight: 600;
+}
+
+/* ========== Spinner ========== */
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #e8eaed;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== Success Message ========== */
+.success-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border: 2px solid #10b981;
+    border-radius: 10px;
+    color: #065f46;
+}
+
+.success-message svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.success-message strong {
+    font-size: 15px;
+}
+
+/* ========== Progress Warning ========== */
+.progress-warning {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.progress-warning svg {
+    width: 22px;
+    height: 22px;
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+.progress-warning span {
+    font-size: 14px;
+    color: #78350f;
+    font-weight: 500;
+}
+
+/* ========== Modal Actions ========== */
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #e8eaed;
+}
+
+.btn-primary,
+.btn-danger,
+.btn-cancel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-primary svg,
+.btn-danger svg,
+.btn-cancel svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.btn-cancel {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.btn-cancel:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.btn-primary:active,
+.btn-danger:active,
+.btn-cancel:active {
+    transform: translateY(0);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .backup-modal {
+        max-width: 95%;
+        margin: 20px auto;
+    }
+
+    .restore-backup-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .restore-backup-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-danger,
+    .btn-cancel {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .progress-circle-container {
+        width: 160px;
+        height: 160px;
+    }
+
+    .percentage-text {
+        font-size: 36px;
+    }
+
+    .stage-name {
+        font-size: 18px;
+    }
+}
+
+/* ========== Override for modal backdrop z-index ========== */
+.modal.active {
+    z-index: 1040 !important;
+}
+
+.modal.active .backup-modal {
+    z-index: 1050 !important;
+}

@@ -2,9 +2,9 @@
 .app-sidebar {
     position: fixed;
     left: 0;
-    top: 105px; /* Below header + titlebar */
+    top: 32px; /* Below header + titlebar */
     width: 80px;
-    height: calc(100vh - 105px);
+    height: calc(100vh - 32px);
     background: var(--bg-surface);
     border-right: 1px solid var(--border-color);
     display: flex;
@@ -50,44 +50,147 @@
 }
 
 .sidebar-btn span {
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+}
+
+/* زر النسخ الاحتياطي المميز */
+.sidebar-btn-backup {
+    margin-top: auto; /* يدفع الزر للأسفل */
+    background: #eef4ff;
+    color: #3478ed;
+    border: 1px solid #cbdcff;
+}
+
+.sidebar-btn-backup:hover {
+    background: #e3efff;
+    color: #2465d2;
+    border-color: #b3d4ff;
+}
+
+.sidebar-btn-backup.active {
+    background: #d9ebff;
+    color: #1e58bd;
+    border-color: #9cc4ff;
+    box-shadow: 0 2px 8px rgba(52, 120, 237, 0.15);
+}
+
+.sidebar-btn-backup svg {
+    width: 20px;
+    height: 20px;
 }
 
 /* ========== Sidebar (Today's Files) ========== */
 .sidebar {
     position: fixed;
     right: 0;
-    top: 105px; /* Below header + titlebar */
-    width: 280px;
-    height: calc(100vh - 105px);
-    background: var(--bg-surface);
-    border-left: 1px solid var(--border-color);
-    overflow-y: auto;
+    top: 32px; /* Below header + titlebar */
+    width: 390px;
+    min-height: 680px;
+    height: calc(100vh - 32px);
+    background: #ffffff;
+    border-left: 1px solid #e1e6ed;
+    overflow: hidden;
     z-index: 100;
-    box-shadow: var(--shadow-subtle);
+    box-shadow: 0 8px 35px rgba(35, 52, 77, 0.07);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Tajawal', 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+    font-size: 13px;
+    color: #1d2939;
+}
+
+.sidebar * {
+    box-sizing: border-box;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #b9b9b9;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #9b9b9b;
 }
 
 .sidebar-header {
-    padding: var(--spacing-24) var(--spacing-24);
-    border-bottom: 1px solid var(--border-color);
+    height: 58px;
+    padding: 0 19px;
+    border-bottom: 1px solid #e5eaf1;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--bg-surface);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    background: #ffffff;
+    flex-shrink: 0;
 }
 
 .sidebar-header h2 {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 700;
+    color: #1d2939;
     margin: 0;
     letter-spacing: -0.2px;
+}
+
+.sidebar-header-subtitle {
+    display: block;
+    font-size: 10px;
+    color: #8995a5;
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+/* أزرار إظهار/إخفاء الأقسام */
+.sidebar-toggle-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.sidebar-toggle-btn {
+    width: 32px;
+    height: 32px;
+    background: #f7f9fc;
+    border: 1px solid #e5eaf1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    color: #8995a5;
+}
+
+.sidebar-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+}
+
+.sidebar-toggle-btn:hover {
+    background: #eef3f9;
+    border-color: #cbd5e1;
+    color: #3478ed;
+}
+
+.sidebar-toggle-btn.active {
+    background: #e8f1ff;
+    border-color: #3478ed;
+    color: #3478ed;
+}
+
+.sidebar-toggle-btn.active:hover {
+    background: #d9ebff;
 }
 
 .files-count {
@@ -97,14 +200,23 @@
 }
 
 .btn-icon-small {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    padding: var(--spacing-8) 10px;
-    border-radius: var(--radius-sm);
+    background: #f3f6fa;
+    color: #65748a;
+    border: 0;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
     cursor: pointer;
-    transition: all var(--transition-base);
-    box-shadow: var(--shadow-subtle);
-    height: fit-content;
+    transition: all 0.15s ease;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-icon-small:hover {
+    background: #e5eaf1;
+    color: #1d2939;
 }
 
 .btn-icon-small.list {
@@ -603,4 +715,1305 @@
     font-size: var(--icon-xl);
     margin-bottom: var(--spacing-12);
     opacity: 0.5;
+}
+
+
+/* ========================================
+   Sidebar Sections - New Design
+======================================== */
+
+.sidebar-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar-content {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.sidebar-section {
+    margin-bottom: 0;
+}
+
+.sidebar-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 2px 10px;
+}
+
+.sidebar-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1d2939;
+}
+
+.sidebar-icon {
+    width: 16px;
+    height: 16px;
+    color: #64748b;
+}
+
+.sidebar-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 4px;
+    background: #eaf1ff;
+    color: #3478ed;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+.sidebar-view-all,
+.sidebar-add-btn {
+    border: 0;
+    background: transparent;
+    color: #7b8ba0;
+    font-size: 10px;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.sidebar-view-all:hover,
+.sidebar-add-btn:hover {
+    color: #3478ed;
+}
+
+.sidebar-view-all svg,
+.sidebar-add-btn svg {
+    width: 10px;
+    height: 10px;
+}
+
+.sidebar-section-content {
+    padding: 12px;
+    background: #f7f9fc;
+    border: 1px solid #e8edf4;
+    border-radius: 11px;
+}
+
+/* ========================================
+   Pinned Items List
+======================================== */
+
+.sidebar-pinned-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.sidebar-pinned-item {
+    background: #ffffff;
+    border: 1px solid #e7ecf3;
+    border-radius: 8px;
+    min-height: 78px;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.15s ease;
+    overflow: hidden;
+}
+
+.sidebar-pinned-item:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.pinned-item-button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: right;
+    padding: 0;
+    width: 100%;
+}
+
+.pinned-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+}
+
+.pinned-item-icon {
+    width: 27px;
+    height: 27px;
+    display: grid;
+    place-items: center;
+    background: #edf4ff;
+    border-radius: 7px;
+    color: #3478ed;
+}
+
+.pinned-item-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.pinned-item-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.pinned-item-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #1d2939;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.pinned-item-meta {
+    font-size: 9px;
+    color: #8995a5;
+    margin-top: 2px;
+}
+
+.unpin-button {
+    width: 16px;
+    height: 16px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: none;
+    color: #7b8ba0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+}
+
+.unpin-button:hover {
+    color: #e34b52;
+}
+
+.unpin-button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.empty-hint {
+    margin-top: 4px;
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+/* ========================================
+   Daily Template Card
+======================================== */
+
+.daily-template-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: inherit;
+}
+
+.daily-template-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 125, 245, 0.15);
+    border-color: #7dd3fc;
+}
+
+.daily-template-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    background: #387DF5;
+    border-radius: 10px;
+    color: white;
+}
+
+.daily-template-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.daily-template-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.daily-template-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0c4a6e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: right;
+}
+
+.daily-template-meta {
+    font-size: 11px;
+    color: #0369a1;
+}
+
+.daily-template .form-group label {
+    display: flex;
+    margin-bottom: var(--spacing-12);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   Reminders List
+======================================== */
+
+.sidebar-reminders-list {
+    position: relative;
+    padding-right: 19px;
+}
+
+/* خط الوقت العمودي */
+.sidebar-reminders-list:before {
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    bottom: 7px;
+    width: 1px;
+    background: #e7edf4;
+}
+
+.sidebar-reminder-item {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 7px;
+    align-items: center;
+    padding: 0 0 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    text-align: right;
+}
+
+.sidebar-reminder-item:last-child {
+    padding-bottom: 0;
+}
+
+/* نقطة على الخط الزمني */
+.sidebar-reminder-item:before {
+    content: '';
+    position: absolute;
+    right: -17px;
+    top: 5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #aab6c5;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #dce4ee;
+}
+
+.sidebar-reminder-item.today:before {
+    background: #ed9a13;
+}
+
+.sidebar-reminder-item.overdue:before {
+    background: #e34b52;
+}
+
+.sidebar-reminder-item:hover {
+    transform: translateX(-2px);
+}
+
+.reminder-dot {
+    display: none;
+}
+
+.reminder-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.reminder-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #1d2939;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: right;
+}
+
+.reminder-date {
+    font-size: 9px;
+    color: #8995a5;
+    margin-top: 2px;
+}
+
+.reminder-days-badge {
+    font-size: 9px;
+    border-radius: 5px;
+    padding: 3px 7px;
+    background: #f1f4f8;
+    color: #748196;
+    box-shadow: none;
+    font-weight: 700;
+}
+
+.sidebar-reminder-item.today .reminder-days-badge {
+    background: #fff5df;
+    color: #ad6a00;
+}
+
+.sidebar-reminder-item.overdue .reminder-days-badge {
+    background: #fff0f0;
+    color: #ce3c44;
+}
+
+.reminders-footer {
+    text-align: center;
+    border-top: 1px solid #edf0f4;
+    margin-top: 10px;
+    padding-top: 8px;
+}
+
+.reminders-footer button {
+    background: transparent;
+    border: none;
+    color: #3478ed;
+    font-size: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.reminders-footer button:hover {
+    text-decoration: underline;
+}
+
+/* ========================================
+   Lists Grid
+======================================== */
+
+.sidebar-lists-grid {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sidebar-list-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #e5eaf1;
+    background: #fafbfd;
+    border-radius: 8px;
+    padding: 9px 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    min-width: 0;
+    flex: 1 1 130px;
+}
+
+.sidebar-list-item:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.list-color-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+}
+
+.list-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1d2939;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+
+.list-count {
+    font-size: 9px;
+    color: #718096;
+    background: #e9eef5;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+/* ========================================
+   Empty State
+======================================== */
+
+.sidebar-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 12px;
+    text-align: center;
+}
+
+.sidebar-empty-state .empty-icon {
+    width: 32px;
+    height: 32px;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.sidebar-empty-state p {
+    margin: 0;
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.empty-hint {
+    margin-top: 4px;
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+/* ========================================
+   Scrollbar
+======================================== */
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+/* ========================================
+   Reminder Days Badge
+======================================== */
+.reminder-days-badge {
+    flex-shrink: 0;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Tasks List (Sidebar)
+======================================== */
+
+.sidebar-tasks-list {
+    background: #f4f8ff;
+    border: 1px solid #e2ebfb;
+    border-radius: 11px;
+    padding: 0;
+}
+
+.sidebar-task-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #e8eef8;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    text-align: right;
+}
+
+.sidebar-task-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.task-checkbox {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #9cb7e9;
+    border-radius: 50%;
+    background: white;
+    color: white;
+}
+
+.sidebar-task-item.done .task-checkbox {
+    background: #0eaa7d;
+    border-color: #0eaa7d;
+}
+
+.task-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+.sidebar-task-item .task-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #1d2939;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: right;
+}
+
+.sidebar-task-item .task-date {
+    font-size: 9px;
+    color: #7b8da7;
+}
+
+.task-priority {
+    font-size: 9px;
+    color: #7b8da7;
+    background: #f2f5fa;
+    border-radius: 5px;
+    padding: 3px 6px;
+}
+
+/* ========================================
+   Modal Styles
+======================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-container.modal-sm {
+    max-width: 480px;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.modal-close:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   Form Styles
+======================================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.form-hint {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #64748b;
+}
+
+/* ========================================
+   File Upload Area
+======================================== */
+.file-upload-area {
+    position: relative;
+}
+
+.file-input {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 32px 24px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-upload-label:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.file-upload-label svg {
+    width: 32px;
+    height: 32px;
+    color: #64748b;
+}
+
+.file-upload-label span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+}
+
+.file-input:focus + .file-upload-label {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========================================
+   Button Styles
+======================================== */
+.btn-primary {
+    background: #387DF5;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background: #ffffff;
+    color: #475569;
+    border: 1.5px solid #e2e8f0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+}
+
+
+/* ========== Sidebar Backup Section ========== */
+.sidebar-backup-section {
+    padding: 0;
+    margin-top: auto;
+}
+
+.sidebar-backup-button {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    padding: 13px;
+    background: #eef4ff;
+    border: 1px solid #cbdcff;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+
+
+
+/* ========================================
+   Sidebar New Design Styles
+======================================== */
+
+/* Group / Section Styles */
+.sidebar-section.pinned .sidebar-section-content,
+.sidebar-section.reminders .sidebar-section-content,
+.sidebar-section.tasks .sidebar-section-content,
+.sidebar-section.lists .sidebar-section-content {
+    padding: 12px;
+    background: #f7f9fc;
+    border: 1px solid #e8edf4;
+    border-radius: 11px;
+}
+
+/* Pinned Files Grid */
+.file-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.file {
+    background: #fff;
+    border: 1px solid #e7ecf3;
+    border-radius: 8px;
+    min-height: 78px;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.15s ease;
+}
+
+.file:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.file-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.file-icon {
+    width: 27px;
+    height: 27px;
+    border-radius: 7px;
+    background: #edf4ff;
+    color: #3478ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.sidebar .file-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.file-title {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 6px;
+    color: #1d2939;
+}
+
+.meta {
+    font-size: 9px;
+    color: #8995a5;
+    margin-top: 2px;
+}
+
+/* Reminders Timeline */
+.reminders .sidebar-section-content {
+    padding: 12px;
+    border: 1px solid #e8edf4;
+    border-radius: 11px;
+}
+
+.agenda {
+    position: relative;
+    padding-right: 19px;
+}
+
+.agenda:before {
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    bottom: 7px;
+    width: 1px;
+    background: #e7edf4;
+}
+
+.reminder {
+    position: relative;
+    padding: 0 0 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 7px;
+    align-items: center;
+    justify-items: start;
+}
+
+/* .reminder:last-child {
+    padding-bottom: 0;
+} */
+
+.reminder:before {
+    content: '';
+    position: absolute;
+    right: -17px;
+    top: 5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #aab6c5;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #dce4ee;
+}
+
+.reminder.today:before {
+    background: #ed9a13;
+}
+
+.reminder.overdue:before {
+    background: #e34b52;
+}
+
+.rem-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #1d2939;
+}
+
+.rem-date {
+    font-size: 9px;
+    color: #8995a5;
+    margin-top: 2px;
+    text-align: right;
+}
+
+.state {
+    font-size: 9px;
+    border-radius: 5px;
+    padding: 3px 7px;
+    background: #f1f4f8;
+    color: #748196;
+    font-weight: 700;
+}
+
+.today .state {
+    background: #fff5df;
+    color: #ad6a00;
+}
+
+.overdue .state {
+    background: #fff0f0;
+    color: #ce3c44;
+}
+
+.foot {
+    text-align: center;
+    border-top: 1px solid #edf0f4;
+    margin-top: 10px;
+    padding-top: 8px;
+    color: #3478ed;
+    font-size: 10px;
+}
+
+.foot button {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.foot button:hover {
+    text-decoration: underline;
+}
+
+/* Tasks Styles */
+.tasks .sidebar-section-content {
+    background: #f4f8ff;
+    border: 1px solid #e2ebfb;
+    border-radius: 11px;
+    padding: 12px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #e8eef8;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.15s ease;
+}
+
+.task:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.check {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #9cb7e9;
+    border-radius: 50%;
+    background: white;
+    color: white;
+    flex: none;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    transition: all 0.15s ease;
+}
+
+.task.done .check {
+    background: #0eaa7d;
+    border-color: #0eaa7d;
+}
+
+.taskcopy {
+    flex: 1;
+    text-align: right;
+}
+
+.taskcopy b {
+    font-size: 11px;
+    color: #1d2939;
+}
+
+.priority {
+    font-size: 9px;
+    color: #7b8da7;
+    background: #f2f5fa;
+    border-radius: 5px;
+    padding: 3px 6px;
+}
+
+/* Lists Chips */
+.lists .sidebar-section-content {
+    padding: 12px;
+    border: 1px solid #e8edf4;
+    border-radius: 11px;
+}
+
+.chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    border: 1px solid #e5eaf1;
+    background: #fafbfd;
+    border-radius: 8px;
+    padding: 9px 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex: 1 1 130px;
+    transition: all 0.15s ease;
+}
+
+.chip:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: #3478ed;
+}
+
+.chip b {
+    font-size: 11px;
+    flex: 1;
+    color: #1d2939;
+}
+
+.num {
+    font-size: 9px;
+    color: #718096;
+    background: #e9eef5;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+/* Backup Button */
+.backup {
+    border: 1px solid #cbdcff;
+    background: #eef4ff;
+    border-radius: 11px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.backup:hover {
+    background: #e3efff;
+    border-color: #b3d4ff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(52, 120, 237, 0.15);
+}
+
+.backupicon {
+    width: 37px;
+    height: 37px;
+    border-radius: 9px;
+    background: #3478ed;
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+}
+
+.backupcopy {
+    flex: 1;
+    text-align: right;
+}
+
+.backupcopy b {
+    font-size: 11px;
+    color: #1d2939;
+}
+
+.backupcopy small {
+    display: block;
+    color: #7288ad;
+    font-size: 9px;
+    margin-top: 2px;
+}
+
+.arrow {
+    color: #3478ed;
+    font-size: 18px;
+}
+
+/* Action buttons hover states */
+.sidebar-section-header button:hover {
+    color: #3478ed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 390px) {
+    .sidebar {
+        width: 100%;
+        border: 0;
+    }
 }

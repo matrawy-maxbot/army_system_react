@@ -1,0 +1,336 @@
+/* ========== Date Format Modal ========== */
+.date-format-modal {
+    max-width: 700px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+/* ========== Format Preview Box ========== */
+.format-preview-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.format-preview-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1e40af;
+    white-space: nowrap;
+}
+
+.format-preview-label svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.format-preview-value {
+    flex: 1;
+    padding: 10px 14px;
+    background: white;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a202c;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    direction: ltr;
+}
+
+/* ========== Date Format Options ========== */
+.date-format-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 2px solid #e8eaed;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #ffffff;
+}
+
+.radio-option:hover {
+    border-color: #3b82f6;
+    background: #f8fafc;
+    transform: translateX(-2px);
+}
+
+.radio-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-left: 12px;
+    cursor: pointer;
+    accent-color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.radio-option input[type="radio"]:checked + .radio-label {
+    font-weight: 600;
+    color: #3b82f6;
+}
+
+.radio-option:has(input[type="radio"]:checked) {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.radio-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.format-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a202c;
+}
+
+.format-example {
+    font-size: 12px;
+    color: #64748b;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    text-align: right;
+}
+
+/* ========== Custom Pattern Section ========== */
+.custom-pattern-section {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 8px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.custom-pattern-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    background-color: #ffffff;
+    color: #1a202c;
+    direction: ltr;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.custom-pattern-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ========== Keywords Reference ========== */
+.keywords-reference {
+    margin-top: 16px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+}
+
+.keywords-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.keywords-header svg {
+    color: #3b82f6;
+    width: 18px;
+    height: 18px;
+}
+
+.keywords-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.keyword-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border: 1px solid #e8eaed;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.keyword-item code {
+    background: #3b82f6;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.keyword-item span {
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* ========== Keywords Examples ========== */
+.keywords-examples {
+    padding-top: 12px;
+    border-top: 1px solid #e8eaed;
+}
+
+.keywords-examples strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #1a202c;
+    font-size: 13px;
+}
+
+.example-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 12px;
+}
+
+.example-item code {
+    background: #eff6ff;
+    color: #3b82f6;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 140px;
+    direction: ltr;
+    text-align: left;
+}
+
+.example-item span {
+    color: #64748b;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+    text-align: left;
+}
+
+/* ========== Form Actions ========== */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e8eaed;
+}
+
+.btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .date-format-modal {
+        max-width: 95%;
+    }
+    
+    .format-preview-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .format-preview-label {
+        justify-content: center;
+    }
+    
+    .keywords-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .form-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+}

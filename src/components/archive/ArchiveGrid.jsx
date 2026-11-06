@@ -1,14 +1,43 @@
 /**
  * ArchiveGrid Component
- * شبكة عرض جميع فئات الأرشيف
+ * شبكة عرض جميع فئات الأرشيف مع البحث
  */
 
+import { useMemo } from 'react';
 import { useAppState } from '../../context/AppStateContext';
 import ArchiveCategoryCard from './ArchiveCategoryCard';
 import './ArchiveGrid.css';
 
-const ArchiveGrid = ({ onAddFolder, onOpenFolder }) => {
+const ArchiveGrid = ({ searchQuery, onAddFolder, onOpenFolder, onPinFolder }) => {
   const { appState } = useAppState();
+
+  // Filter categories and folders based on search query
+  const filteredCategories = useMemo(() => {
+    if (!appState.archiveCategories || appState.archiveCategories.length === 0) {
+      return [];
+    }
+
+    if (!searchQuery || searchQuery.trim() === '') {
+      return appState.archiveCategories;
+    }
+
+    const query = searchQuery.trim().toLowerCase();
+
+    // Filter categories that have folders matching the search
+    return appState.archiveCategories
+      .map(category => {
+        const filteredFolders = (category.folders || []).filter(folder =>
+          folder.name.toLowerCase().includes(query) ||
+          (folder.description && folder.description.toLowerCase().includes(query))
+        );
+
+        return {
+          ...category,
+          folders: filteredFolders
+        };
+      })
+      .filter(category => category.folders.length > 0); // Only show categories with matching folders
+  }, [appState.archiveCategories, searchQuery]);
 
   if (!appState.archiveCategories || appState.archiveCategories.length === 0) {
     return (
@@ -26,14 +55,30 @@ const ArchiveGrid = ({ onAddFolder, onOpenFolder }) => {
     );
   }
 
+  if (searchQuery && filteredCategories.length === 0) {
+    return (
+      <div className="archive-empty">
+        <div className="empty-icon">
+          <svg className="svg-icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+        <p>لم يتم العثور على مجلدات</p>
+        <p className="empty-hint">جرب البحث بكلمات مفتاحية أخرى</p>
+      </div>
+    );
+  }
+
   return (
     <div className="archive-grid">
-      {appState.archiveCategories.map((category) => (
+      {filteredCategories.map((category) => (
         <ArchiveCategoryCard
           key={category.id}
           category={category}
           onAddFolder={onAddFolder}
           onOpenFolder={onOpenFolder}
+          onPinFolder={onPinFolder}
         />
       ))}
     </div>

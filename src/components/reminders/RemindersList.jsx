@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import ReminderCard from './ReminderCard';
 import AddReminderModal from './AddReminderModal';
 import EditReminderModal from './EditReminderModal';
+import ReminderDetailModal from './ReminderDetailModal';
+import ReorderRemindersModal from './ReorderRemindersModal';
 import { dataAPI } from '../../services/electronAPI';
 
 const RemindersList = () => {
     const [reminders, setReminders] = useState([]);
     const [filter, setFilter] = useState('all'); // all, active, expired
-    const [sort, setSort] = useState('date-asc'); // date-asc, date-desc, title-asc, title-desc
+    const [sort, setSort] = useState('manual'); // manual, date-asc, date-desc, title-asc, title-desc
     const [showAddModal, setShowAddModal] = useState(false);
     const [editingReminder, setEditingReminder] = useState(null);
+    const [viewingReminder, setViewingReminder] = useState(null);
+    const [showReorderModal, setShowReorderModal] = useState(false);
 
     useEffect(() => {
         loadReminders();
@@ -19,8 +23,14 @@ const RemindersList = () => {
         try {
             const result = await dataAPI.loadData();
             if (result.success && result.data && result.data.reminders) {
-                setReminders(result.data.reminders);
-                checkExpiredReminders(result.data.reminders);
+                // ترتيب التذكيرات حسب حقل order
+                const sortedReminders = (result.data.reminders || []).sort((a, b) => {
+                    const orderA = a.order !== undefined ? a.order : 999999;
+                    const orderB = b.order !== undefined ? b.order : 999999;
+                    return orderA - orderB;
+                });
+                setReminders(sortedReminders);
+                checkExpiredReminders(sortedReminders);
             }
         } catch (error) {
             console.error('Error loading reminders:', error);
@@ -47,10 +57,15 @@ const RemindersList = () => {
         try {
             const result = await dataAPI.loadData();
             if (result.success && result.data) {
+                // حساب أعلى order موجود
+                const maxOrder = Math.max(0, ...(result.data.reminders || []).map(r => r.order || 0));
+
                 const newReminder = {
                     id: Date.now(),
                     ...reminderData,
-                    isExpired: false
+                    isExpired: false,
+                    isActive: true, // التذكيرات الجديدة تكون مفعّلة افتراضيًا
+                    order: maxOrder + 1
                 };
 
                 const updatedReminders = [...(result.data.reminders || []), newReminder];
@@ -82,6 +97,24 @@ const RemindersList = () => {
         } catch (error) {
             console.error('Error editing reminder:', error);
             alert('حدث خطأ أثناء تعديل التذكير');
+        }
+    };
+
+    const handleToggleReminder = async (reminderId) => {
+        try {
+            const result = await dataAPI.loadData();
+            if (result.success && result.data) {
+                const updatedReminders = result.data.reminders.map(r =>
+                    r.id === reminderId ? { ...r, isActive: !r.isActive } : r
+                );
+
+                result.data.reminders = updatedReminders;
+                await dataAPI.saveData(result.data);
+                loadReminders();
+            }
+        } catch (error) {
+            console.error('Error toggling reminder:', error);
+            alert('حدث خطأ أثناء تحديث حالة التذكير');
         }
     };
 
@@ -127,12 +160,31 @@ const RemindersList = () => {
                     return a.title.localeCompare(b.title, 'ar');
                 case 'title-desc':
                     return b.title.localeCompare(a.title, 'ar');
+                case 'manual': // الترتيب اليدوي
+                    const orderA = a.order !== undefined ? a.order : 999999;
+                    const orderB = b.order !== undefined ? b.order : 999999;
+                    return orderA - orderB;
                 default:
                     return 0;
             }
         });
 
         return filtered;
+    };
+
+    const handleSaveOrder = async (orderedReminders) => {
+        try {
+            const result = await dataAPI.loadData();
+            if (result.success && result.data) {
+                result.data.reminders = orderedReminders;
+                await dataAPI.saveData(result.data);
+                setReminders(orderedReminders);
+                checkExpiredReminders(orderedReminders);
+            }
+        } catch (error) {
+            console.error('Error saving reminders order:', error);
+            alert('حدث خطأ أثناء حفظ الترتيب');
+        }
     };
 
     const filteredReminders = getFilteredAndSortedReminders();
@@ -148,12 +200,24 @@ const RemindersList = () => {
                     التذكيرات 
                     <span className="files-count">({reminders.length})</span>
                 </h2>
-                <button className="btn-add-category" onClick={() => setShowAddModal(true)}>
-                    <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 0 1 0 2h-5v5a1 1 0 0 1 -2 0v-5h-5a1 1 0 0 1 0 -2h5v-5a1 1 0 0 1 1 -1" />
-                    </svg>
-                    إضافة تذكير
-                </button>
+                <div className="reminders-header-actions">
+                    {reminders.length > 1 && sort === 'manual' && (
+                        <button className="btn-reorder" onClick={() => setShowReorderModal(true)}>
+                            <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M3 8h18" />
+                                <path d="M3 16h18" />
+                                <path d="M11 3v18" />
+                            </svg>
+                            إعادة الترتيب
+                        </button>
+                    )}
+                    <button className="btn-add-category" onClick={() => setShowAddModal(true)}>
+                        <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 0 1 0 2h-5v5a1 1 0 0 1 -2 0v-5h-5a1 1 0 0 1 0 -2h5v-5a1 1 0 0 1 1 -1" />
+                        </svg>
+                        إضافة تذكير
+                    </button>
+                </div>
             </div>
 
             <div className="reminders-filters">
@@ -195,6 +259,7 @@ const RemindersList = () => {
                     value={sort}
                     onChange={(e) => setSort(e.target.value)}
                 >
+                    <option value="manual">الترتيب اليدوي</option>
                     <option value="date-asc">التاريخ (الأقرب أولاً)</option>
                     <option value="date-desc">التاريخ (الأبعد أولاً)</option>
                     <option value="title-asc">العنوان (أ-ي)</option>
@@ -215,11 +280,13 @@ const RemindersList = () => {
                 </div>
             ) : (
                 <div className="reminders-grid">
-                    {filteredReminders.map(reminder => (
+                    {filteredReminders.map((reminder) => (
                         <ReminderCard
                             key={reminder.id}
                             reminder={reminder}
                             onEdit={() => setEditingReminder(reminder)}
+                            onToggle={() => handleToggleReminder(reminder.id)}
+                            onViewDetails={() => setViewingReminder(reminder)}
                         />
                     ))}
                 </div>
@@ -229,6 +296,7 @@ const RemindersList = () => {
                 <AddReminderModal
                     onClose={() => setShowAddModal(false)}
                     onSave={handleAddReminder}
+                    showFaxLink={false}
                 />
             )}
 
@@ -238,6 +306,28 @@ const RemindersList = () => {
                     onClose={() => setEditingReminder(null)}
                     onSave={handleEditReminder}
                     onDelete={handleDeleteReminder}
+                    showFaxLink={false}
+                />
+            )}
+
+            {viewingReminder && (
+                <ReminderDetailModal
+                    reminder={viewingReminder}
+                    onClose={() => setViewingReminder(null)}
+                    onEdit={() => {
+                        setEditingReminder(viewingReminder);
+                        setViewingReminder(null);
+                    }}
+                    onDelete={() => handleDeleteReminder(viewingReminder.id)}
+                    onToggle={() => handleToggleReminder(viewingReminder.id)}
+                />
+            )}
+
+            {showReorderModal && (
+                <ReorderRemindersModal
+                    reminders={reminders}
+                    onClose={() => setShowReorderModal(false)}
+                    onSave={handleSaveOrder}
                 />
             )}
         </div>

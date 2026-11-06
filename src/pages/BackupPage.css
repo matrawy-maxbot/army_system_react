@@ -1,0 +1,335 @@
+/**
+ * BackupPage Styles - Isolated from global modal styles
+ */
+
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+
+/* Local CSS variables for BackupPage only */
+.backup-page-wrapper {
+    --ink: #1d2939;
+    --muted: #8993a1;
+    --line: #e8ebf0;
+    --blue: #3478ed;
+    --blue-soft: #eff5ff;
+    --red: #d34b4b;
+    --red-soft: #fff4f3;
+    --green: #16865d;
+}
+
+/* Wrapper لإلغاء أي padding خارجي */
+.backup-page-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    background: #f8f9fb !important;
+    overflow-y: auto;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.backup-page-wrapper * {
+    box-sizing: border-box;
+}
+
+.backup-page-wrapper button,
+.backup-page-wrapper input {
+    font: 14px "IBM Plex Sans Arabic", Tahoma, Arial, sans-serif;
+}
+
+.backup-page-wrapper button {
+    cursor: pointer;
+}
+
+.backup-page-wrapper .page {
+    max-width: 1050px;
+    margin: 55px auto;
+    padding: 0 28px;
+    background: transparent;
+    color: var(--ink);
+    font: 14px "IBM Plex Sans Arabic", Tahoma, Arial, sans-serif;
+}
+
+.backup-page-wrapper .backup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+    padding: 0 10px;
+}
+
+.backup-page-wrapper .backup-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.backup-page-wrapper .backup-title {
+    font-size: 23px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+}
+
+.backup-page-wrapper .backup-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+}
+
+.backup-page-wrapper .btn-create-backup {
+    border: 1px solid var(--blue);
+    background: var(--blue);
+    color: #fff;
+    border-radius: 8px;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(52, 120, 237, 0.2);
+}
+
+.backup-page-wrapper .btn-create-backup:hover:not(:disabled) {
+    background: #2465d2;
+    box-shadow: 0 2px 4px rgba(52, 120, 237, 0.3);
+    transform: translateY(-1px);
+}
+
+.backup-page-wrapper .btn-create-backup:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.backup-page-wrapper .btn-create-backup svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+}
+
+.backup-page-wrapper .btn-create-backup:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.backup-page-wrapper button:focus-visible,
+.backup-page-wrapper input:focus-visible {
+    outline: 3px solid #c5d8ff;
+    outline-offset: 2px;
+}
+
+.backup-page-wrapper .list-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.backup-page-wrapper .list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 19px;
+    border-bottom: 1px solid var(--line);
+    gap: 12px;
+}
+
+.backup-page-wrapper .list-heading {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.backup-page-wrapper .count {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-right: 5px;
+}
+
+.backup-page-wrapper .search {
+    width: 210px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 12px;
+    background: #fff;
+}
+
+.backup-page-wrapper .search::placeholder {
+    color: #a0a8b3;
+}
+
+.backup-page-wrapper .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px;
+    padding: 17px 19px;
+    border-bottom: 1px solid var(--line);
+}
+
+.backup-page-wrapper .row:last-child {
+    border-bottom: 0;
+}
+
+.backup-page-wrapper .file-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    flex-direction: row;
+}
+
+.backup-page-wrapper .file-icon {
+    width: 37px;
+    height: 37px;
+    border-radius: 8px;
+    background: var(--blue-soft);
+    color: var(--blue);
+    display: grid;
+    place-items: center;
+    flex: none;
+}
+
+.backup-page-wrapper .file-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.backup-page-wrapper .file-copy {
+    min-width: 0;
+}
+
+.backup-page-wrapper .name {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.backup-page-wrapper .meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.backup-page-wrapper .actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.backup-page-wrapper .action {
+    height: 33px;
+    padding: 0 11px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    color: #667386;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.backup-page-wrapper .action.restore {
+    color: var(--blue);
+    border-color: #cbdcff;
+}
+
+.backup-page-wrapper .action.restore:hover {
+    background: var(--blue-soft);
+}
+
+.backup-page-wrapper .action.delete {
+    color: var(--red);
+    border-color: #f1d0ce;
+}
+
+.backup-page-wrapper .action.delete:hover {
+    background: var(--red-soft);
+}
+
+.backup-page-wrapper .empty {
+    padding: 42px 15px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.backup-page-wrapper .list-footer {
+    padding: 12px 19px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--muted);
+}
+
+@media (max-width: 620px) {
+    .backup-page-wrapper .page {
+        margin: 25px auto;
+        padding: 0 13px;
+    }
+
+    .backup-page-wrapper .backup-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10px;
+        margin-bottom: 18px;
+    }
+
+    .backup-page-wrapper .backup-header-content {
+        text-align: center;
+    }
+
+    .backup-page-wrapper .backup-title {
+        font-size: 20px;
+    }
+
+    .backup-page-wrapper .backup-subtitle {
+        font-size: 12px;
+    }
+
+    .backup-page-wrapper .btn-create-backup {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 18px;
+    }
+
+    .list-head {
+        padding: 13px;
+        flex-wrap: wrap;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .actions {
+        padding-right: 49px;
+    }
+
+    .action {
+        flex: 1;
+    }
+
+    .meta {
+        gap: 9px;
+    }
+}

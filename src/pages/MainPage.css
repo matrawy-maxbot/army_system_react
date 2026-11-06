@@ -1,0 +1,629 @@
+/* MainPage Styles - مطابق للتصميم المرجعي بالضبط */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f5f7fa;
+  --white: #fff;
+  --ink: #111827;
+  --muted: #8795aa;
+  --line: #dce3ec;
+  --blue: #3478f6;
+  --blue-soft: #edf3ff;
+  --green: #20b981;
+  --shadow: 0 2px 8px rgba(25, 45, 75, 0.035);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  width: min(100% - 38px, 1180px);
+  margin: 26px auto 40px;
+  font-family: "Cairo", Tahoma, Arial, sans-serif;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ========== Topbar ========== */
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.heading h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 2px;
+  color: #101827;
+}
+
+.heading p {
+  font-size: 10px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.primary {
+  border: 0;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 6px;
+  padding: 9px 15px;
+  box-shadow: 0 1px 2px #d4e2ff;
+  transition: 0.18s;
+}
+
+.primary:hover {
+  background: #2468e8;
+  transform: translateY(-1px);
+}
+
+/* ========== Workflow Section ========== */
+.workflow {
+  height: 100px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px 10px;
+  margin-bottom: 17px;
+  box-shadow: var(--shadow);
+}
+
+.workflow-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workflow-head strong {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.workflow-head span {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 19px 10px 0;
+}
+
+.steps:before {
+  content: "";
+  height: 2px;
+  background: #e6ebf1;
+  position: absolute;
+  right: 4%;
+  left: 4%;
+  top: 11px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  padding: 0 3px;
+}
+
+.step .circle {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  border: 1px solid #dce3ed;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #718096;
+  font-size: 11px;
+}
+
+.step.done .circle {
+  background: #eaf8f2;
+  border-color: #c9f0df;
+  color: #20b981;
+}
+
+.step.active .circle {
+  background: var(--blue);
+  border: 4px solid #e6efff;
+  color: white;
+  box-shadow: 0 0 0 2px #d8e6ff;
+}
+
+.step .label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #172033;
+  white-space: nowrap;
+}
+
+.step small {
+  display: block;
+  font-size: 8px;
+  font-weight: 400;
+  color: #9aa6b8;
+  margin-top: 1px;
+}
+
+/* ========== Section Header ========== */
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 11px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.section-title h2 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.section-title span {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: #64748b;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.actions .selected {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+/* ========== Fax Grid ========== */
+.fax-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.fax-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  min-height: 232px;
+  box-shadow: var(--shadow);
+  transition: 0.18s;
+  cursor: pointer;
+}
+
+.fax-card:hover {
+  border-color: #b8cdf5;
+  transform: translateY(-2px);
+}
+
+.fax-card.original {
+  border-style: dashed;
+}
+
+.preview {
+  height: 122px;
+  background: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.original .preview {
+  background: #f1f3f6;
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  border: 1px solid #e7ebf1;
+  border-radius: 4px;
+  padding: 3px 7px;
+  color: #8190a5;
+  font-size: 8px;
+}
+
+.paper {
+  width: 59px;
+  height: 89px;
+  background: #fff;
+  box-shadow: 0 2px 9px #d8dde5;
+  transform: rotate(3deg);
+  padding: 11px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.paper i {
+  height: 2px;
+  background: #e2e7ed;
+  display: block;
+}
+
+.paper i:nth-child(2) {
+  width: 90%;
+}
+
+.paper i:nth-child(3) {
+  width: 95%;
+}
+
+.paper i:nth-child(4) {
+  width: 80%;
+}
+
+.paper .stamp {
+  height: 12px;
+  width: 27px;
+  border: 1px solid #b7cdf8;
+  margin: 2px auto 0;
+}
+
+.paper i:last-child {
+  margin-top: 2px;
+  width: 75%;
+}
+
+.card-body {
+  padding: 10px 11px 9px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.card-title strong {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.card-title .source {
+  font-size: 8px;
+  color: #4d86f8;
+  background: #edf3ff;
+  padding: 3px 7px;
+  border-radius: 3px;
+}
+
+.meta {
+  font-size: 8px;
+  color: #91a0b4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-divider {
+  height: 1px;
+  background: #edf0f4;
+  margin: 10px 0 8px;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.word-icon {
+  width: 28px;
+  height: 29px;
+  border-radius: 5px;
+  background: #edf3ff;
+  color: #3478f6;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  font-family: Arial;
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.file-info strong {
+  font-size: 9px;
+  display: block;
+}
+
+.file-info span {
+  font-size: 8px;
+  color: #9aa6b8;
+}
+
+.status {
+  font-size: 8px;
+  background: #e7f8f0;
+  color: #2caa79;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.add-filter {
+  width: 100%;
+  border: 1px dashed #cbdaf4;
+  background: #f8faff;
+  color: #3478f6;
+  border-radius: 6px;
+  padding: 7px;
+  margin-top: 0;
+  font-size: 9px;
+}
+
+.add-filter:hover {
+  background: #edf4ff;
+}
+
+/* ========== Reminders Section ========== */
+.reminders {
+  margin-top: 26px;
+}
+
+.reminder-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 11px;
+}
+
+.reminder-head .section-title h2 {
+  font-size: 15px;
+}
+
+.link {
+  border: 0;
+  background: none;
+  color: #3478f6;
+  font-size: 9px;
+  padding: 4px;
+}
+
+.reminder-list {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reminder {
+  min-height: 62px;
+  padding: 9px 13px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-bottom: 1px solid #edf0f4;
+  cursor: pointer;
+  transition: 0.18s;
+}
+
+.reminder:last-child {
+  border-bottom: 0;
+}
+
+.reminder:hover {
+  background: #f9fafb;
+}
+
+.date {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #fff8ed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #b7791f;
+  flex-shrink: 0;
+}
+
+.date strong {
+  font-family: Arial;
+  font-size: 17px;
+  line-height: 18px;
+}
+
+.date span {
+  font-size: 8px;
+}
+
+.reminder-copy {
+  flex: 1;
+}
+
+.reminder-copy strong {
+  font-size: 10px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.reminder-copy span {
+  font-size: 8px;
+  color: #91a0b4;
+}
+
+.fax-pill {
+  font-size: 8px;
+  color: #8492a6;
+  background: #f1f3f6;
+  border-radius: 4px;
+  padding: 5px 7px;
+  white-space: nowrap;
+}
+
+.chevron {
+  color: #8da0b8;
+  font-size: 16px;
+  margin-left: 3px;
+}
+
+/* ========== Modal ========== */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 25, 42, 0.35);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 5000;
+}
+
+.modal-backdrop.show {
+  display: flex;
+}
+
+.modal {
+  width: min(390px, 100%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 18px 55px #14233b33;
+}
+
+.modal h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.modal p {
+  color: #718096;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.modal-footer button {
+  border-radius: 6px;
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.modal-footer .primary {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+/* ========== Toast ========== */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #172033;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 7px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 0.2s;
+  pointer-events: none;
+  z-index: 6000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 650px) {
+  .page {
+    width: calc(100% - 24px);
+    margin-top: 18px;
+  }
+  
+  .workflow {
+    height: auto;
+    padding: 12px;
+  }
+  
+  .steps {
+    margin: 17px 0 4px;
+    gap: 4px;
+  }
+  
+  .step {
+    gap: 4px;
+    padding: 0;
+  }
+  
+  .step .label {
+    font-size: 8px;
+  }
+  
+  .step small {
+    font-size: 7px;
+  }
+  
+  .step .circle {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  
+  .fax-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fax-card {
+    min-height: 210px;
+  }
+  
+  .preview {
+    height: 110px;
+  }
+  
+  .topbar {
+    margin-bottom: 16px;
+  }
+}

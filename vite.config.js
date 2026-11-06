@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   build: {
-    outDir: 'dist',
+    outDir: 'dist-vite',
     assetsDir: 'assets',
     emptyOutDir: true,
     rollupOptions: {

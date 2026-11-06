@@ -17,10 +17,17 @@ const ConfirmDeleteModal = ({
   itemName,
   itemCount,
   warningNote,
-  loading = false 
+  loading = false,
+  modalId = 'confirm-delete-modal'
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} size="small">
+    <Modal 
+      isOpen={isOpen} 
+      onClose={onClose} 
+      title={title} 
+      size="small"
+      modalId={modalId}
+    >
       <div className="confirm-delete-content">
         <div className="confirm-delete-icon">
           <svg className="svg-icon-xl" viewBox="0 0 24 24" fill="currentColor">

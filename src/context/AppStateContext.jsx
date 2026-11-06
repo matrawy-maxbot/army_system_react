@@ -15,6 +15,7 @@ export function AppStateProvider({ children }) {
         currentFilteringSession: { isActive: false, nextFaxNumber: 1 },
         replies: [],
         reminders: [],
+        tasks: [],
         lists: [{ id: 1, name: "المفضلة", isDefault: true, items: [] }],
         templates: []
     });
@@ -60,6 +61,7 @@ export function AppStateProvider({ children }) {
                 currentFilteringSession: cleanedData.currentFilteringSession || { isActive: false, nextFaxNumber: 1 },
                 replies: cleanedData.replies || [],
                 reminders: cleanedData.reminders || [],
+                tasks: cleanedData.tasks || [],
                 lists: cleanedData.lists || [{ id: 1, name: "المفضلة", isDefault: true, items: [] }],
                 templates: cleanedData.templates || []
             });
@@ -82,6 +84,7 @@ export function AppStateProvider({ children }) {
                     currentFilteringSession: { isActive: false, nextFaxNumber: 1 },
                     replies: [],
                     reminders: [],
+                    tasks: [],
                     lists: [{ id: 1, name: "المفضلة", isDefault: true, items: [] }],
                     templates: []
                 };

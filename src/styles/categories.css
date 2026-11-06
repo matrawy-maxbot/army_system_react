@@ -86,7 +86,7 @@
     align-items: center;
     padding: var(--spacing-24);
     border-bottom: 1px solid var(--border-color);
-    background: var(--bg-app);
+    background: #ffffff;
 }
 
 .category-title {

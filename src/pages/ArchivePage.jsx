@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { useAppState } from '../context/AppStateContext';
 import {
   ArchiveGrid,
   AddArchiveCategoryModal,
@@ -16,12 +17,14 @@ import {
 import './ArchivePage.css';
 
 const ArchivePage = () => {
+  const { appState, setAppState, saveData } = useAppState();
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [showAddFolderModal, setShowAddFolderModal] = useState(false);
   const [showFolderViewModal, setShowFolderViewModal] = useState(false);
   const [showEditFolderModal, setShowEditFolderModal] = useState(false);
   const [showMoveFolderModal, setShowMoveFolderModal] = useState(false);
   const [showDeleteFolderModal, setShowDeleteFolderModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
@@ -34,6 +37,28 @@ const ArchivePage = () => {
   const handleOpenFolder = (folderId) => {
     setSelectedFolderId(folderId);
     setShowFolderViewModal(true);
+  };
+
+  const handlePinFolder = async (folder) => {
+    // Toggle pin state
+    const updatedCategories = appState.archiveCategories.map(category => {
+      if (category.folders) {
+        return {
+          ...category,
+          folders: category.folders.map(f => 
+            f.id === folder.id ? { ...f, isPinned: !f.isPinned } : f
+          )
+        };
+      }
+      return category;
+    });
+
+    setAppState({
+      ...appState,
+      archiveCategories: updatedCategories
+    });
+
+    await saveData();
   };
 
   const handleEditFolder = (folderId) => {
@@ -62,29 +87,39 @@ const ArchivePage = () => {
   return (
     <div className="archive-page">
       <div className="archive-header-section">
-        <h1 className="archive-title">
-          <svg className="svg-icon-md" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-            <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-            <path d="M10 12l4 0" />
-          </svg>
-          فئات الأرشيف والمجلدات
-        </h1>
+        <div className="archive-header-text">
+          <div className="title-desc">
+            <h1>فئات الأرشيف والمجلدات</h1>
+            <p>إدارة وتنظيم مستندات الأرشيف</p>
+          </div>
+          <div className="search-area">
+            <label className="search">
+              <div className="search-box" style={{margin:0}}>
+                <input 
+                  type="text"
+                  id="search"
+                  placeholder="البحث عن مجلد او ملف..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </label>
+          </div>
+        </div>
         <button 
-          className="btn-primary"
+          className="primary-btn"
           onClick={() => setShowAddCategoryModal(true)}
         >
-          <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 4a1 1 0 0 1 1 1v6h6a1 1 0 0 1 0 2h-6v6a1 1 0 0 1 -2 0v-6h-6a1 1 0 0 1 0 -2h6v-6a1 1 0 0 1 1 -1" />
-          </svg>
-          إضافة فئة أرشيف
+          + إضافة فئة أرشيف
         </button>
       </div>
 
       <div className="archive-content">
         <ArchiveGrid
+          searchQuery={searchQuery}
           onAddFolder={handleAddFolder}
           onOpenFolder={handleOpenFolder}
+          onPinFolder={handlePinFolder}
         />
       </div>
 
