@@ -1,0 +1,195 @@
+/* Cloned File Preview Modal */
+.cloned-preview-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(25, 35, 50, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.cloned-preview-modal.show {
+    display: flex;
+}
+
+.cloned-preview-modal-content {
+    width: min(650px, 100%);
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cloned-preview-modal-header {
+    padding: 14px 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e9edf2;
+}
+
+.cloned-preview-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.cloned-preview-modal-title span:first-child {
+    font-size: 12px;
+    font-weight: 600;
+    color: #29384d;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cloned-source-badge {
+    font-size: 8px;
+    padding: 3px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.cloned-source-badge.template {
+    color: #059669;
+    background: #d1fae5;
+}
+
+.cloned-source-badge.cloned {
+    color: #3478f6;
+    background: #edf3ff;
+}
+
+.cloned-preview-close {
+    border: 0;
+    background: transparent;
+    color: #7d899a;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.cloned-preview-close:hover {
+    background: #f3f5f8;
+}
+
+.cloned-preview-modal-body {
+    height: 400px;
+    display: grid;
+    place-items: center;
+    background: #f3f5f8;
+    position: relative;
+}
+
+.cloned-paper-large {
+    width: 220px;
+    height: 300px;
+    padding: 25px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.055);
+    overflow: hidden;
+    position: relative;
+}
+
+.cloned-type-large {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 9px;
+    border-radius: 4px;
+    background: #fff;
+    color: #d05d5d;
+    font-size: 10px;
+    font-weight: 700;
+    border: 1px solid #eceff3;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.cloned-type-large.word {
+    color: #3978db;
+}
+
+.cloned-type-large.excel {
+    color: #059669;
+}
+
+.cloned-type-large.ppt {
+    color: #ea580c;
+}
+
+.cloned-preview-modal-footer {
+    padding: 14px 17px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    border-top: 1px solid #e9edf2;
+}
+
+.cloned-preview-btn {
+    border: 0;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.cloned-preview-btn.secondary {
+    background: #f3f5f8;
+    color: #64748b;
+}
+
+.cloned-preview-btn.secondary:hover {
+    background: #e9edf2;
+}
+
+.cloned-preview-btn.primary {
+    background: #3478f6;
+    color: white;
+    box-shadow: 0 1px 2px rgba(52, 120, 246, 0.2);
+}
+
+.cloned-preview-btn.primary:hover {
+    background: #2468e8;
+    transform: translateY(-1px);
+}
+
+.cloned-template-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.template-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+}
+
+.template-info-item .label {
+    color: #91a0b4;
+    font-weight: 600;
+}
+
+.template-info-item .value {
+    color: #29384d;
+    font-weight: 700;
+}

@@ -168,178 +168,115 @@
 /* ========== No Preview State ========== */
 
 .templates-section .no-preview {
-    width: 77%;
-    height: 100%;
-    background: #f8f9fb;
-    border: 1px dashed #cbd3df;
-    border-radius: 3px 3px 0 0;
+    height: 90%;
+    background: #ffffff;
+    border: 2px dashed #d4dce6;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    color: #8b97a8;
+    gap: 12px;
+    color: #6b7a90;
     text-align: center;
     flex-shrink: 0;
+    padding: 20px 15px;
+    aspect-ratio: 3/4;
 }
 
 .templates-section .no-preview-icon {
-    width: 42px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
-    border: 1px solid #d9e0e9;
-    border-radius: 5px;
-    color: #9aa8ba;
-    font-size: 25px;
-    box-shadow: 0 2px 6px #253b5708;
+    background: #f4f6f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #8894a6;
+    font-size: 28px;
+    flex-shrink: 0;
 }
 
 .templates-section .no-preview-title {
-    font-size: 10px;
-    font-weight: 700;
-    color: #69778b;
+    font-size: 11px;
+    font-weight: 600;
+    color: #495563;
+    margin: 0;
+    line-height: 1.4;
 }
 
 .templates-section .no-preview-subtitle {
-    font-size: 8px;
-    color: #a0a9b7;
+    font-size: 9px;
+    color: #9aa5b3;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 90%;
 }
 
-/* ========== Template Actions (Overlay Effect) ========== */
+/* ========== Template Actions (Card Actions) ========== */
 
-.templates-section .template-overlay {
+.template-card-actions {
     position: absolute;
-    inset: 0;
+    top: 10px;
+    right: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #14243b9c, #1c3655b8);
+    flex-direction: column;
+    gap: 6px;
     opacity: 0;
-    transition: opacity 0.25s;
+    transition: opacity 0.2s ease;
+    z-index: 2;
 }
 
-.templates-section .template-card:hover .template-overlay,
-.templates-section .template-card:focus-within .template-overlay {
+.template-card:hover .template-card-actions {
     opacity: 1;
 }
 
-.templates-section .template-actions {
+.template-card-actions .action-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
-    transform: translateY(10px);
-    transition: transform 0.25s;
-    padding: 9px;
-    background: #ffffff14;
-    border: 1px solid #ffffff30;
-    border-radius: 11px;
-    backdrop-filter: blur(9px);
-    flex-wrap: wrap;
     justify-content: center;
-}
-
-.templates-section .template-card:hover .template-actions,
-.templates-section .template-card:focus-within .template-actions {
-    transform: translateY(0);
-}
-
-.templates-section .order-buttons-template {
-    display: flex;
-    gap: 4px;
-    order: -1;
-    width: 100%;
-    justify-content: center;
-}
-
-.templates-section .template-actions button {
-    height: 37px;
-    border-radius: 7px;
-    padding: 0 11px;
-    border: 1px solid #ffffff40;
     background: #ffffffed;
-    color: #48566d;
-    font-size: 11px;
-    font-weight: 600;
-    font-family: inherit;
+    border: 1px solid #e2e7ee;
+    border-radius: 7px;
+    color: #556578;
     cursor: pointer;
-    transition: 0.18s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    transition: all 0.18s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.templates-section .template-actions button:hover {
+.template-card-actions .action-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.templates-section .template-actions .action-order {
-    width: 37px;
-    height: 37px;
-    padding: 0;
-    background: #f0f5fb;
-    color: #3477ed;
-}
-
-.templates-section .template-actions .action-order:hover {
-    background: #3477ed;
-    color: white;
-}
-
-.templates-section .template-actions .action-order svg {
+.template-card-actions .action-btn svg {
     width: 14px;
     height: 14px;
 }
 
-.templates-section .template-actions .action-open {
+.template-card-actions .action-edit:hover {
     background: #3477ed;
-    color: white;
     border-color: #3477ed;
-}
-
-.templates-section .template-actions .action-open:hover {
-    background: #2565d9;
-}
-
-.templates-section .template-actions .action-open svg {
-    width: 14px;
-    height: 14px;
-}
-
-.templates-section .template-actions .action-edit {
-    width: 37px;
-    height: 37px;
-    padding: 0;
-}
-
-.templates-section .template-actions .action-edit:hover {
-    color: #326fe7;
-}
-
-.templates-section .template-actions .action-edit svg {
-    width: 14px;
-    height: 14px;
-}
-
-.templates-section .template-actions .action-delete {
-    width: 37px;
-    height: 37px;
-    padding: 0;
-    color: #d65e5e;
-    background: #fff4f2;
-}
-
-.templates-section .template-actions .action-delete:hover {
-    background: #e85d58;
     color: white;
 }
 
-.templates-section .template-actions .action-delete svg {
-    width: 14px;
-    height: 14px;
+.template-card-actions .action-delete:hover {
+    background: #e85d58;
+    border-color: #e85d58;
+    color: white;
+}
+
+/* إزالة الـ overlay القديم */
+.templates-section .template-overlay {
+    display: none;
+}
+
+.templates-section .template-actions {
+    display: none;
 }
 
 /* ========== Template Info ========== */
@@ -362,24 +299,24 @@
     flex: 1;
 }
 
-/* ========== Template Modal ========== */
+/* ========== Template Rename Modal ========== */
 
-.template-modal {
+.template-rename-modal {
     display: none;
     position: fixed;
     inset: 0;
     background: rgba(23, 36, 58, 0.44);
-    z-index: 999;
+    z-index: 1014;
     align-items: center;
     justify-content: center;
     padding: 15px;
 }
 
-.template-modal.show {
+.template-rename-modal.show {
     display: flex;
 }
 
-.template-modal .modal-content {
+.template-rename-modal .modal-content {
     background: #ffffff;
     border-radius: 11px;
     padding: 22px;
@@ -388,14 +325,14 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.template-modal .modal-content h3 {
+.template-rename-modal .modal-content h3 {
     font-size: 15px;
     margin: 0 0 12px 0;
     color: #253044;
     font-weight: 700;
 }
 
-.template-modal .modal-content input {
+.template-rename-modal .modal-content input {
     width: 100%;
     padding: 11px;
     border: 1px solid #e3e8ef;
@@ -406,17 +343,17 @@
     transition: border-color 0.2s;
 }
 
-.template-modal .modal-content input:focus {
+.template-rename-modal .modal-content input:focus {
     border-color: #3477ed;
 }
 
-.template-modal .modal-buttons {
+.template-rename-modal .modal-buttons {
     display: flex;
     gap: 8px;
     margin-top: 15px;
 }
 
-.template-modal .modal-buttons button {
+.template-rename-modal .modal-buttons button {
     border: 0;
     border-radius: 7px;
     padding: 9px 14px;
@@ -427,21 +364,21 @@
     transition: background 0.18s;
 }
 
-.template-modal #saveTemplateName {
+.template-rename-modal #saveTemplateName {
     background: #3477ed;
     color: #ffffff;
 }
 
-.template-modal #saveTemplateName:hover {
+.template-rename-modal #saveTemplateName:hover {
     background: #2565d9;
 }
 
-.template-modal #cancelTemplateName {
+.template-rename-modal #cancelTemplateName {
     background: #f0f2f6;
     color: #657187;
 }
 
-.template-modal #cancelTemplateName:hover {
+.template-rename-modal #cancelTemplateName:hover {
     background: #e2e6eb;
 }
 
@@ -475,15 +412,8 @@
 }
 
 @media (hover: none) {
-    .templates-section .template-overlay {
+    .template-card-actions {
         opacity: 1;
-        background: linear-gradient(0deg, #172b48b5, transparent 55%);
-        align-items: flex-end;
-        padding-bottom: 12px;
-    }
-
-    .templates-section .template-actions {
-        transform: none;
     }
 }
 

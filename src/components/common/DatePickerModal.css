@@ -1,0 +1,375 @@
+/**
+ * DatePickerModal Styles
+ * تصميم نافذة اختيار التاريخ
+ * تصميم عصري واحترافي مع تقويم كامل
+ */
+
+.date-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.date-picker-modal {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    width: 360px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.date-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.date-picker-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.date-picker-modal .close-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 6px;
+    font-size: 20px;
+    color: #6b7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.date-picker-body {
+    padding: 16px 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.nav-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 6px;
+    color: #374151;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: #e5e7eb;
+    color: #1a1a1a;
+}
+
+.calendar-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.title-btn {
+    padding: 6px 12px;
+    border: none;
+    background: #f9fafb;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.title-btn:hover {
+    background: #e5e7eb;
+}
+
+.title-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.calendar-content {
+    margin-bottom: 14px;
+}
+
+/* أسماء الأيام */
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 6px;
+}
+
+.weekday {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    padding: 6px 2px;
+}
+
+/* شبكة الأيام */
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+.day-cell {
+    aspect-ratio: 1;
+    border: none;
+    background: white;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.day-cell:hover {
+    background: #f3f4f6;
+}
+
+.day-cell.other-month {
+    color: #d1d5db;
+}
+
+.day-cell.today {
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+}
+
+.day-cell.selected {
+    background: #2563eb;
+    color: white;
+    font-weight: 700;
+}
+
+.day-cell.selected:hover {
+    background: #1d4ed8;
+}
+
+/* شبكة الأشهر */
+.months-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.month-cell {
+    padding: 12px;
+    border: none;
+    background: #f9fafb;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.month-cell:hover {
+    background: #e5e7eb;
+    color: #1a1a1a;
+}
+
+.month-cell.current {
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+}
+
+/* شبكة السنوات */
+.years-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.year-cell {
+    padding: 12px;
+    border: none;
+    background: #f9fafb;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.year-cell:hover {
+    background: #e5e7eb;
+    color: #1a1a1a;
+}
+
+.year-cell.current {
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+}
+
+/* عرض التاريخ المختار */
+.selected-date-display {
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 2px solid #e5e7eb;
+}
+
+.selected-date-display .label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.selected-date-display .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* Footer */
+.date-picker-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.secondary-btn,
+.cancel-btn,
+.confirm-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.secondary-btn {
+    background: white;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+}
+
+.secondary-btn:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.cancel-btn {
+    background: white;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+
+.cancel-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.confirm-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.confirm-btn:hover {
+    background: #1d4ed8;
+}
+
+/* استجابة الشاشات الصغيرة */
+@media (max-width: 540px) {
+    .date-picker-modal {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 16px 16px 0 0;
+        margin-top: auto;
+    }
+
+    .date-picker-header,
+    .date-picker-body,
+    .date-picker-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .calendar-days {
+        gap: 2px;
+    }
+
+    .day-cell {
+        font-size: 13px;
+    }
+
+    .weekday {
+        font-size: 11px;
+    }
+}

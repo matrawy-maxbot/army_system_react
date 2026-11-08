@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مثال على زر تسجيل الخروج</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', Tahoma, sans-serif;
+            background: #f5f7fa;
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .demo-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .app-sidebar {
+            width: 80px;
+            background: #ffffff;
+            border: 1px solid #e1e6ed;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .sidebar-btn {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            font-weight: 600;
+            color: #718096;
+            text-align: center;
+            font-family: 'Cairo', Tahoma, sans-serif;
+        }
+        
+        .sidebar-btn:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+        
+        .sidebar-btn.active {
+            background: #3478f6;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(52, 120, 246, 0.25);
+        }
+        
+        .sidebar-btn svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-btn-backup {
+            margin-top: auto;
+            background: #eef4ff;
+            color: #3478ed;
+            border: 1px solid #cbdcff;
+        }
+        
+        .sidebar-btn-backup:hover {
+            background: #e3efff;
+            color: #2465d2;
+            border-color: #b3d4ff;
+        }
+        
+        .sidebar-btn-logout {
+            background: #fff2f2;
+            color: #d83939;
+            border: 1px solid #ffd5d5;
+        }
+        
+        .sidebar-btn-logout:hover {
+            background: #ffe8e8;
+            color: #c72828;
+            border-color: #ffbaba;
+            transform: translateY(-1px);
+        }
+        
+        .sidebar-btn-logout:active {
+            transform: translateY(0);
+        }
+        
+        .sidebar-btn-logout svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .code-section {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            max-width: 600px;
+        }
+        
+        .code-section pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .highlight {
+            color: #22d3ee;
+        }
+        
+        .string {
+            color: #a5f3fc;
+        }
+        
+        .tag {
+            color: #fb923c;
+        }
+        
+        .attribute {
+            color: #60a5fa;
+        }
+        
+        .variants {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .variant-btn {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', Tahoma, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .variant-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .variant-red {
+            background: #fff2f2;
+            color: #d83939;
+            border: 1px solid #ffd5d5;
+        }
+        
+        .variant-red:hover {
+            background: #ffe8e8;
+            color: #c72828;
+            transform: translateY(-1px);
+        }
+        
+        .variant-blue {
+            background: #f0f4f8;
+            color: #2563eb;
+            border: 1px solid #cbd5e0;
+        }
+        
+        .variant-blue:hover {
+            background: #e2e8f0;
+            color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        
+        .variant-orange {
+            background: #fff5eb;
+            color: #dd6b20;
+            border: 1px solid #fbd38d;
+        }
+        
+        .variant-orange:hover {
+            background: #feebc8;
+            color: #c05621;
+            transform: translateY(-1px);
+        }
+        
+        .variant-gray {
+            background: #f7fafc;
+            color: #718096;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .variant-gray:hover {
+            background: #edf2f7;
+            color: #4a5568;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <!-- القسم الأول: TabBar كامل مع الزر -->
+    <div class="demo-section">
+        <h2>📱 الشريط الجانبي الكامل (TabBar)</h2>
+        <div class="app-sidebar">
+            <button class="sidebar-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z"/>
+                </svg>
+                <span>الرئيسية</span>
+            </button>
+            
+            <button class="sidebar-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/>
+                </svg>
+                <span>التذكيرات</span>
+            </button>
+            
+            <button class="sidebar-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2"/>
+                    <path d="M9 12l2 2l4 -4"/>
+                </svg>
+                <span>المهمات</span>
+            </button>
+            
+            <button class="sidebar-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/>
+                    <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"/>
+                </svg>
+                <span>الأرشفة</span>
+            </button>
+            
+            <button class="sidebar-btn sidebar-btn-backup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 18a4 4 0 0 1-.5-8A6.5 6.5 0 0 1 18 8a5 5 0 0 1 0 10H6Z"/>
+                </svg>
+                <span>النسخ الاحتياطي</span>
+            </button>
+            
+            <button class="sidebar-btn sidebar-btn-logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- القسم الثاني: أمثلة مختلفة للزر -->
+    <div class="demo-section">
+        <h2>🎨 أشكال مختلفة لزر تسجيل الخروج</h2>
+        <div class="variants">
+            <button class="variant-btn variant-red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                تسجيل الخروج (أحمر - النمط الافتراضي)
+            </button>
+            
+            <button class="variant-btn variant-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                تسجيل الخروج (أزرق محافظ)
+            </button>
+            
+            <button class="variant-btn variant-orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                تسجيل الخروج (برتقالي تحذيري)
+            </button>
+            
+            <button class="variant-btn variant-gray">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                تسجيل الخروج (رمادي محايد)
+            </button>
+        </div>
+    </div>
+    
+    <!-- القسم الثالث: كود JSX -->
+    <div class="demo-section">
+        <h2>💻 كود JSX للزر</h2>
+        <div class="code-section">
+            <pre><span class="tag">&lt;button</span> 
+    <span class="attribute">className</span>=<span class="string">"sidebar-btn sidebar-btn-logout"</span>
+    <span class="attribute">data-section</span>=<span class="string">"logout"</span> 
+    <span class="attribute">title</span>=<span class="string">"تسجيل الخروج"</span>
+    <span class="attribute">onClick</span>={<span class="highlight">() => handleButtonClick('login')</span>}
+<span class="tag">&gt;</span>
+    <span class="tag">&lt;svg</span> <span class="attribute">viewBox</span>=<span class="string">"0 0 24 24"</span> <span class="attribute">fill</span>=<span class="string">"none"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;path</span> <span class="attribute">d</span>=<span class="string">"M9 21H5a2 2..."</span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;polyline</span> <span class="attribute">points</span>=<span class="string">"16 17 21 12 16 7"</span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;line</span> <span class="attribute">x1</span>=<span class="string">"21"</span> <span class="attribute">y1</span>=<span class="string">"12"</span> <span class="attribute">x2</span>=<span class="string">"9"</span> <span class="attribute">y2</span>=<span class="string">"12"</span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/svg&gt;</span>
+    <span class="tag">&lt;span&gt;</span>تسجيل الخروج<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/button&gt;</span></pre>
+        </div>
+    </div>
+    
+    <!-- القسم الرابع: كود CSS -->
+    <div class="demo-section">
+        <h2>🎨 كود CSS للتنسيقات</h2>
+        <div class="code-section">
+            <pre><span class="highlight">.sidebar-btn-logout</span> {
+    <span class="attribute">background</span>: <span class="string">#fff2f2</span>;
+    <span class="attribute">color</span>: <span class="string">#d83939</span>;
+    <span class="attribute">border</span>: <span class="string">1px solid #ffd5d5</span>;
+}
+
+<span class="highlight">.sidebar-btn-logout:hover</span> {
+    <span class="attribute">background</span>: <span class="string">#ffe8e8</span>;
+    <span class="attribute">color</span>: <span class="string">#c72828</span>;
+    <span class="attribute">border-color</span>: <span class="string">#ffbaba</span>;
+    <span class="attribute">transform</span>: <span class="highlight">translateY(-1px)</span>;
+}
+
+<span class="highlight">.sidebar-btn-logout:active</span> {
+    <span class="attribute">transform</span>: <span class="highlight">translateY(0)</span>;
+}</pre>
+        </div>
+    </div>
+    
+    <script>
+        // إضافة تأثير للنقر على الأزرار
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                const buttonText = this.textContent.trim();
+                if (buttonText.includes('تسجيل الخروج')) {
+                    alert('✅ تم الضغط على زر تسجيل الخروج!\n\nسيتم توجيهك لصفحة تسجيل الدخول');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الدخول | إدارة الفاكسات</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+    :root {
+      --blue: #3478f6;
+      --blue-dark: #2465e8;
+      --ink: #17243a;
+      --muted: #8795aa;
+      --line: #e3e9f2;
+      --surface: #ffffff;
+      --bg: #f4f7fb;
+      --purple: #7558b9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Cairo", Tahoma, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 13% 20%, rgba(69,126,246,.07), transparent 28%),
+        radial-gradient(circle at 85% 88%, rgba(117,88,185,.06), transparent 25%),
+        var(--bg);
+    }
+    .window-bar {
+      height: 34px;
+      background: linear-gradient(105deg, #607ce8, #7958b5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(49,67,130,.15);
+    }
+    .window-actions { display: flex; gap: 19px; align-items: center; direction:ltr; }
+    .window-actions span { font-size: 17px; line-height: 1; opacity: .95; cursor: pointer; transition: opacity 0.2s; }
+    .window-actions span:hover { opacity: 1; }
+    .brand-mini { display:flex; align-items:center; gap:9px; font-size:12px; font-weight:700; }
+    .brand-mini .mark { width:19px;height:19px;border-radius:6px;background:rgba(255,255,255,.2);display:grid;place-items:center; }
+    .page { min-height: calc(100vh - 34px); display:flex; flex-direction:column; }
+    .topbar {
+      width:min(1420px, calc(100% - 64px));
+      height:84px; margin:auto; display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid #e6ebf3;
+    }
+    .brand { display:flex; align-items:center; gap:13px; }
+    .brand-icon {
+      width:43px;height:43px;border-radius:13px;background:var(--blue);color:white;
+      display:grid;place-items:center;box-shadow:0 7px 16px rgba(52,120,246,.2);
+    }
+    .brand-name { font-size:17px;font-weight:800;letter-spacing:-.3px; }
+    .brand-sub { font-size:10px;color:var(--muted);margin-top:1px; }
+    .secure { display:flex;align-items:center;gap:8px;color:#8291a7;font-size:11px; }
+    .secure svg { color:#24a879; }
+    main {
+      flex:1; width:min(1180px, calc(100% - 64px)); margin:48px auto 55px;
+      display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:stretch;
+    }
+    .visual-panel {
+      position:relative;overflow:hidden;min-height:590px;border:1px solid #e2e9f4;border-radius:22px;
+      background:linear-gradient(145deg,#edf3ff 0%,#f8faff 58%,#f2effb 100%);
+      padding:45px 42px;display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .visual-panel:before,.visual-panel:after {
+      content:"";position:absolute;border-radius:50%;pointer-events:none;
+      border:1px solid rgba(73,126,237,.12);
+    }
+    .visual-panel:before { width:390px;height:390px;top:-205px;left:-145px; }
+    .visual-panel:after { width:300px;height:300px;bottom:-185px;right:-110px; }
+    .visual-copy,.preview-wrap,.visual-foot { position:relative;z-index:1; }
+    .eyebrow { color:var(--blue);font-size:12px;font-weight:700;display:flex;align-items:center;gap:8px; }
+    .eyebrow:before { content:"";width:23px;height:2px;background:var(--blue);border-radius:2px; }
+    h1 { font-size:31px;line-height:1.55;margin:13px 0 9px;font-weight:800;letter-spacing:-.8px; }
+    .visual-copy p { color:#75859d;font-size:13px;line-height:2;margin:0;max-width:440px; }
+    .preview-wrap { margin:35px 0 25px; }
+    .preview {
+      width:100%;max-width:490px;margin:auto;background:#fff;border:1px solid #dfe7f2;border-radius:15px;
+      box-shadow:0 22px 50px rgba(37,65,112,.13);overflow:hidden;transform:rotate(-1deg);
+    }
+    .preview-head { height:43px;background:#fff;border-bottom:1px solid #edf0f5;display:flex;align-items:center;justify-content:space-between;padding:0 15px; }
+    .dots { display:flex;gap:5px;direction:ltr; }
+    .dots i { width:6px;height:6px;border-radius:50%;background:#d6deeb; }
+    .preview-title { font-size:10px;font-weight:700;color:#53627a; }
+    .preview-body { display:grid;grid-template-columns:42px 1fr;min-height:205px; }
+    .preview-side { background:#f8faff;border-left:1px solid #edf1f7;padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:15px; }
+    .side-dot { width:17px;height:17px;border-radius:5px;background:#e8eef9; }
+    .side-dot.active { background:#dce8ff;border:1px solid #c6d9ff; }
+    .preview-content { padding:15px 17px; }
+    .preview-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:13px; }
+    .preview-row strong { font-size:11px; }
+    .tiny-pill { font-size:8px;color:#3478f6;background:#edf4ff;padding:4px 8px;border-radius:5px; }
+    .file-card { border:1px solid #e6ebf3;border-radius:8px;padding:11px;display:flex;align-items:center;gap:10px;margin-top:9px; }
+    .file-icon { width:31px;height:36px;background:#eef4ff;border-radius:6px;display:grid;place-items:center;color:#4c83ef; }
+    .file-lines { flex:1; }
+    .file-lines b { display:block;width:42%;height:6px;border-radius:5px;background:#dce5f1;margin-bottom:7px; }
+    .file-lines span { display:block;width:68%;height:5px;border-radius:5px;background:#edf1f6; }
+    .file-status { width:7px;height:7px;border-radius:50%;background:#35bd8c; }
+    .visual-foot { display:flex;align-items:center;gap:10px;color:#8493aa;font-size:11px; }
+    .visual-foot .shield { width:31px;height:31px;border:1px solid #d9e5fa;border-radius:9px;display:grid;place-items:center;color:var(--blue);background:rgba(255,255,255,.65); }
+    .login-panel {
+      background:var(--surface);border:1px solid #e3e9f1;border-radius:22px;
+      box-shadow:0 12px 35px rgba(30,55,90,.045);padding:54px 54px 38px;
+      display:flex;flex-direction:column;justify-content:center;min-height:590px;
+    }
+    .login-symbol { width:58px;height:58px;border-radius:17px;background:#edf4ff;color:var(--blue);display:grid;place-items:center;margin-bottom:27px; }
+    .login-panel .overline { color:var(--blue);font-size:11px;font-weight:700;margin-bottom:7px; }
+    h2 { margin:0;font-size:27px;font-weight:800;letter-spacing:-.5px; }
+    .description { margin:9px 0 32px;color:#8795a9;font-size:12px;line-height:1.9; }
+    label { display:block;font-size:12px;font-weight:700;margin-bottom:10px;color:#34445d; }
+    .password-wrap { position:relative; }
+    input {
+      width:100%;height:53px;border:1px solid #dfe6f0;border-radius:10px;padding:0 15px 0 49px;
+      font-family:inherit;font-size:14px;color:var(--ink);outline:none;background:#fbfcfe;transition:.2s;
+    }
+    input::placeholder { color:#b0bac9;font-size:12px; }
+    input:focus { border-color:#82aafa;background:#fff;box-shadow:0 0 0 4px rgba(52,120,246,.09); }
+    .toggle {
+      position:absolute;left:13px;top:50%;transform:translateY(-50%);border:0;background:transparent;
+      color:#91a0b5;cursor:pointer;padding:5px;display:grid;place-items:center;transition:color 0.2s;
+    }
+    .toggle:hover { color:var(--blue); }
+    .hint { margin-top:10px;color:#a0acbd;font-size:10px; }
+    .submit {
+      width:100%;height:52px;margin-top:25px;border:0;border-radius:10px;background:var(--blue);color:white;
+      font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;
+      display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 7px 15px rgba(52,120,246,.17);
+    }
+    .submit:hover { background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 10px 20px rgba(52,120,246,.23); }
+    .submit:active { transform:translateY(0); }
+    .message { 
+      display:block;margin-top:13px;font-size:11px;text-align:center;padding:10px;
+      border-radius:8px;
+    }
+    .message.error { color:#d35b5b;background:#fff0f0;border:1px solid #ffdbdb; }
+    .message.success { color:#16976c;background:#e7f8f1;border:1px solid #c3ead9; }
+    .divider { height:1px;background:#edf0f5;margin:34px 0 20px; }
+    .login-bottom { display:flex;justify-content:space-between;align-items:center;color:#9aa6b7;font-size:10px; }
+    .login-bottom span:last-child { display:flex;align-items:center;gap:6px; }
+    .login-bottom svg { color:#27a77a; }
+    @media (max-width:900px) {
+      main { grid-template-columns:1fr;max-width:620px;margin-top:28px; }
+      .visual-panel { min-height:440px;order:2;padding:32px; }
+      .login-panel { min-height:520px;order:1;padding:42px; }
+      .preview-wrap { margin:24px 0 18px; }
+    }
+    @media (max-width:560px) {
+      .topbar,main { width:calc(100% - 28px); }
+      .topbar { height:70px; }
+      .secure { display:none; }
+      main { margin:18px auto 28px;gap:14px; }
+      .login-panel { padding:32px 23px;min-height:490px; }
+      .visual-panel { padding:27px 22px;min-height:420px; }
+      h1 { font-size:25px; }
+      h2 { font-size:24px; }
+      .brand-name { font-size:14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="window-bar">
+    <div class="window-actions"><span>×</span><span>□</span><span>−</span></div>
+    <div class="brand-mini"><span class="mark">▣</span> إدارة الفاكسات</div>
+  </div>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H16l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/><path d="M15.5 3v5H20M8 12h8M8 16h8"/></svg>
+        </div>
+        <div><div class="brand-name">نظام إدارة الفاكسات والتدريب</div><div class="brand-sub">إدارة المستندات وسير العمل بسهولة</div></div>
+      </div>
+      <div class="secure">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+        اتصال آمن ومشفّر
+      </div>
+    </header>
+
+    <main>
+      <section class="visual-panel">
+        <div class="visual-copy">
+          <div class="eyebrow">مساحة عملك، في مكان واحد</div>
+          <h1>كل فاكس في مكانه.<br>وكل مهمة تحت السيطرة.</h1>
+          <p>منصة متكاملة لتنظيم الفاكسات والمستندات ومتابعة المهام والتذكيرات، بواجهة بسيطة تساعدك على إنجاز عملك.</p>
+        </div>
+
+        <div class="preview-wrap">
+          <div class="preview">
+            <div class="preview-head">
+              <div class="dots"><i></i><i></i><i></i></div>
+              <div class="preview-title">لوحة إدارة الفاكسات</div>
+            </div>
+            <div class="preview-body">
+              <div class="preview-side">
+                <span class="side-dot active"></span><span class="side-dot"></span><span class="side-dot"></span><span class="side-dot"></span><span class="side-dot"></span>
+              </div>
+              <div class="preview-content">
+                <div class="preview-row"><strong>المستندات الأخيرة</strong><span class="tiny-pill">عرض الكل</span></div>
+                <div class="file-card"><div class="file-icon">▤</div><div class="file-lines"><b></b><span></span></div><i class="file-status"></i></div>
+                <div class="file-card"><div class="file-icon">▤</div><div class="file-lines"><b style="width:34%"></b><span style="width:54%"></span></div><i class="file-status"></i></div>
+                <div class="file-card"><div class="file-icon">▤</div><div class="file-lines"><b style="width:48%"></b><span style="width:62%"></span></div><i class="file-status" style="background:#e8ad4b"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual-foot">
+          <span class="shield">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <span>بياناتك ومستنداتك في بيئة عمل آمنة</span>
+        </div>
+      </section>
+
+      <section class="login-panel">
+        <div class="login-symbol">
+          <svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1"/></svg>
+        </div>
+        <div class="overline">مرحباً بعودتك</div>
+        <h2>تسجيل الدخول</h2>
+        <p class="description">أدخل كلمة المرور للمتابعة إلى مساحة العمل الخاصة بك.</p>
+
+        <form id="loginForm">
+          <label for="password">كلمة المرور</label>
+          <div class="password-wrap">
+            <input id="password" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required />
+            <button class="toggle" type="button" id="togglePassword" aria-label="إظهار كلمة المرور">
+              <svg id="eyeIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+            </button>
+          </div>
+          <div class="hint">تأكد من إدخال كلمة المرور بشكل صحيح.</div>
+          <button class="submit" type="submit">
+            <span>الدخول إلى النظام</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <div class="message" id="message" style="display:none;"></div>
+        </form>
+
+        <div class="divider"></div>
+        <div class="login-bottom">
+          <span>© 2026 نظام إدارة الفاكسات</span>
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg> دخول محمي</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const password = document.getElementById('password');
+    const toggle = document.getElementById('togglePassword');
+    const message = document.getElementById('message');
+    const form = document.getElementById('loginForm');
+
+    toggle.addEventListener('click', () => {
+      const visible = password.type === 'password';
+      password.type = visible ? 'text' : 'password';
+      toggle.setAttribute('aria-label', visible ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور');
+      toggle.innerHTML = visible
+        ? '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.2 0 9.5 7 9.5 7a15 15 0 0 1-3.1 3.8M6.2 6.2C3.8 7.8 2.5 12 2.5 12s3.3 7 9.5 7c1 0 2-.2 2.8-.5"/></svg>'
+        : '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>';
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const passwordValue = password.value.trim();
+      
+      if (!passwordValue) {
+        message.textContent = 'يرجى إدخال كلمة المرور';
+        message.className = 'message error';
+        message.style.display = 'block';
+        return;
+      }
+
+      // محاكاة عملية تسجيل الدخول
+      message.textContent = 'تم تسجيل الدخول بنجاح!';
+      message.className = 'message success';
+      message.style.display = 'block';
+      
+      // يمكن إضافة منطق التحقق الفعلي هنا
+      setTimeout(() => {
+        console.log('Login successful with password:', passwordValue);
+        // يمكن التوجيه للصفحة الرئيسية هنا
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

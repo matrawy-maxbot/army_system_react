@@ -15,6 +15,7 @@ import Button from '../common/Button';
 
 import ConfirmDeleteModal from '../common/ConfirmDeleteModal';
 import ConfirmPrintModal from '../common/ConfirmPrintModal';
+import TemplateDetailModal from '../templates/TemplateDetailModal';
 
 import './ReplyDetailModal.css';
 
@@ -43,6 +44,10 @@ const ReplyDetailModal = ({ isOpen, onClose, replyId }) => {
     const [images, setImages] = useState([]);
     const [showDeleteAttachmentModal, setShowDeleteAttachmentModal] = useState(false);
     const [attachmentToDelete, setAttachmentToDelete] = useState(null);
+    
+    // إدارة مودال تفاصيل القالب
+    const [showTemplateDetailModal, setShowTemplateDetailModal] = useState(false);
+    const [selectedTemplateForView, setSelectedTemplateForView] = useState(null);
 
 
 
@@ -326,6 +331,33 @@ const ReplyDetailModal = ({ isOpen, onClose, replyId }) => {
 
         alert('سيتم فتح تفاصيل الفاكس المرتبط');
 
+    };
+    
+    const handleViewTemplate = () => {
+        // البحث عن القالب في القوالب المحفوظة
+        const templates = appState.templates || [];
+        const template = templates.find(t => t.name === reply.templateName);
+        
+        if (template) {
+            setSelectedTemplateForView(template);
+            setShowTemplateDetailModal(true);
+        } else {
+            // إنشاء كائن قالب مؤقت من معلومات الرد
+            const tempTemplate = {
+                id: 'temp-' + reply.id,
+                name: reply.templateName,
+                fileType: reply.fileType || 'DOCX',
+                fileName: reply.templateName,
+                createdAt: reply.createdAt
+            };
+            setSelectedTemplateForView(tempTemplate);
+            setShowTemplateDetailModal(true);
+        }
+    };
+    
+    const handleCloseTemplateModal = () => {
+        setShowTemplateDetailModal(false);
+        setSelectedTemplateForView(null);
     };
     
     // دوال إدارة المرفقات
@@ -626,7 +658,7 @@ const ReplyDetailModal = ({ isOpen, onClose, replyId }) => {
                                 </button>
                             )}
                             {reply.templateName && (
-                                <div className="document-attachment-card">
+                                <button type="button" className="document-attachment-card" onClick={handleViewTemplate}>
                                     <span className="document-attachment-thumb">
                                         <span className="document-mini-paper">
                                             <b>TEMPLATE</b>
@@ -636,7 +668,7 @@ const ReplyDetailModal = ({ isOpen, onClose, replyId }) => {
                                     </span>
                                     <strong>{reply.templateName}</strong>
                                     <small>القالب المستخدم</small>
-                                </div>
+                                </button>
                             )}
                         </section>
 
@@ -998,6 +1030,22 @@ const ReplyDetailModal = ({ isOpen, onClose, replyId }) => {
                         </div>
                     </div>
                 </Modal>
+            )}
+
+            {/* مودال تفاصيل القالب */}
+            {showTemplateDetailModal && selectedTemplateForView && (
+                <TemplateDetailModal
+                    isOpen={showTemplateDetailModal}
+                    onClose={handleCloseTemplateModal}
+                    template={selectedTemplateForView}
+                    onUseTemplate={() => {
+                        console.log('استخدام القالب من مودال تفاصيل الرد');
+                        handleCloseTemplateModal();
+                    }}
+                    onDownloadTemplate={() => {
+                        console.log('تنزيل القالب من مودال تفاصيل الرد');
+                    }}
+                />
             )}
 
         </>

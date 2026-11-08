@@ -6,6 +6,8 @@
 
 import React, { useState } from 'react';
 import { useAppState } from '../context/AppStateContext';
+import DatePickerModal from '../components/common/DatePickerModal';
+import SearchResults from '../components/common/SearchResults';
 import './MainPage.css';
 
 const MainPage = ({ onUploadClick }) => {
@@ -15,6 +17,10 @@ const MainPage = ({ onUploadClick }) => {
     const [modalText, setModalText] = useState('');
     const [toast, setToast] = useState('');
     const [showToast, setShowToast] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [searchMode, setSearchMode] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const showModalDialog = (title, text) => {
         setModalTitle(title);
@@ -53,6 +59,81 @@ const MainPage = ({ onUploadClick }) => {
         showModalDialog('إنشاء رد لهذا الفاكس', 'سيتم إنشاء مستند رد جديد مرتبط بفاكس 2.');
     };
 
+    const handleDatePickerClick = () => {
+        setShowDatePicker(true);
+    };
+
+    const handleDateSelect = (date) => {
+        setSelectedDate(date);
+        const formattedDate = date.toLocaleDateString('ar-EG', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        showToastMessage(`تم اختيار: ${formattedDate}`);
+    };
+
+    const handleTodayClick = () => {
+        showToastMessage('تم اختيار تاريخ اليوم');
+    };
+
+    const handleArchiveSearchClick = () => {
+        const demoQuery = 'فاكس';
+        setSearchQuery(demoQuery);
+        setSearchMode(true);
+    };
+
+    const handleCloseSearch = () => {
+        setSearchMode(false);
+        setSearchQuery('');
+    };
+
+    // إذا كان في وضع البحث، اعرض نتائج البحث
+    if (searchMode) {
+        return (
+            <main className="page">
+                {/* Header Section */}
+                <header className="topbar">
+                    <div className="heading">
+                        <h1>الرئيسية</h1>
+                        <p>إدارة الفاكسات والردود والمتابعة</p>
+                    </div>
+                    <div className="header-actions">
+                        <button className="icon-btn date-btn" onClick={handleDatePickerClick} title="اختيار تاريخ">
+                            📅
+                        </button>
+                        <button className="secondary today-btn" onClick={handleTodayClick}>
+                            اليوم
+                        </button>
+                        <button className="secondary search-btn" onClick={handleArchiveSearchClick}>
+                            🔍 بحث في الأرشيف
+                        </button>
+                        <button className="primary" onClick={handleUploadClick}>
+                            + رفع فاكس أصلي
+                        </button>
+                    </div>
+                </header>
+
+                {/* Search Results */}
+                <SearchResults query={searchQuery} onClose={handleCloseSearch} />
+
+                {/* Date Picker Modal */}
+                <DatePickerModal
+                    isOpen={showDatePicker}
+                    onClose={() => setShowDatePicker(false)}
+                    onSelectDate={handleDateSelect}
+                    initialDate={selectedDate}
+                />
+
+                {/* Toast */}
+                <div className={`toast ${showToast ? 'show' : ''}`}>
+                    {toast}
+                </div>
+            </main>
+        );
+    }
+
     return (
         <main className="page">
             {/* Header Section */}
@@ -61,9 +142,20 @@ const MainPage = ({ onUploadClick }) => {
                     <h1>الرئيسية</h1>
                     <p>إدارة الفاكسات والردود والمتابعة</p>
                 </div>
-                <button className="primary" onClick={handleUploadClick}>
-                    + رفع فاكس أصلي
-                </button>
+                <div className="header-actions">
+                    <button className="icon-btn date-btn" onClick={handleDatePickerClick} title="اختيار تاريخ">
+                        📅
+                    </button>
+                    <button className="secondary today-btn" onClick={handleTodayClick}>
+                        اليوم
+                    </button>
+                    <button className="secondary search-btn" onClick={handleArchiveSearchClick}>
+                        🔍 بحث في الأرشيف
+                    </button>
+                    <button className="primary" onClick={handleUploadClick}>
+                        + رفع فاكس أصلي
+                    </button>
+                </div>
             </header>
 
             {/* Workflow Section */}
@@ -284,6 +376,14 @@ const MainPage = ({ onUploadClick }) => {
             <div className={`toast ${showToast ? 'show' : ''}`}>
                 {toast}
             </div>
+
+            {/* Date Picker Modal */}
+            <DatePickerModal
+                isOpen={showDatePicker}
+                onClose={() => setShowDatePicker(false)}
+                onSelectDate={handleDateSelect}
+                initialDate={selectedDate}
+            />
         </main>
     );
 };

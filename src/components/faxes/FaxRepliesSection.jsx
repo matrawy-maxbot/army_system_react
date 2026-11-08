@@ -67,7 +67,10 @@ const FaxRepliesSection = () => {
             status: 'draft', // draft, in_progress, completed
             createdDate: new Date().toISOString(),
             lastModified: new Date().toISOString(),
-            note: ''
+            note: '',
+            isCreatedFromTemplate: template ? true : false,
+            createdFromTemplateId: template?.id || null,
+            createdFromTemplateName: template?.name || null
         };
 
         const updatedReplies = [...replies, newReply];

@@ -527,6 +527,18 @@ export const electronAPI = window.electronAPI || {
   deleteFile: async () => ({ success: false, error: 'Electron not available' }),
   fileExists: async () => ({ success: false, error: 'Electron not available' }),
   getFileInfo: async () => ({ success: false, error: 'Electron not available' }),
+  showItemInFolder: async (filePath) => {
+    if (window.electronAPI && window.electronAPI.showItemInFolder) {
+      return await window.electronAPI.showItemInFolder(filePath);
+    }
+    // Browser fallback
+    console.warn('عرض مسار الملف متاح فقط في Electron');
+    alert('عرض مسار الملف متاح فقط في نسخة Electron Desktop');
+    return {
+      success: false,
+      error: 'عرض مسار الملف غير مدعوم في المتصفح'
+    };
+  },
   
   // Data operations
   loadData: async () => dataAPI.loadData(),

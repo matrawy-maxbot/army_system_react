@@ -14,6 +14,7 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
   const [selectedLists, setSelectedLists] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   // إعادة تعيين القوائم المحددة عند فتح المودال
   useEffect(() => {
@@ -29,6 +30,7 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
       
       setSelectedLists(currentLists);
       setError('');
+      setSuccessMessage('');
     }
   }, [isOpen, item, appState.lists]);
 
@@ -89,7 +91,10 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
 
       setAppState(updatedState);
       await saveData();
-      handleClose();
+      // لا نغلق المودال تلقائياً - دع المستخدم يغلقه بنفسه
+      setSuccessMessage('✓ تم الحفظ بنجاح');
+      // إخفاء رسالة النجاح بعد 2 ثانية
+      setTimeout(() => setSuccessMessage(''), 2000);
     } catch (err) {
       console.error('Error updating lists:', err);
       setError('حدث خطأ أثناء تحديث القوائم');
@@ -101,6 +106,7 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
   const handleClose = () => {
     setSelectedLists([]);
     setError('');
+    setSuccessMessage('');
     onClose();
   };
 
@@ -115,6 +121,7 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
       onClose={handleClose} 
       title="إضافة إلى القوائم"
       modalId={`add-to-lists-${item?.type}-${item?.id}`}
+      closeOnOverlayClick={true}
     >
       <div className="add-to-lists-content">
         <div className="add-to-lists-item-info">
@@ -161,7 +168,10 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
                   key={list.id}
                   type="button"
                   className={`list-button ${selectedLists.includes(list.id) ? 'selected' : ''} ${list.isDefault ? 'default' : ''}`}
-                  onClick={() => handleToggleList(list.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleToggleList(list.id);
+                  }}
                   disabled={loading}
                 >
                   {list.name}
@@ -176,18 +186,44 @@ const AddToListsModal = ({ isOpen, onClose, item }) => {
             {error}
           </div>
         )}
+
+        {successMessage && (
+          <div className="success-message" style={{ 
+            marginTop: '10px', 
+            color: '#10b981', 
+            background: '#d1fae5',
+            padding: '10px 14px',
+            borderRadius: '6px',
+            fontSize: '13px',
+            fontWeight: '500',
+            textAlign: 'center'
+          }}>
+            {successMessage}
+          </div>
+        )}
       </div>
 
       <div className="modal-actions" style={{ marginTop: '20px' }}>
         <Button 
           type="button" 
           variant="primary" 
-          onClick={handleSave} 
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSave();
+          }} 
           disabled={loading || lists.length === 0}
         >
           {loading ? 'جاري الحفظ...' : 'حفظ'}
         </Button>
-        <Button type="button" variant="secondary" onClick={handleClose} disabled={loading}>
+        <Button 
+          type="button" 
+          variant="secondary" 
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClose();
+          }} 
+          disabled={loading}
+        >
           إلغاء
         </Button>
       </div>

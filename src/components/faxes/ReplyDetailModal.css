@@ -665,7 +665,22 @@
 .document-status-button.completed.active { box-shadow: 0 0 0 2px rgba(19,185,129,.12); }
 
 .document-attachments { display: flex; flex-wrap: wrap; gap: 11px; }
-.document-attachment-card { width: 92px; padding: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; border: 0; background: transparent; color: inherit; text-align: right; cursor: pointer; font-family: inherit; }
+.document-attachment-card {     
+    width: 92px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: right;
+    cursor: pointer;
+    font-family: inherit;
+    justify-content: space-between;
+    font-weight: bold; 
+}
 .document-attachment-thumb { height: 124px; width: 100%; padding: 10px; display: grid; place-items: center; border: 1px solid var(--border-color, #dedfe3); border-radius: 10px; background: #fafafa; }
 .document-mini-paper { width: 61px; height: 98px; padding: 10px 7px; display: flex; flex-direction: column; background: white; border: 1px solid #e0e4eb; box-shadow: 0 3px 8px rgba(16,24,40,.05); }
 .document-mini-paper b { display: block; text-align: center; font-size: 5px; color: #172b55; direction: ltr; margin-bottom: 9px; }

@@ -3,7 +3,7 @@
     position: fixed;
     left: 0;
     top: 32px; /* Below header + titlebar */
-    width: 80px;
+    width: 68px;
     height: calc(100vh - 32px);
     background: var(--bg-surface);
     border-right: 1px solid var(--border-color);
@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-8);
-    padding: var(--spacing-16) var(--spacing-8);
+    padding: var(--spacing-16) var(--spacing-6);
     z-index: var(--z-sidebar);
     box-shadow: var(--shadow-subtle);
 }
@@ -21,14 +21,14 @@
     background: transparent;
     border: none;
     border-radius: var(--radius-card);
-    padding: var(--spacing-12) var(--spacing-8);
+    padding: var(--spacing-8) var(--spacing-6);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 3px;
     cursor: pointer;
     transition: all var(--transition-base);
-    font-size: 11px;
+    font-size: 7px;
     font-weight: var(--font-weight-semibold);
     color: var(--text-secondary);
     text-align: center;
@@ -46,6 +46,8 @@
 }
 
 .sidebar-btn svg {
+    width: 15px;
+    height: 15px;
     flex-shrink: 0;
 }
 
@@ -56,30 +58,70 @@
     width: 100%;
 }
 
-/* زر النسخ الاحتياطي المميز */
-.sidebar-btn-backup {
-    margin-top: auto; /* يدفع الزر للأسفل */
-    background: #eef4ff;
-    color: #3478ed;
-    border: 1px solid #cbdcff;
+/* مجموعة الأزرار السفلية */
+.bottom-buttons-group {
+    margin-top: auto;
+    padding-top: var(--spacing-12);
+    border-top: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+    width: 100%;
 }
 
-.sidebar-btn-backup:hover {
-    background: #e3efff;
-    color: #2465d2;
-    border-color: #b3d4ff;
+/* الأزرار المربعة السفلية */
+.sidebar-btn-icon {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    color: var(--text-secondary);
+    padding: 0;
 }
 
-.sidebar-btn-backup.active {
-    background: #d9ebff;
-    color: #1e58bd;
-    border-color: #9cc4ff;
-    box-shadow: 0 2px 8px rgba(52, 120, 237, 0.15);
+.sidebar-btn-icon svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
 }
 
-.sidebar-btn-backup svg {
-    width: 20px;
-    height: 20px;
+.sidebar-btn-icon:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar-btn-icon.active {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+/* زر تسجيل الخروج المميز */
+.sidebar-btn-icon-logout {
+    background: #fff2f2;
+    color: #d83939;
+    border-color: #ffd5d5;
+}
+
+.sidebar-btn-icon-logout:hover {
+    background: #ffe8e8;
+    color: #c72828;
+    border-color: #ffbaba;
+    transform: translateY(-2px);
+}
+
+.sidebar-btn-icon-logout:active {
+    transform: translateY(0);
 }
 
 /* ========== Sidebar (Today's Files) ========== */
@@ -154,6 +196,63 @@
 .sidebar-toggle-buttons {
     display: flex;
     gap: 6px;
+}
+
+.sidebar-toggle-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e1e6ed;
+    background: transparent;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: #8995a5;
+}
+
+.sidebar-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.sidebar-toggle-btn:hover {
+    background: #f5f7fa;
+    border-color: #c5d1e1;
+    color: #475569;
+}
+
+.sidebar-toggle-btn.active {
+    background: #edf3ff;
+    border-color: #b8cdf5;
+    color: #3478f6;
+}
+
+/* زر الإعدادات المميز في السايدبار */
+.sidebar-toggle-btn.settings-btn {
+    border-color: #ffd5d5;
+    background: #fff2f2;
+    color: #d83939;
+}
+
+.sidebar-toggle-btn.settings-btn:hover {
+    background: #ffe8e8;
+    border-color: #ffbaba;
+    color: #c72828;
+}
+
+/* زر صفحة الترحيب المميز في السايدبار */
+.sidebar-toggle-btn.welcome-btn {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.sidebar-toggle-btn.welcome-btn:hover {
+    background: #e0e7ff;
+    border-color: #a5b4fc;
+    color: #4338ca;
 }
 
 .sidebar-toggle-btn {
@@ -2016,4 +2115,53 @@
         width: 100%;
         border: 0;
     }
+}
+
+
+/* Tutorial Mode - Full Screen */
+.container.tutorial-mode {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    height: max-content;
+    overflow: auto;
+}
+
+.container.tutorial-mode .container-content {
+    padding: 0 !important;
+    min-height: max-content;
+    max-height: max-content;
+    height: max-content;
+}
+
+/* Login Mode - Full Screen */
+.container.login-mode {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    min-height: max-content;
+    overflow: hidden;
+}
+
+.container.login-mode .container-content {
+    padding: 0 !important;
+    min-height: max-content;
+    max-height: 100vh;
+    height: max-content;
+    overflow: auto;
+}
+
+/* Welcome Mode - وضع صفحة الترحيب */
+.container.welcome-mode {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.container.welcome-mode .container-content {
+    padding: 0 !important;
+    max-height: calc(100vh - 32px);
 }

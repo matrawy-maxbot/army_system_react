@@ -6,6 +6,8 @@
 import { useState } from 'react';
 import { useAppState } from '../../context/AppStateContext';
 import { electronAPI } from '../../services';
+import AddToListsModal from '../common/AddToListsModal';
+import FileDetailModal from './FileDetailModal';
 import './FolderViewModal.css';
 
 const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }) => {
@@ -14,6 +16,10 @@ const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }
   const [selectedFiles, setSelectedFiles] = useState(new Set());
   const [showDeleteFileModal, setShowDeleteFileModal] = useState(false);
   const [fileToDelete, setFileToDelete] = useState(null);
+  const [showAddToListsModal, setShowAddToListsModal] = useState(false);
+  const [showMoveFilesModal, setShowMoveFilesModal] = useState(false);
+  const [showFileDetailModal, setShowFileDetailModal] = useState(false);
+  const [selectedFileForDetail, setSelectedFileForDetail] = useState(null);
 
   // العثور على المجلد
   const findFolder = () => {
@@ -127,12 +133,86 @@ const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }
   };
 
   const handleOpenFile = async (file) => {
+    // فتح مودال تفاصيل الملف بدلاً من فتح الملف مباشرة
+    setSelectedFileForDetail({
+      ...file,
+      categoryId: folder.categoryId,
+      folderId: folder.id,
+      categoryName: category.name,
+      folderName: folder.name
+    });
+    setShowFileDetailModal(true);
+  };
+
+  const handleToggleFolderFavorite = () => {
+    setShowAddToListsModal(true);
+  };
+
+  const handleOpenFolderPath = async () => {
     try {
-      await electronAPI.openDocument(file.path || file.name);
+      if (folder.path) {
+        await electronAPI.showItemInFolder(folder.path);
+      } else {
+        alert('مسار المجلد غير متوفر');
+      }
     } catch (err) {
-      console.error('Error opening file:', err);
-      alert('فشل في فتح الملف');
+      console.error('Error opening folder path:', err);
+      alert('فشل في فتح مسار المجلد');
     }
+  };
+
+  const handleToggleFileFavorite = (file) => {
+    setSelectedFileForDetail({
+      ...file,
+      categoryId: folder.categoryId,
+      folderId: folder.id,
+      categoryName: category.name,
+      folderName: folder.name
+    });
+    setShowAddToListsModal(true);
+  };
+
+  const handleMoveSelectedFiles = () => {
+    if (selectedFiles.size === 0) return;
+    setShowMoveFilesModal(true);
+  };
+
+  const handleConfirmMoveFiles = async (targetFolderId) => {
+    if (!folder || selectedFiles.size === 0) return;
+
+    const filesToMove = files.filter(f => selectedFiles.has(f.id));
+
+    const updatedCategories = appState.archiveCategories.map(cat => {
+      return {
+        ...cat,
+        folders: cat.folders.map(f => {
+          // إزالة الملفات من المجلد الحالي
+          if (f.id === folderId) {
+            return {
+              ...f,
+              files: f.files.filter(file => !selectedFiles.has(file.id))
+            };
+          }
+          // إضافة الملفات إلى المجلد المستهدف
+          if (f.id === targetFolderId) {
+            return {
+              ...f,
+              files: [...(f.files || []), ...filesToMove]
+            };
+          }
+          return f;
+        })
+      };
+    });
+
+    setAppState({
+      ...appState,
+      archiveCategories: updatedCategories
+    });
+
+    await saveData();
+    setSelectedFiles(new Set());
+    setShowMoveFilesModal(false);
   };
 
   const handleToggleFileSelection = (fileId) => {
@@ -285,7 +365,29 @@ const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }
         onClick={(e) => e.stopPropagation()}
       >
         <header className="fvm-header">
-          <div className="fvm-head-title">{folder.name}</div>
+          <div className="fvm-head-left">
+            <button 
+              className="fvm-head-btn fvm-head-path-btn"
+              aria-label="فتح مسار المجلد"
+              title="فتح مسار المجلد"
+              onClick={handleOpenFolderPath}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              </svg>
+            </button>
+            <button 
+              className="fvm-head-btn fvm-head-favorite-btn"
+              aria-label="إضافة المجلد إلى قائمة"
+              title="إضافة المجلد إلى قائمة"
+              onClick={handleToggleFolderFavorite}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+              </svg>
+            </button>
+            <div className="fvm-head-title">{folder.name}</div>
+          </div>
           <button 
             className="fvm-close" 
             aria-label="إغلاق" 
@@ -388,6 +490,25 @@ const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }
                 تم تحديد {selectedFiles.size}
               </span>
               <button 
+                className="fvm-small-btn" 
+                onClick={() => {
+                  // فتح مودال المفضلة للملف الأول (كمثال)
+                  const firstFileId = Array.from(selectedFiles)[0];
+                  const firstFile = files.find(f => f.id === firstFileId);
+                  if (firstFile) {
+                    handleToggleFileFavorite(firstFile);
+                  }
+                }}
+              >
+                إضافة إلى المفضلة
+              </button>
+              <button 
+                className="fvm-small-btn" 
+                onClick={handleMoveSelectedFiles}
+              >
+                نقل إلى مجلد
+              </button>
+              <button 
                 className="fvm-small-btn danger" 
                 onClick={handleDeleteSelected}
               >
@@ -441,6 +562,19 @@ const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }
                       {formatFileSize(file.size)}
                     </div>
                     <div className="fvm-file-actions">
+                      <button 
+                        className="fvm-favorite-btn"
+                        title="إضافة إلى المفضلة"
+                        aria-label="إضافة الملف إلى قائمة"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleFileFavorite(file);
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                        </svg>
+                      </button>
                       <button 
                         className={`fvm-pin-btn ${file.isPinned ? 'pinned' : ''}`}
                         title={file.isPinned ? 'إلغاء التثبيت' : 'تثبيت'}
@@ -529,6 +663,93 @@ const FolderViewModal = ({ isOpen, onClose, folderId, onEdit, onMove, onDelete }
             </div>
           </div>
         </div>
+      )}
+
+      {/* Add to Lists Modal */}
+      <AddToListsModal
+        isOpen={showAddToListsModal}
+        onClose={() => setShowAddToListsModal(false)}
+        item={{
+          id: selectedFileForDetail?.id || folder.id,
+          type: selectedFileForDetail ? 'file' : 'folder',
+          title: selectedFileForDetail 
+            ? (selectedFileForDetail.originalFileName || selectedFileForDetail.name)
+            : folder.name,
+          categoryName: category.name,
+          folderName: folder.name
+        }}
+      />
+
+      {/* Move Files Modal */}
+      {showMoveFilesModal && (
+        <div 
+          className="fvm-dialog-backdrop" 
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowMoveFilesModal(false);
+          }}
+        >
+          <div 
+            className="fvm-dialog fvm-move-dialog" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="fvm-dialog-content">
+              <h2 className="fvm-dialog-title">نقل الملفات</h2>
+              <p className="fvm-dialog-message">
+                اختر المجلد الذي تريد نقل {selectedFiles.size} ملف إليه:
+              </p>
+              <div className="fvm-folder-select-list">
+                {appState.archiveCategories?.map(cat => (
+                  <div key={cat.id} className="fvm-folder-select-category">
+                    <div className="fvm-folder-select-category-name">{cat.name}</div>
+                    {cat.folders?.filter(f => f.id !== folderId).map(f => (
+                      <button
+                        key={f.id}
+                        className="fvm-folder-select-item"
+                        onClick={() => handleConfirmMoveFiles(f.id)}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg>
+                        {f.name}
+                        <span className="fvm-folder-category-hint">{cat.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <div className="fvm-dialog-actions">
+                <button 
+                  className="fvm-dialog-btn secondary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMoveFilesModal(false);
+                  }}
+                >
+                  إلغاء
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* File Detail Modal */}
+      {showFileDetailModal && selectedFileForDetail && (
+        <FileDetailModal
+          file={selectedFileForDetail}
+          onClose={() => {
+            setShowFileDetailModal(false);
+            setSelectedFileForDetail(null);
+          }}
+          onUpdate={async () => {
+            // تحديث البيانات بعد تغيير في مودال التفاصيل
+            const result = findFolder();
+            if (result) {
+              // يتم التحديث تلقائيًا من خلال AppState
+            }
+          }}
+        />
       )}
     </div>
   );

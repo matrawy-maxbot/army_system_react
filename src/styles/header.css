@@ -25,13 +25,13 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 1rem;
+    gap: 10px;
 }
 
 .header-right h1 {
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
+    color: #475ea7;
     letter-spacing: -0.3px;
 }
 
@@ -45,21 +45,101 @@
     color: var(--text-secondary);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
+    min-width: auto;
+    text-align: center;
 }
 
 .btn-icon {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    padding: 9px var(--spacing-16);
+    padding: 8px;
     border-radius: var(--radius-md);
     cursor: pointer;
-    font-size: var(--font-size-xs);
     color: var(--text-secondary);
-    font-weight: var(--font-weight-medium);
     transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
 }
 
 .btn-icon:hover {
     background: var(--bg-hover);
     border-color: var(--border-hover);
+}
+
+.btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.date-picker-btn {
+    flex-shrink: 0;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Search Form */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.search-form:focus-within {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 0 3px rgba(52, 120, 246, 0.1);
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    padding: 8px 12px;
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    outline: none;
+    width: 200px;
+    font-family: inherit;
+    height: auto;
+}
+
+input.search-input:focus-visible {
+    border: none;
+}
+
+input.search-input:focus {
+    background: unset;
+    box-shadow: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.search-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    border-right: 1px solid var(--border-color);
+}
+
+.search-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.search-btn svg {
+    width: 18px;
+    height: 18px;
 }

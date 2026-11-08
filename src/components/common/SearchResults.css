@@ -1,0 +1,353 @@
+/**
+ * SearchResults Styles
+ * تصميم نتائج البحث - محاكي للمستندات
+ */
+
+.search-page {
+    max-width: 1440px;
+    margin: auto;
+}
+
+.search-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.search-info h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+}
+
+.search-info p {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.search-query {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.results-count {
+    padding: 4px 12px;
+    background: #f3f4f6;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.close-search-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-search-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateX(-2px);
+}
+
+.close-search-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.close-search-btn:hover svg {
+    transform: translateX(-2px);
+}
+
+/* Grid Layout */
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Card */
+.search-card {
+    background: #fff;
+    border: 1px solid #e1e5eb;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.18s ease;
+    min-width: 0;
+}
+
+.search-card:hover {
+    border-color: #b8cbea;
+    box-shadow: 0 8px 22px rgba(29, 53, 87, 0.06);
+    transform: translateY(-2px);
+}
+
+/* Preview Section */
+.card-preview {
+    height: 190px;
+    background: #edf1f6;
+    padding: 15px 18px 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Preview Image */
+.preview-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(28, 44, 66, 0.1);
+}
+
+/* No Preview State */
+.no-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #8792a4;
+    text-align: center;
+}
+
+.no-preview svg {
+    width: 56px;
+    height: 56px;
+    opacity: 0.4;
+}
+
+.no-preview span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Paper Mock - Hidden by default, shown when no preview image */
+.paper {
+    height: 235px;
+    max-width: 310px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #e7e9ed;
+    box-shadow: 0 2px 8px rgba(28, 44, 66, 0.06);
+    padding: 17px 19px;
+    color: #5b6471;
+    transform: rotate(-0.3deg);
+    display: none; /* مخفي افتراضياً */
+}
+
+.paper-head {
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #48566a;
+    border-bottom: 1px solid #dfe4eb;
+    padding-bottom: 9px;
+    margin-bottom: 12px;
+}
+
+.paper-title {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 14px;
+    color: #35445a;
+}
+
+.line {
+    height: 5px;
+    background: #e8ebf0;
+    border-radius: 3px;
+    margin: 8px 0;
+}
+
+.line.short {
+    width: 62%;
+}
+
+.line.mid {
+    width: 82%;
+}
+
+.hit-line {
+    font-size: 9px;
+    line-height: 1.8;
+    background: #fff9df;
+    border: 1px solid #f2e3a5;
+    border-radius: 4px;
+    padding: 4px 6px;
+    margin: 10px 0;
+    color: #51596a;
+}
+
+mark {
+    background: #ffe18a;
+    color: #684800;
+    border-radius: 2px;
+    padding: 0 2px;
+    font-weight: bold;
+}
+
+/* File Type Badge */
+.file-type {
+    position: absolute;
+    top: 25px;
+    right: 27px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.file-type.pdf {
+    background: #ffe5e8;
+    color: #bd3345;
+}
+
+.file-type.docx {
+    background: #e3efff;
+    color: #235cae;
+}
+
+.file-type.xlsx {
+    background: #dcf5e8;
+    color: #167a4c;
+}
+
+/* Card Body */
+.card-body {
+    padding: 15px 17px 16px;
+}
+
+.name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 9px;
+}
+
+.card-name {
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #182230;
+}
+
+.card-pages {
+    font-size: 11px;
+    color: #8490a2;
+    white-space: nowrap;
+}
+
+.card-excerpt {
+    font-size: 12px;
+    color: #66748a;
+    line-height: 1.9;
+    background: #f8f9fb;
+    border: 1px solid #edf0f4;
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-height: 54px;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 13px;
+}
+
+.card-date {
+    font-size: 11px;
+    color: #929bad;
+}
+
+.card-open {
+    font-size: 12px;
+    color: #2867c7;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card-open:hover {
+    text-decoration: underline;
+}
+
+/* Empty State */
+.search-empty {
+    text-align: center;
+    padding: 45px;
+    color: #7a8698;
+    background: #fff;
+    border: 1px dashed #d9dfe8;
+    border-radius: 14px;
+    margin-top: 20px;
+}
+
+/* Back Button */
+.back-to-main-btn {
+    display: none; /* مخفي لأننا نستخدم close-search-btn في الـ header */
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+    .search-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .search-page {
+        padding: 22px 14px;
+    }
+
+    .search-top {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .close-search-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-preview {
+        height: 180px;
+    }
+}

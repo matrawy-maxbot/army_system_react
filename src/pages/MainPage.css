@@ -52,6 +52,12 @@ button {
   margin: 0;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .primary {
   border: 0;
   background: var(--blue);
@@ -65,6 +71,52 @@ button {
 .primary:hover {
   background: #2468e8;
   transform: translateY(-1px);
+}
+
+.secondary {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: #64748b;
+  border-radius: 6px;
+  padding: 9px 14px;
+  transition: 0.18s;
+  font-weight: 600;
+}
+
+.secondary:hover {
+  background: #f8fafc;
+  border-color: #b8cdf5;
+  transform: translateY(-1px);
+}
+
+.icon-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 16px;
+  line-height: 1;
+  transition: 0.18s;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background: #f8fafc;
+  border-color: #b8cdf5;
+  transform: translateY(-1px);
+}
+
+.date-btn {
+  cursor: pointer;
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* ========== Workflow Section ========== */
@@ -581,6 +633,26 @@ button {
     width: calc(100% - 24px);
     margin-top: 18px;
   }
+
+  .topbar {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .header-actions button {
+    flex: 1;
+    min-width: fit-content;
+  }
+
+  .icon-btn {
+    padding: 9px 10px;
+  }
   
   .workflow {
     height: auto;
@@ -621,9 +693,5 @@ button {
   
   .preview {
     height: 110px;
-  }
-  
-  .topbar {
-    margin-bottom: 16px;
   }
 }

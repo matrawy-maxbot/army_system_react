@@ -27,7 +27,7 @@ import {
 } from '../archive';
 import '../archive/FolderViewModal.css';
 
-function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
+function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder, onSettingsClick }) {
     const [reminders, setReminders] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [lists, setLists] = useState([]);
@@ -372,6 +372,15 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                     </div>
                     <div className="sidebar-toggle-buttons">
                         <button 
+                            className="sidebar-toggle-btn welcome-btn"
+                            onClick={() => handleNavigate('welcome')}
+                            title="صفحة الترحيب"
+                        >
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm.01 5l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 3a1 1 0 0 0 -.993 .883l-.007 .117v5l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-5l-.007 -.117a1 1 0 0 0 -.993 -.883z"/>
+                            </svg>
+                        </button>
+                        <button 
                             className={`sidebar-toggle-btn ${showPinned ? 'active' : ''}`}
                             onClick={() => setShowPinned(!showPinned)}
                             title={showPinned ? 'إخفاء الملفات المثبتة' : 'إظهار الملفات المثبتة'}
@@ -415,6 +424,15 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                 <line x1="3" y1="6" x2="3.01" y2="6"/>
                                 <line x1="3" y1="12" x2="3.01" y2="12"/>
                                 <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                        </button>
+                        <button 
+                            className="sidebar-toggle-btn settings-btn"
+                            onClick={onSettingsClick}
+                            title="الإعدادات"
+                        >
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14.647 4.081a.724 .724 0 0 0 1.08 .448c2.439 -1.485 5.23 1.305 3.745 3.744a.724 .724 0 0 0 .447 1.08c2.775 .673 2.775 4.62 0 5.294a.724 .724 0 0 0 -.448 1.08c1.485 2.439 -1.305 5.23 -3.744 3.745a.724 .724 0 0 0 -1.08 .447c-.673 2.775 -4.62 2.775 -5.294 0a.724 .724 0 0 0 -1.08 -.448c-2.439 1.485 -5.23 -1.305 -3.745 -3.744a.724 .724 0 0 0 -.447 -1.08c-2.775 -.673 -2.775 -4.62 0 -5.294a.724 .724 0 0 0 .448 -1.08c-1.485 -2.439 1.305 -5.23 3.744 -3.745a.722 .722 0 0 0 1.08 -.447c.673 -2.775 4.62 -2.775 5.294 0zm-2.647 4.919a3 3 0 1 0 0 6a3 3 0 0 0 0 -6" />
                             </svg>
                         </button>
                     </div>
@@ -461,7 +479,7 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                                             </svg>
                                                         )}
                                                     </span>
-                                                    <button
+                                                    <span
                                                         style={{
                                                             background: 'transparent',
                                                             border: 'none',
@@ -478,15 +496,23 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                                             setUnpinningItem(item);
                                                         }}
                                                         title="إلغاء التثبيت"
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        onKeyPress={(e) => {
+                                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                                e.stopPropagation();
+                                                                setUnpinningItem(item);
+                                                            }
+                                                        }}
                                                     >
                                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '16px', height: '16px' }}>
                                                             <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />
                                                             <path d="M9 15l-4.5 4.5" />
                                                             <path d="M14.5 4l5.5 5.5" />
                                                         </svg>
-                                                    </button>
+                                                    </span>
                                                 </div>
-                                                <button
+                                                <div
                                                     style={{
                                                         background: 'transparent',
                                                         border: 'none',
@@ -497,6 +523,13 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                                         fontFamily: 'inherit'
                                                     }}
                                                     onClick={() => handleOpenPinnedItem(item)}
+                                                    role="button"
+                                                    tabIndex={0}
+                                                    onKeyPress={(e) => {
+                                                        if (e.key === 'Enter' || e.key === ' ') {
+                                                            handleOpenPinnedItem(item);
+                                                        }
+                                                    }}
                                                 >
                                                     <div className="file-title">{item.name}</div>
                                                     <div className="meta">
@@ -505,7 +538,7 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                                             : `مستند · ${item.folderName}`
                                                         }
                                                     </div>
-                                                </button>
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
@@ -620,7 +653,7 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                             <div className="sidebar-section-content">
                                 {tasks.length > 0 ? (
                                     tasks.map((task, index) => (
-                                        <button
+                                        <div
                                             key={task.id}
                                             className={`task ${task.isCompleted ? 'done' : ''}`}
                                             style={{
@@ -633,6 +666,13 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                                 marginBottom: index < tasks.length - 1 ? '8px' : '0'
                                             }}
                                             onClick={() => setViewingTask(task)}
+                                            role="button"
+                                            tabIndex={0}
+                                            onKeyPress={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    setViewingTask(task);
+                                                }
+                                            }}
                                         >
                                             <button 
                                                 className="check"
@@ -658,7 +698,7 @@ function Sidebar({ onSectionChange, onShowListDetails, onOpenPinnedFolder }) {
                                                 </div>
                                             </div>
                                             <span className="priority">عادية</span>
-                                        </button>
+                                        </div>
                                     ))
                                 ) : (
                                     <div className="sidebar-empty-state">

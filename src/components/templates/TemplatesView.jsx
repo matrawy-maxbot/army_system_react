@@ -4,6 +4,7 @@ import TemplateCard from './TemplateCard';
 import AddTemplateModal from './AddTemplateModal';
 import ConfirmDeleteModal from '../common/ConfirmDeleteModal';
 import ReorderTemplatesModal from './ReorderTemplatesModal';
+import TemplateDetailModal from './TemplateDetailModal';
 
 const DEFAULT_TEMPLATES = [
     { id: 1, name: 'نموذج عقد عمل', fileName: 'نموذج عقد عمل.docx', fileType: 'DOCX' },
@@ -20,6 +21,8 @@ const TemplatesView = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [templateToDelete, setTemplateToDelete] = useState(null);
     const [showReorderModal, setShowReorderModal] = useState(false);
+    const [showDetailModal, setShowDetailModal] = useState(false);
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
 
     useEffect(() => {
         loadTemplates();
@@ -161,7 +164,18 @@ const TemplatesView = () => {
     };
 
     const handleOpenTemplate = (template) => {
-        alert('اربط هذا الإجراء بمسار الملف الأصلي: ' + template.name);
+        setSelectedTemplate(template);
+        setShowDetailModal(true);
+    };
+
+    const handleUseTemplate = (template) => {
+        alert('سيتم فتح القالب للاستخدام: ' + template.name);
+        // هنا يمكنك إضافة المنطق لفتح الملف باستخدام electronAPI
+    };
+
+    const handleDownloadTemplate = (template) => {
+        alert('سيتم تنزيل القالب: ' + template.name);
+        // هنا يمكنك إضافة المنطق لتنزيل الملف
     };
 
     const handleSaveOrder = async (orderedTemplates) => {
@@ -265,7 +279,7 @@ const TemplatesView = () => {
             )}
 
             {renameModalOpen && (
-                <div className="template-modal show" id="renameModal" onClick={handleCloseRenameModal}>
+                <div className="template-rename-modal show" id="renameModal" onClick={handleCloseRenameModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <h3>تعديل اسم القالب</h3>
                         <input
@@ -315,6 +329,17 @@ const TemplatesView = () => {
                     onSave={handleSaveOrder}
                 />
             )}
+
+            <TemplateDetailModal
+                template={selectedTemplate}
+                isOpen={showDetailModal}
+                onClose={() => {
+                    setShowDetailModal(false);
+                    setSelectedTemplate(null);
+                }}
+                onUseTemplate={handleUseTemplate}
+                onDownloadTemplate={handleDownloadTemplate}
+            />
         </section>
     );
 };

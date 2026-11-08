@@ -9,16 +9,20 @@ import AddToListsModal from './components/common/AddToListsModal';
 import ConfirmPrintModal from './components/common/ConfirmPrintModal';
 import ConfirmDeleteModal from './components/common/ConfirmDeleteModal';
 import ListItemsView from './components/lists/ListItemsView';
+import SearchResults from './components/common/SearchResults';
 // import { FilesList } from './components/files';
 import { RemindersList } from './components/reminders';
 import { TasksList } from './components/tasks';
-import { MainRemindersSection } from './components/main';
+import { MainRemindersSection, MainClonedFilesSection } from './components/main';
 import { ListsView } from './components/lists';
 import { TemplatesView } from './components/templates';
 import { SettingsModal } from './components/settings';
 
 import ArchivePage from './pages/ArchivePage';
 import BackupPage from './pages/BackupPage';
+import TutorialPage from './pages/TutorialPage';
+import LoginPage from './pages/LoginPage';
+import WelcomePage from './pages/WelcomePage';
 import './styles/files.css';
 import './styles/main-page.css';
 
@@ -53,8 +57,15 @@ function AppContent() {
     const [showPrintConfirm, setShowPrintConfirm] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     
+    // Search mode
+    const [searchMode, setSearchMode] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    
     // Section state - حالة التبديل بين الأقسام
-    const [activeSection, setActiveSection] = useState('main');
+    // Auth and onboarding states
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
+    const [activeSection, setActiveSection] = useState('login');
 
     const handleUpload = async (uploadData) => {
         const { type, pdf, pdfs, images } = uploadData;
@@ -262,7 +273,10 @@ function AppContent() {
             status: 'draft',
             createdDate: new Date().toISOString(),
             lastModified: new Date().toISOString(),
-            note: ''
+            note: '',
+            isCreatedFromTemplate: template ? true : false,
+            createdFromTemplateId: template?.id || null,
+            createdFromTemplateName: template?.name || null
         };
 
         const updatedReplies = [...(appState.faxReplies || []), newReply];
@@ -373,18 +387,57 @@ function AppContent() {
         <div className="app" dir="rtl">
             <TitleBar />
             
-            <TabBar onSectionChange={handleSectionChange} activeSection={activeSection} />
-            <Sidebar 
-                onSectionChange={handleSectionChange}
-                onShowListDetails={handleShowListDetails}
-                onOpenPinnedFolder={handleOpenPinnedFolder}
-            />
+            {activeSection !== 'tutorial' && activeSection !== 'login' && activeSection !== 'welcome' && (
+                <>
+                    <TabBar onSectionChange={handleSectionChange} activeSection={activeSection} />
+                    <Sidebar 
+                        onSectionChange={handleSectionChange}
+                        onShowListDetails={handleShowListDetails}
+                        onOpenPinnedFolder={handleOpenPinnedFolder}
+                        onSettingsClick={() => setShowSettings(true)}
+                    />
+                </>
+            )}
             
-            <main className="container">
-                <Header onSettingsClick={() => setShowSettings(true)} />
+            <main className={`container ${activeSection === 'tutorial' ? 'tutorial-mode' : ''} ${activeSection === 'login' ? 'login-mode' : ''} ${activeSection === 'welcome' ? 'welcome-mode' : ''}`}>
+                {activeSection !== 'tutorial' && activeSection !== 'login' && activeSection !== 'welcome' && (
+                    <Header 
+                        onSettingsClick={() => setShowSettings(true)}
+                        onDatePickerClick={() => toast.info('سيتم إضافة Date Picker قريباً')}
+                        onSearch={(query) => {
+                            // التوجيه إلى الصفحة الرئيسية تلقائياً
+                            setActiveSection('main');
+                            
+                            // إذا كان الحقل فارغاً، إلغاء وضع البحث والرجوع للرئيسية
+                            if (!query || query.trim() === '') {
+                                setSearchMode(false);
+                                setSearchQuery('');
+                            } else {
+                                // إذا كان هناك نص، تفعيل وضع البحث
+                                setSearchQuery(query);
+                                setSearchMode(true);
+                            }
+                        }}
+                        onArchiveSearch={(query) => {
+                            setActiveSection('archive');
+                            toast.info(`البحث عن: ${query}`);
+                        }}
+                    />
+                )}
                 <div className="container-content">
+                    {/* نتائج البحث */}
+                    {searchMode && activeSection === 'main' && (
+                        <SearchResults 
+                            query={searchQuery} 
+                            onClose={() => {
+                                setSearchMode(false);
+                                setSearchQuery('');
+                            }} 
+                        />
+                    )}
+
                     {/* قسم الصفحة الرئيسية - الفئات والفاكسات */}
-                    {activeSection === 'main' && (
+                    {activeSection === 'main' && !searchMode && (
                         <>
                             {/* Top Bar - Heading & Upload Button */}
                             <div className="topbar">
@@ -692,6 +745,11 @@ function AppContent() {
                             <div className="reminders">
                                 <MainRemindersSection />
                             </div>
+
+                            {/* Cloned Files Section */}
+                            <div className="cloned-files-section">
+                                <MainClonedFilesSection />
+                            </div>
                         </>
                     )}
 
@@ -710,13 +768,36 @@ function AppContent() {
                     {/* قسم الأرشفة */}
                     {activeSection === 'archive' && <ArchivePage />}
                     {activeSection === 'backup' && <BackupPage />}
+                    
+                    {/* صفحة الجولة التعليمية */}
+                    {activeSection === 'tutorial' && <TutorialPage onBackClick={() => handleSectionChange('main')} />}
+                    
+                    {/* صفحة تسجيل الدخول */}
+                    {activeSection === 'login' && <LoginPage onLogin={(password) => {
+                        console.log('Login attempt with password:', password);
+                        // يمكن إضافة منطق التحقق هنا
+                        setIsAuthenticated(true);
+                        toast.success('تم تسجيل الدخول بنجاح', 'تسجيل الدخول');
+                        handleSectionChange('welcome');
+                    }} />}
+                    
+                    {/* صفحة الترحيب */}
+                    {activeSection === 'welcome' && (
+                        <WelcomePage 
+                            onBackClick={() => {
+                                setHasSeenWelcome(true);
+                                handleSectionChange('main');
+                            }} 
+                            onNavigateToTutorial={() => handleSectionChange('tutorial')}
+                        />
+                    )}
                 </div>
             </main>
             
             {/* نظام الملفات اليومية */}
             {/* <FilesList /> */}
             
-            <Footer />
+            {activeSection !== 'login' && activeSection !== 'welcome' && <Footer />}
 
             {/* Modals */}
             <UploadFaxModal 

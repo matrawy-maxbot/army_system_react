@@ -30,18 +30,15 @@ export function ModalStackProvider({ children }) {
             // تحقق إذا كان المودال مسجل بالفعل
             if (prev.includes(modalId)) {
                 newIndex = prev.indexOf(modalId);
-                console.log(`[ModalStack] Modal "${modalId}" already registered at index ${newIndex}`);
                 return prev;
             }
             newIndex = prev.length;
             const newStack = [...prev, modalId];
-            console.log(`[ModalStack] Registered "${modalId}" at index ${newIndex}`, newStack);
             return newStack;
         });
 
         // احسب z-index بناءً على الموقع الجديد
         const zIndex = BASE_MODAL_ZINDEX + (newIndex * ZINDEX_INCREMENT);
-        console.log(`[ModalStack] Modal "${modalId}" z-index: ${zIndex}`);
         return zIndex;
     }, []);
 
@@ -52,7 +49,6 @@ export function ModalStackProvider({ children }) {
     const unregisterModal = useCallback((modalId) => {
         setModalStack(prev => {
             const filtered = prev.filter(id => id !== modalId);
-            console.log(`[ModalStack] Unregistered "${modalId}"`, filtered);
             return filtered;
         });
     }, []);

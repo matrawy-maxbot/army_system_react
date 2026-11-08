@@ -15,8 +15,9 @@ function TabBar({ onSectionChange, activeSection }) {
                 title="الصفحة الرئيسية"
                 onClick={() => handleButtonClick('main')}
             >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12.707 2.293l9 9c.63 .63 .184 1.707 -.707 1.707h-1v6a3 3 0 0 1 -3 3h-1v-7a3 3 0 0 0 -2.824 -2.995l-.176 -.005h-2a3 3 0 0 0 -3 3v7h-1a3 3 0 0 1 -3 -3v-6h-1c-.89 0 -1.337 -1.077 -.707 -1.707l9 -9a1 1 0 0 1 1.414 0m.293 11.707a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883 -.993l.117 -.007z" />
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
                 </svg>
                 <span>الرئيسية</span>
             </button>
@@ -26,8 +27,11 @@ function TabBar({ onSectionChange, activeSection }) {
                 title="القوالب"
                 onClick={() => handleButtonClick('templates')}
             >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h14zm-14 2a1 1 0 0 0 -.993 .883l-.007 .117v12a1 1 0 0 0 .883 .993l.117 .007h6v-14h-6zm14 0h-6v14h6a1 1 0 0 0 .993 -.883l.007 -.117v-12a1 1 0 0 0 -.883 -.993l-.117 -.007z" />
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
                 </svg>
                 <span>القوالب</span>
             </button>
@@ -37,9 +41,9 @@ function TabBar({ onSectionChange, activeSection }) {
                 title="التذكيرات"
                 onClick={() => handleButtonClick('reminders')}
             >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/>
-                    <path d="M9 17v1a3 3 0 0 0 6 0v-1"/>
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
                 </svg>
                 <span>التذكيرات</span>
             </button>
@@ -49,10 +53,9 @@ function TabBar({ onSectionChange, activeSection }) {
                 title="المهمات"
                 onClick={() => handleButtonClick('tasks')}
             >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2"/>
-                    <rect x="9" y="3" width="6" height="4" rx="2"/>
-                    <path d="M9 12l2 2l4 -4"/>
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
                 </svg>
                 <span>المهمات</span>
             </button>
@@ -62,10 +65,13 @@ function TabBar({ onSectionChange, activeSection }) {
                 title="القوائم"
                 onClick={() => handleButtonClick('lists')}
             >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"/>
-                    <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"/>
-                    <path d="M9 12l2 2l4 -4"/>
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"/>
+                    <line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/>
+                    <line x1="3" y1="18" x2="3.01" y2="18"/>
                 </svg>
                 <span>القوائم</span>
             </button>
@@ -75,24 +81,50 @@ function TabBar({ onSectionChange, activeSection }) {
                 title="نظام الأرشفة"
                 onClick={() => handleButtonClick('archive')}
             >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-                    <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-                    <path d="M10 12l4 0" />
+                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 8v13H3V8"/>
+                    <path d="M1 3h22v5H1z"/>
+                    <path d="M10 12h4"/>
                 </svg>
                 <span>الأرشفة</span>
             </button>
-            <button 
-                className={`sidebar-btn sidebar-btn-backup ${activeSection === 'backup' ? 'active' : ''}`}
-                data-section="backup" 
-                title="النسخ الاحتياطية"
-                onClick={() => handleButtonClick('backup')}
-            >
-                <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 18a4 4 0 0 1-.5-8A6.5 6.5 0 0 1 18 8a5 5 0 0 1 0 10H6Z"/>
-                </svg>
-                <span>النسخ الاحتياطي</span>
-            </button>
+            {/* الأزرار السفلية - مجموعة واحدة */}
+            <div className="bottom-buttons-group">
+                <button 
+                    className={`sidebar-btn-icon ${activeSection === 'backup' ? 'active' : ''}`}
+                    data-section="backup" 
+                    title="النسخ الاحتياطية"
+                    onClick={() => handleButtonClick('backup')}
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6 18a4 4 0 0 1-.5-8A6.5 6.5 0 0 1 18 8a5 5 0 0 1 0 10H6Z"/>
+                    </svg>
+                </button>
+                <button 
+                    className={`sidebar-btn-icon ${activeSection === 'tutorial' ? 'active' : ''}`}
+                    data-section="tutorial" 
+                    title="الدليل التعليمي"
+                    onClick={() => handleButtonClick('tutorial')}
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                </button>
+                <button 
+                    className="sidebar-btn-icon sidebar-btn-icon-logout"
+                    data-section="logout" 
+                    title="تسجيل الخروج"
+                    onClick={() => handleButtonClick('login')}
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                </button>
+            </div>
         </aside>
     );
 }

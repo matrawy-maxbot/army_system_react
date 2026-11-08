@@ -14,11 +14,15 @@
 import React, { useState } from 'react';
 import { useAppState } from '../../context/AppStateContext';
 import Modal from '../common/Modal';
+import TemplateDetailModal from '../templates/TemplateDetailModal';
 import './SelectModals.css';
 
 const SelectTemplateModal = ({ isOpen, onClose, onSelect, fax }) => {
     const { appState } = useAppState();
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
+    const [viewingTemplate, setViewingTemplate] = useState(null);
+    const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
     // الحصول على القوالب من النظام
     const templates = appState.templates || [];
@@ -28,53 +32,36 @@ const SelectTemplateModal = ({ isOpen, onClose, onSelect, fax }) => {
         template.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const handleSelect = (template) => {
-        onSelect(template);
+    const handleTemplateSelect = (template) => {
+        setSelectedTemplate(template);
+        // تأخير صغير قبل إغلاق المودال للسماح برؤية التحديد
+        setTimeout(() => {
+            onSelect(template);
+        }, 200);
+    };
+
+    const handlePreviewClick = (e, template) => {
+        e.stopPropagation(); // منع تفعيل onClick الخاص بالكارت
+        setViewingTemplate(template);
+        setIsDetailModalOpen(true);
+    };
+
+    const handleSelectFromDetail = (template) => {
+        setIsDetailModalOpen(false);
+        setSelectedTemplate(template);
+        // تأخير صغير قبل إغلاق المودال للسماح برؤية التحديد
+        setTimeout(() => {
+            onSelect(template);
+        }, 200);
+    };
+
+    const handleCloseDetailModal = () => {
+        setIsDetailModalOpen(false);
+        setViewingTemplate(null);
     };
 
     const handleCreateBlank = () => {
         onSelect(null); // null يعني مستند فارغ
-    };
-
-    // أيقونة نوع الملف
-    const getFileIcon = (fileType) => {
-        switch (fileType?.toLowerCase()) {
-            case 'docx':
-            case 'doc':
-                return (
-                    <svg viewBox="0 0 24 24" fill="#2B579A" stroke="currentColor" strokeWidth="1">
-                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
-                        <path d="M17 21h-10a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
-                        <path d="M9 9h1"/>
-                        <path d="M9 13h6"/>
-                        <path d="M9 17h6"/>
-                    </svg>
-                );
-            case 'xlsx':
-            case 'xls':
-                return (
-                    <svg viewBox="0 0 24 24" fill="#217346" stroke="currentColor" strokeWidth="1">
-                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
-                        <path d="M17 21h-10a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
-                        <path d="M9 12h6"/>
-                        <path d="M12 9v6"/>
-                    </svg>
-                );
-            case 'pdf':
-                return (
-                    <svg viewBox="0 0 24 24" fill="#DC3545" stroke="currentColor" strokeWidth="1">
-                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
-                        <path d="M17 21h-10a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
-                    </svg>
-                );
-            default:
-                return (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
-                        <path d="M17 21h-10a2 2 0 0 1 -2 -2V5a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>
-                    </svg>
-                );
-        }
     };
 
     return (
@@ -171,41 +158,55 @@ const SelectTemplateModal = ({ isOpen, onClose, onSelect, fax }) => {
 
                     {/* قائمة القوالب */}
                     {templates.length > 0 && (
-                        <div className="templates-list-section">
-                            <h3 className="templates-section-title">القوالب المحفوظة</h3>
+                        <div className="saved-templates-section">
+                            <div className="saved-templates-heading">
+                                <span>القوالب المحفوظة</span>
+                                <span className="templates-count">{filteredTemplates.length} قالب</span>
+                            </div>
                             
                             {filteredTemplates.length > 0 ? (
-                                <div className="templates-grid-compact">
+                                <div className="saved-templates-grid">
                                     {filteredTemplates.map(template => (
                                         <div
                                             key={template.id}
-                                            className="template-card-compact"
-                                            onClick={() => handleSelect(template)}
+                                            className={`saved-template-card ${selectedTemplate?.id === template.id ? 'selected' : ''}`}
+                                            onClick={() => handleTemplateSelect(template)}
                                             role="button"
                                             tabIndex={0}
                                             onKeyDown={(e) => {
                                                 if (e.key === 'Enter' || e.key === ' ') {
                                                     e.preventDefault();
-                                                    handleSelect(template);
+                                                    handleTemplateSelect(template);
                                                 }
                                             }}
                                         >
-                                            <div className="template-card-icon">
-                                                {getFileIcon(template.fileType)}
+                                            <div className="template-thumbnail">
+                                                <div className="mini-document">
+                                                    <div className="mini-doc-heading"></div>
+                                                    <div className="mini-doc-line"></div>
+                                                    <div className="mini-doc-line"></div>
+                                                    <div className="mini-doc-line"></div>
+                                                    <div className="mini-doc-table"></div>
+                                                    <div className="mini-doc-line"></div>
+                                                    <div className="mini-doc-line short"></div>
+                                                </div>
                                             </div>
-                                            <div className="template-card-content">
-                                                <h4>{template.name}</h4>
-                                                <span className="file-type-badge">
-                                                    {template.fileType?.toUpperCase() || 'DOC'}
-                                                </span>
+                                            <div className="saved-template-info">
+                                                <strong>{template.name}</strong>
+                                                <span>{template.fileType?.toUpperCase() || 'DOCX'}</span>
                                             </div>
-                                            <div className="template-card-action">
+                                            <button 
+                                                className="template-preview-btn"
+                                                onClick={(e) => handlePreviewClick(e, template)}
+                                                title="معاينة القالب"
+                                                aria-label="معاينة القالب"
+                                            >
                                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <path d="M5 12h14"/>
-                                                    <path d="M13 18l6-6"/>
-                                                    <path d="M13 6l6 6"/>
+                                                    <path d="M12 5c-7.633 0-9.927 6.617-9.948 6.684L1.946 12l.105.316C2.073 12.383 4.367 19 12 19s9.927-6.617 9.948-6.684l.106-.316-.105-.316C21.927 11.617 19.633 5 12 5z"/>
+                                                    <circle cx="12" cy="12" r="3"/>
                                                 </svg>
-                                            </div>
+                                            </button>
+                                            <div className="template-selected-indicator"></div>
                                         </div>
                                     ))}
                                 </div>
@@ -240,6 +241,16 @@ const SelectTemplateModal = ({ isOpen, onClose, onSelect, fax }) => {
                     </button>
                 </div>
             </div>
+
+            {/* مودال تفاصيل القالب */}
+            {isDetailModalOpen && viewingTemplate && (
+                <TemplateDetailModal
+                    isOpen={isDetailModalOpen}
+                    onClose={handleCloseDetailModal}
+                    template={viewingTemplate}
+                    onUseTemplate={handleSelectFromDetail}
+                />
+            )}
         </Modal>
     );
 };

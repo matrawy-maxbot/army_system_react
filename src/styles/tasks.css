@@ -209,6 +209,7 @@
     cursor: pointer;
     position: relative;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .task-check:checked {
