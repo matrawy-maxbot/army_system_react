@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppStateProvider, useAppState } from './context/AppStateContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { ModalStackProvider } from './context/ModalStackContext';
@@ -17,6 +17,7 @@ import { MainRemindersSection, MainClonedFilesSection } from './components/main'
 import { ListsView } from './components/lists';
 import { TemplatesView } from './components/templates';
 import { SettingsModal } from './components/settings';
+import settingsAPI from './services/settingsAPI';
 
 import ArchivePage from './pages/ArchivePage';
 import BackupPage from './pages/BackupPage';
@@ -29,6 +30,31 @@ import './styles/main-page.css';
 function AppContent() {
     const { updateState, appState } = useAppState();
     const toast = useToast();
+    
+    // Check API connection on app start
+    useEffect(() => {
+        const checkConnection = async () => {
+            try {
+                console.log('🔄 Checking API connection...');
+                const result = await settingsAPI.initialize();
+                
+                if (result.success) {
+                    console.log('✅ API connected:', settingsAPI.getCurrentMode(), 'mode');
+                    if (settingsAPI.getCurrentMode() === 'http') {
+                        toast.success('متصل بـ Dev Server');
+                    }
+                } else {
+                    console.error('❌ API connection failed:', result.error);
+                    toast.error('فشل الاتصال بالخادم. تأكد من تشغيل: npm run server');
+                }
+            } catch (error) {
+                console.error('❌ Failed to check connection:', error);
+                toast.error('فشل الاتصال بالخادم');
+            }
+        };
+        
+        checkConnection();
+    }, []);
     
     // Modal states
     const [showSettings, setShowSettings] = useState(false);
